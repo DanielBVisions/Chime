@@ -1,6 +1,7 @@
 ---
-// Deduped canonical role list. Renders as a static wrapped list for now —
-// the two-track infinite marquee (see tech spec §5.4) is wired in a later step.
+// Deduped canonical role list. Renders as a static wrapped list by default;
+// role-ticker.ts progressively enhances it into a two-track infinite marquee
+// (tech spec §5.4), skipped entirely under prefers-reduced-motion.
 const roles = [
   'Fault engineers',
   'network designers',
@@ -25,11 +26,13 @@ const roles = [
 ---
 
 <div class="role-ticker" data-role-ticker data-reveal>
-  <ul class="role-ticker__list">
-    {roles.map((role) => (
-      <li>{role}</li>
-    ))}
-  </ul>
+  <div class="role-ticker__group" data-role-ticker-group>
+    <ul class="role-ticker__list" data-role-ticker-track>
+      {roles.map((role) => (
+        <li>{role}</li>
+      ))}
+    </ul>
+  </div>
 </div>
 
 <style>
@@ -39,11 +42,16 @@ const roles = [
     border-block: 1px solid rgba(255, 255, 255, 0.2);
   }
 
+  .role-ticker__group {
+    display: flex;
+  }
+
   .role-ticker__list {
     display: flex;
     flex-wrap: wrap;
     row-gap: 0.75rem;
     justify-content: center;
+    width: 100%;
   }
 
   .role-ticker__list li {
@@ -57,5 +65,20 @@ const roles = [
     content: '·';
     margin-inline: 0.75rem;
     color: var(--color-blue-mid);
+  }
+
+  /* Marquee state — added by role-ticker.ts once it clones the track;
+     never applied under prefers-reduced-motion, so the static wrapped
+     list above is the reduced-motion fallback by construction. */
+  .role-ticker.is-marquee .role-ticker__group {
+    width: max-content;
+  }
+
+  .role-ticker.is-marquee .role-ticker__list {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: max-content;
+    padding-inline-end: 3rem;
   }
 </style>

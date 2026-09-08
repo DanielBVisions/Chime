@@ -1,6 +1,8 @@
 ---
 // Rendered as text wordmarks for now — swap each span for an <img> once real
 // partner SVGs land in public/images/partner-logos/ (tech spec §8, item 5-adjacent).
+// role-ticker.ts progressively enhances this into a single-track infinite
+// marquee (tech spec §5.7), skipped under prefers-reduced-motion.
 const partners = [
   'UK Power Networks',
   'SSE',
@@ -13,14 +15,19 @@ const partners = [
 ];
 ---
 
-<section class="section partners" data-partner-logos>
+<section class="section partners">
   <div class="container" data-reveal>
     <p class="partners__label">Partnered with</p>
-    <ul class="partners__list">
-      {partners.map((partner) => (
-        <li>{partner}</li>
-      ))}
-    </ul>
+
+    <div class="partners__marquee" data-partner-logos>
+      <div class="partners__group" data-partner-group>
+        <ul class="partners__list" data-partner-track>
+          {partners.map((partner) => (
+            <li>{partner}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -34,12 +41,21 @@ const partners = [
     color: var(--color-grey-400);
   }
 
-  .partners__list {
+  .partners__marquee {
+    overflow: hidden;
     margin-top: var(--space-gutter);
+  }
+
+  .partners__group {
+    display: flex;
+  }
+
+  .partners__list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 2rem 3rem;
+    width: 100%;
   }
 
   .partners__list li {
@@ -47,11 +63,27 @@ const partners = [
     font-weight: 700;
     color: var(--color-grey-400);
     filter: grayscale(1);
+    white-space: nowrap;
     transition: color 0.2s ease, filter 0.2s ease;
   }
 
   .partners__list li:hover {
     color: var(--color-blue-deep);
     filter: grayscale(0);
+  }
+
+  /* Marquee state — added by role-ticker.ts once it clones the track;
+     never applied under prefers-reduced-motion, so the wrapped list
+     above is the reduced-motion fallback by construction. */
+  .partners__marquee.is-marquee .partners__group {
+    width: max-content;
+  }
+
+  .partners__marquee.is-marquee .partners__list {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: max-content;
+    padding-inline-end: 3rem;
   }
 </style>
