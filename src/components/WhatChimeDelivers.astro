@@ -200,6 +200,12 @@ const columns = [
     border-radius: 18px;
     padding: 1.75rem;
     box-shadow: 0 8px 20px -6px rgba(20, 24, 29, 0.08);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  }
+
+  .delivers__column:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 32px -12px rgba(11, 92, 173, 0.2);
   }
 
   .delivers__column-header {
@@ -210,6 +216,11 @@ const columns = [
   .delivers__column-icon {
     width: 2.75rem;
     height: 2.75rem;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .delivers__column:hover .delivers__column-icon {
+    transform: scale(1.15) rotate(-8deg);
   }
 
   .delivers__column-icon svg {
@@ -256,5 +267,12 @@ const columns = [
     font-size: 0.875rem;
     line-height: 1.55;
     color: var(--color-grey-600);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .delivers__column,
+    .delivers__column-icon {
+      transition: none;
+    }
   }
 </style>

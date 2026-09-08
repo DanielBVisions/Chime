@@ -164,6 +164,18 @@ const testimonials = [
     background: var(--color-grey-100);
     border-radius: 18px;
     box-sizing: border-box;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  }
+
+  .testimonials__card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 32px -12px rgba(11, 92, 173, 0.18);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .testimonials__card {
+      transition: none;
+    }
   }
 
   .testimonials__card p {

@@ -4,6 +4,7 @@ import BrandArc from './BrandArc.astro';
 
 <section class="hero" data-hero>
   <BrandArc size={640} anchor="top-right" style="top: -140px; right: -140px;" />
+  <div class="hero__glow" data-hero-glow aria-hidden="true"></div>
 
   <div class="container hero__inner">
     <div class="hero__copy">
@@ -53,6 +54,20 @@ import BrandArc from './BrandArc.astro';
     overflow: hidden;
     background: var(--color-white);
     padding-block: 4rem 3.5rem;
+  }
+
+  .hero__glow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background: radial-gradient(500px circle at var(--x, 50%) var(--y, 50%), rgba(63, 169, 218, 0.22), transparent 65%);
+  }
+
+  .hero__glow.is-active {
+    opacity: 1;
   }
 
   .hero__inner {

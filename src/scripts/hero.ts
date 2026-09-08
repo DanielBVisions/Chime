@@ -28,6 +28,8 @@ export function initHero() {
     );
   }
 
+  initCursorGlow(hero, prefersReducedMotion);
+
   if (!video) return;
 
   // Poster image is the real LCP element; fade the video in over it once it
@@ -51,5 +53,25 @@ export function initHero() {
       end: 'bottom top',
       scrub: true,
     },
+  });
+}
+
+// Soft ambient light that follows the cursor — mouse/trackpad only (a
+// touchscreen has no persistent pointer position to follow) and skipped
+// entirely under reduced motion.
+function initCursorGlow(hero: HTMLElement, prefersReducedMotion: boolean) {
+  const glow = hero.querySelector<HTMLElement>('[data-hero-glow]');
+  const canHover = window.matchMedia('(pointer: fine)').matches;
+  if (!glow || prefersReducedMotion || !canHover) return;
+
+  hero.addEventListener('pointerenter', () => glow.classList.add('is-active'));
+  hero.addEventListener('pointerleave', () => glow.classList.remove('is-active'));
+
+  hero.addEventListener('pointermove', (event) => {
+    const rect = hero.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    glow.style.setProperty('--x', `${x}%`);
+    glow.style.setProperty('--y', `${y}%`);
   });
 }
