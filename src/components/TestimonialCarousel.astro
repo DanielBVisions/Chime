@@ -52,28 +52,39 @@ const testimonials = [
       ></iframe>
     </div>
 
-    <div class="testimonials__carousel">
-      <button type="button" class="testimonials__arrow testimonials__arrow--prev" aria-label="Previous testimonial">
+    <div class="testimonials__carousel" data-reveal>
+      <button type="button" class="testimonials__arrow testimonials__arrow--prev" data-testimonial-prev aria-label="Previous testimonial">
         &larr;
       </button>
 
-      <ul class="testimonials__track" data-testimonial-track>
-        {testimonials.map((testimonial) => (
-          <li class="testimonials__slide">
-            <blockquote>
-              <p>"{testimonial.quote}"</p>
-              <footer>
-                <cite>{testimonial.name}</cite>, {testimonial.title}
-              </footer>
-            </blockquote>
-          </li>
-        ))}
-      </ul>
+      <div
+        class="testimonials__viewport"
+        data-testimonial-viewport
+        role="group"
+        aria-roledescription="carousel"
+        aria-label="Customer testimonials"
+        tabindex="0"
+      >
+        <ul class="testimonials__track" data-testimonial-track>
+          {testimonials.map((testimonial) => (
+            <li class="testimonials__slide" data-testimonial-label={`${testimonial.name}, ${testimonial.title}`}>
+              <blockquote>
+                <p>"{testimonial.quote}"</p>
+                <footer>
+                  <cite>{testimonial.name}</cite>, {testimonial.title}
+                </footer>
+              </blockquote>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-      <button type="button" class="testimonials__arrow testimonials__arrow--next" aria-label="Next testimonial">
+      <button type="button" class="testimonials__arrow testimonials__arrow--next" data-testimonial-next aria-label="Next testimonial">
         &rarr;
       </button>
     </div>
+
+    <p class="visually-hidden" role="status" aria-live="polite" data-testimonial-live></p>
   </div>
 </section>
 
@@ -106,29 +117,32 @@ const testimonials = [
     gap: 1rem;
   }
 
-  .testimonials__track {
-    display: flex;
-    gap: var(--space-gutter);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
+  .testimonials__viewport {
+    flex: 1;
+    overflow: hidden;
   }
 
-  .testimonials__track::-webkit-scrollbar {
-    display: none;
+  .testimonials__viewport:focus-visible {
+    outline: 2px solid var(--color-blue-mid);
+    outline-offset: 4px;
+  }
+
+  .testimonials__track {
+    display: flex;
   }
 
   .testimonials__slide {
-    flex: 0 0 min(24rem, 85vw);
-    scroll-snap-align: start;
+    flex: 0 0 100%;
+    width: 100%;
     padding: var(--space-gutter);
     background: var(--color-grey-100);
     border-radius: 12px;
   }
 
   .testimonials__slide p {
-    font-size: 1.05rem;
+    font-size: 1.2rem;
     line-height: 1.6;
+    max-width: 42rem;
   }
 
   .testimonials__slide footer {
