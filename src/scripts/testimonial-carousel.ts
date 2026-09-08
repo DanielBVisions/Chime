@@ -19,11 +19,14 @@ export function initTestimonialCarousel() {
   let page = 0;
   let dots: HTMLButtonElement[] = [];
 
-  // --per-view is set in CSS per breakpoint (1/2/3 cards visible) — read it
-  // back here so the JS paging math always matches what's actually laid out.
+  // Mirrors the CSS breakpoints on .testimonials__slide exactly (640px -> 2,
+  // 1024px -> 3) — matchMedia directly, rather than reading a custom
+  // property back out of computed style, so there's no indirection that can
+  // silently drift out of sync with what's actually laid out.
   function getPerView() {
-    const value = parseFloat(getComputedStyle(viewport!).getPropertyValue('--per-view'));
-    return Number.isFinite(value) && value > 0 ? Math.round(value) : 1;
+    if (window.matchMedia('(min-width: 1024px)').matches) return 3;
+    if (window.matchMedia('(min-width: 640px)').matches) return 2;
+    return 1;
   }
 
   function updateDots() {

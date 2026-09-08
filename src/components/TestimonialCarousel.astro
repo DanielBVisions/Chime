@@ -125,19 +125,6 @@ const testimonials = [
     flex: 1;
     min-width: 0;
     overflow: hidden;
-    --per-view: 1;
-  }
-
-  @media (min-width: 640px) {
-    .testimonials__viewport {
-      --per-view: 2;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .testimonials__viewport {
-      --per-view: 3;
-    }
   }
 
   .testimonials__viewport:focus-visible {
@@ -147,13 +134,27 @@ const testimonials = [
 
   .testimonials__track {
     display: flex;
-    height: 100%;
   }
 
   .testimonials__slide {
-    flex: 0 0 calc(100% / var(--per-view));
+    flex: 0 0 100%;
+    max-width: 100%;
     box-sizing: border-box;
     padding-inline: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .testimonials__slide {
+      flex-basis: 50%;
+      max-width: 50%;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .testimonials__slide {
+      flex-basis: 33.3333%;
+      max-width: 33.3333%;
+    }
   }
 
   .testimonials__card {
