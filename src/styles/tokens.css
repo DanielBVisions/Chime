@@ -1,0 +1,30 @@
+:root {
+  /* Brand blues (from logo arcs) */
+  --color-blue-deep: #0B5CAD;
+  --color-blue-mid: #3FA9DA;
+  --color-blue-pale: #8FE1F2;
+
+  /* Neutrals */
+  --color-ink: #0A0A0A;
+  --color-white: #FFFFFF;
+  --color-grey-100: #F5F7F9;
+  --color-grey-400: #9AA5AD;
+
+  /* Gradient used for arc mark / accents */
+  --gradient-signal: linear-gradient(135deg, var(--color-blue-pale), var(--color-blue-mid) 50%, var(--color-blue-deep));
+
+  /* Type scale */
+  --font-sans: "Manrope", "Inter", system-ui, sans-serif;
+  --fs-hero: clamp(2.5rem, 6vw, 5rem);
+  --fs-h1: clamp(2rem, 4vw, 3.25rem);
+  --fs-h2: clamp(1.5rem, 2.5vw, 2.25rem);
+  --fs-body: 1rem;
+
+  /* Spacing */
+  --space-section: clamp(4rem, 10vw, 8rem);
+  --space-gutter: clamp(1.5rem, 4vw, 3rem);
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-base: 0.8s;
+}
