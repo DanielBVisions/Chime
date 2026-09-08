@@ -8,10 +8,11 @@ const navLinks = [
 ];
 ---
 
-<header class="nav">
+<header class="nav" data-nav>
   <div class="container nav__inner">
     <a href="/" class="nav__logo" aria-label="CHiME home">
-      <img src="/logo/chime-horizontal-white.svg" alt="CHiME" width="140" height="32" />
+      <img data-nav-logo-white src="/logo/chime-horizontal-white.svg" alt="CHiME" width="140" height="32" />
+      <img data-nav-logo-black src="/logo/chime-horizontal-black.svg" alt="" aria-hidden="true" width="140" height="32" />
     </a>
 
     <nav class="nav__links" aria-label="Primary">
@@ -24,14 +25,21 @@ const navLinks = [
 
     <a href="/contact" class="btn nav__cta">Enquire Now</a>
 
-    <button type="button" class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+    <button
+      type="button"
+      class="nav__toggle"
+      data-nav-toggle
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
       <span></span>
       <span></span>
       <span></span>
     </button>
   </div>
 
-  <div id="mobile-menu" class="nav__mobile-menu">
+  <div id="mobile-menu" class="nav__mobile-menu" data-nav-mobile-menu>
     <ul>
       {navLinks.map((link) => (
         <li><a href={link.href}>{link.label}</a></li>
@@ -47,6 +55,12 @@ const navLinks = [
     top: 0;
     z-index: 50;
     width: 100%;
+    background: transparent;
+    transition: background-color 0.3s ease;
+  }
+
+  .nav.is-solid {
+    background: var(--color-white);
   }
 
   .nav__inner {
@@ -57,9 +71,22 @@ const navLinks = [
     padding-block: 1.25rem;
   }
 
+  .nav__logo {
+    position: relative;
+    display: inline-block;
+    width: 140px;
+    height: 32px;
+  }
+
   .nav__logo img {
+    position: absolute;
+    inset: 0;
     height: 32px;
     width: auto;
+  }
+
+  .nav__logo img[data-nav-logo-black] {
+    opacity: 0;
   }
 
   .nav__links ul {
@@ -73,6 +100,11 @@ const navLinks = [
     font-weight: 700;
     letter-spacing: 0.06em;
     color: var(--color-white);
+    transition: color 0.3s ease;
+  }
+
+  .nav.is-solid .nav__links a {
+    color: var(--color-ink);
   }
 
   .nav__cta {
@@ -90,6 +122,11 @@ const navLinks = [
     width: 22px;
     height: 2px;
     background: var(--color-white);
+    transition: background-color 0.3s ease;
+  }
+
+  .nav.is-solid .nav__toggle span {
+    background: var(--color-ink);
   }
 
   .nav__mobile-menu {
