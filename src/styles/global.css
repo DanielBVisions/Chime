@@ -32,7 +32,8 @@ h1,
 h2,
 h3,
 p,
-figure {
+figure,
+blockquote {
   margin: 0;
 }
 
