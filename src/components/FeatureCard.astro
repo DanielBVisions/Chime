@@ -1,0 +1,44 @@
+---
+interface Props {
+  title: string;
+  body: string;
+}
+
+const { title, body } = Astro.props;
+---
+
+<article class="feature-card">
+  <span class="feature-card__icon" aria-hidden="true"></span>
+  <h3>{title}</h3>
+  <p>{body}</p>
+</article>
+
+<style>
+  .feature-card {
+    padding: var(--space-gutter);
+    background: var(--color-white);
+    border: 1px solid var(--color-grey-100);
+    border-radius: 12px;
+  }
+
+  .feature-card__icon {
+    display: block;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--gradient-signal);
+  }
+
+  .feature-card h3 {
+    margin-top: 1.25rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  .feature-card p {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-grey-400);
+  }
+</style>

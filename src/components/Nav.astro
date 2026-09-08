@@ -1,0 +1,132 @@
+---
+const navLinks = [
+  { label: 'HOME', href: '/' },
+  { label: 'ABOUT US', href: '/about-us' },
+  { label: 'CHIME', href: '/chime' },
+  { label: 'UNRIVALLED DELIVERY', href: '/unrivalled-delivery' },
+  { label: 'NEWS & INSIGHTS', href: '/news-insights' },
+];
+---
+
+<header class="nav">
+  <div class="container nav__inner">
+    <a href="/" class="nav__logo" aria-label="CHiME home">
+      <img src="/logo/chime-horizontal-white.svg" alt="CHiME" width="140" height="32" />
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <ul>
+        {navLinks.map((link) => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <a href="/contact" class="btn nav__cta">Enquire Now</a>
+
+    <button type="button" class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="nav__mobile-menu">
+    <ul>
+      {navLinks.map((link) => (
+        <li><a href={link.href}>{link.label}</a></li>
+      ))}
+      <li><a href="/contact" class="btn">Enquire Now</a></li>
+    </ul>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-gutter);
+    padding-block: 1.25rem;
+  }
+
+  .nav__logo img {
+    height: 32px;
+    width: auto;
+  }
+
+  .nav__links ul {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .nav__links a {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--color-white);
+  }
+
+  .nav__cta {
+    flex-shrink: 0;
+  }
+
+  .nav__toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0.5rem;
+  }
+
+  .nav__toggle span {
+    width: 22px;
+    height: 2px;
+    background: var(--color-white);
+  }
+
+  .nav__mobile-menu {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .nav__links,
+    .nav__cta {
+      display: none;
+    }
+
+    .nav__toggle {
+      display: flex;
+    }
+
+    .nav__mobile-menu {
+      position: fixed;
+      inset: 0;
+      top: 72px;
+      display: flex;
+      background: var(--color-ink);
+      transform: translateY(-100%);
+    }
+
+    .nav__mobile-menu ul {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: var(--space-gutter);
+      width: 100%;
+    }
+
+    .nav__mobile-menu a {
+      color: var(--color-white);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+  }
+</style>

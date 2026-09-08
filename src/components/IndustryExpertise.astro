@@ -1,0 +1,118 @@
+---
+import RoleTicker from './RoleTicker.astro';
+---
+
+<section class="industry">
+  <div class="industry__bg" style="background-image: url('/images/industry-professionals-bg.jpg');"></div>
+  <div class="industry__overlay"></div>
+
+  <div class="industry__content container section">
+    <h2>Industry Expertise</h2>
+    <p class="industry__intro">
+      We understand the challenges faced by network operators and the expertise required to
+      drive operational success. That's why CHIME was developed with insights from professionals
+      across the industry, ensuring it meets the real-world needs of those working on the front
+      lines.
+    </p>
+
+    <div class="industry__professionals">
+      <h3>Industry Professionals</h3>
+      <p>
+        At the heart of every successful network operation are the dedicated professionals who
+        bring expertise, precision, and innovation to their roles. From design and construction to
+        maintenance and oversight, these specialists ensure the seamless function and evolution of
+        critical infrastructure.
+      </p>
+      <p>
+        CHIME is built on the collective experience of these industry experts, offering solutions
+        to those shaping the future of network operations.
+      </p>
+    </div>
+
+    <RoleTicker />
+
+    <div class="industry__clear-horizon">
+      <img src="/logo/clear-horizon-horizontal.svg" alt="Clear Horizon" width="180" height="36" />
+      <p>
+        Our team specialises in the business of regulated network operators. We have consultants
+        with over 20 years industry experience combined with highly skilled business analysts,
+        solution design and secure enterprise IT service architecture. Our reputation at the most
+        senior levels in the industry is built on the strength of our exceptional team.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .industry {
+    position: relative;
+    color: var(--color-white);
+    background: var(--color-ink);
+    overflow: hidden;
+  }
+
+  .industry__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .industry__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.75);
+  }
+
+  .industry__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .industry h2 {
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .industry__intro {
+    margin-top: 1.5rem;
+    max-width: 48rem;
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  .industry__professionals {
+    margin-top: var(--space-gutter);
+    max-width: 48rem;
+  }
+
+  .industry__professionals h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-blue-pale);
+  }
+
+  .industry__professionals p {
+    margin-top: 1rem;
+    line-height: 1.7;
+  }
+
+  .industry__professionals p + p {
+    margin-top: 1rem;
+  }
+
+  .industry__clear-horizon {
+    margin-top: var(--space-gutter);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .industry__clear-horizon p {
+    max-width: 48rem;
+    line-height: 1.7;
+  }
+</style>

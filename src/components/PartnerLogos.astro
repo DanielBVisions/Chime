@@ -1,0 +1,57 @@
+---
+// Rendered as text wordmarks for now — swap each span for an <img> once real
+// partner SVGs land in public/images/partner-logos/ (tech spec §8, item 5-adjacent).
+const partners = [
+  'UK Power Networks',
+  'SSE',
+  'Cadent Gas',
+  'ESB Networks',
+  'NRE Services Ltd',
+  'TreeSmiths',
+  'Oakwick',
+  'SP Electricity North West',
+];
+---
+
+<section class="section partners" data-partner-logos>
+  <div class="container">
+    <p class="partners__label">Partnered with</p>
+    <ul class="partners__list">
+      {partners.map((partner) => (
+        <li>{partner}</li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .partners__label {
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-grey-400);
+  }
+
+  .partners__list {
+    margin-top: var(--space-gutter);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem 3rem;
+  }
+
+  .partners__list li {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-grey-400);
+    filter: grayscale(1);
+    transition: color 0.2s ease, filter 0.2s ease;
+  }
+
+  .partners__list li:hover {
+    color: var(--color-blue-deep);
+    filter: grayscale(0);
+  }
+</style>

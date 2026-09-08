@@ -1,0 +1,61 @@
+---
+// Deduped canonical role list. Renders as a static wrapped list for now —
+// the two-track infinite marquee (see tech spec §5.4) is wired in a later step.
+const roles = [
+  'Fault engineers',
+  'network designers',
+  'construction engineers',
+  'team leaders',
+  'job planners',
+  'safety officers',
+  'security architects',
+  'project managers',
+  'transformation directors',
+  'service delivery teams',
+  'cable layers',
+  'tree cutters',
+  'surveyors',
+  'process designers',
+  'project controllers',
+  'regulatory accountants',
+  'contractors',
+  'civils work teams',
+  'job estimators',
+];
+---
+
+<div class="role-ticker" data-role-ticker>
+  <ul class="role-ticker__list">
+    {roles.map((role) => (
+      <li>{role}</li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .role-ticker {
+    overflow: hidden;
+    padding-block: 1.5rem;
+    border-block: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .role-ticker__list {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .role-ticker__list li {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-white);
+    white-space: nowrap;
+  }
+
+  .role-ticker__list li:not(:last-child)::after {
+    content: '·';
+    margin-inline: 0.75rem;
+    color: var(--color-blue-mid);
+  }
+</style>

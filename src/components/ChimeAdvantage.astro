@@ -1,0 +1,95 @@
+---
+import FeatureCard from './FeatureCard.astro';
+
+const features = [
+  {
+    title: 'Industry-leading expertise',
+    body: "With over 25 years of experience, we understand the complexities of regulated industries and the challenges network operators face. CHIME was built to help them overcome these obstacles, improving field force productivity while tackling the industry-wide challenge of increasing regulatory requirements and growing work volumes.",
+  },
+  {
+    title: 'The Only Solution Of Its Kind',
+    body: 'CHIME is the first and only industry-specific application designed exclusively for network operators, solving workforce productivity challenges that no other solution can.',
+  },
+  {
+    title: 'Built for the workforce',
+    body: 'Designed with field teams in mind, CHIME streamlines workflows, reduces administrative burdens, and allows teams to focus on delivering quality work efficiently.',
+  },
+  {
+    title: 'Optimised for productivity',
+    body: 'CHIME significantly reduces data input time, enabling field teams to focus on their core tasks — getting the job done right and delivering excellent customer service.',
+  },
+  {
+    title: 'Seamless implementation',
+    body: 'Works straight out of the box with no need for customisation, ensuring a smooth transition without disrupting operations.',
+  },
+  {
+    title: 'Scalable and adaptable',
+    body: 'Easily configurable to fit your business needs while ensuring compliance with regulatory requirements.',
+  },
+  {
+    title: 'Proven results',
+    body: 'Increases work volumes, streamlines job completion, and keeps projects on time and within budget.',
+  },
+  {
+    title: 'Innovative, patented technology',
+    body: 'Recognised with European and US patents, CHIME sets the benchmark for efficiency and reliability in network operations.',
+  },
+];
+---
+
+<section class="section advantage">
+  <div class="container">
+    <p class="eyebrow">What Sets Us Apart</p>
+    <h2>The CHIME Advantage</h2>
+    <p class="advantage__sub">
+      The Industry's First Solution Built to Maximise Field Force Productivity for Network
+      Operators
+    </p>
+    <a href="/chime" class="btn advantage__cta">Discover More</a>
+
+    <div class="advantage__grid">
+      {features.map((feature) => (
+        <FeatureCard title={feature.title} body={feature.body} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .advantage h2 {
+    margin-top: 0.75rem;
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .advantage__sub {
+    margin-top: 1.25rem;
+    max-width: 44rem;
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+
+  .advantage__cta {
+    margin-top: var(--space-gutter);
+  }
+
+  .advantage__grid {
+    margin-top: var(--space-gutter);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-gutter);
+  }
+
+  @media (min-width: 640px) {
+    .advantage__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .advantage__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

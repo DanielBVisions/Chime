@@ -1,0 +1,122 @@
+---
+const navColumn1 = [
+  { label: 'Home', href: '/' },
+  { label: 'About Us', href: '/about-us' },
+  { label: 'News & Insights', href: '/news-insights' },
+  { label: 'Unrivalled Delivery', href: '/unrivalled-delivery' },
+];
+
+const navColumn2 = [
+  { label: 'CHiME', href: '/chime' },
+  { label: 'Unrivalled Delivery', href: '/unrivalled-delivery' },
+  { label: 'Contact Us', href: '/contact' },
+];
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__top">
+      <a href="/" class="footer__logo" aria-label="CHiME home">
+        <img src="/logo/chime-horizontal-black.svg" alt="CHiME" width="140" height="32" />
+      </a>
+
+      <nav class="footer__nav" aria-label="Footer">
+        <ul>
+          {navColumn1.map((link) => (
+            <li><a href={link.href}>{link.label}</a></li>
+          ))}
+        </ul>
+        <ul>
+          {navColumn2.map((link) => (
+            <li><a href={link.href}>{link.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="footer__contact">
+        <a href="mailto:info@chime-it.com">info@chime-it.com</a>
+        <a href="https://www.linkedin.com/company/chime-it-software/" target="_blank" rel="noopener noreferrer">
+          LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <div class="footer__legal">
+      <p>
+        CHIME is a trading style of Clear Horizon IS Limited, a company registered in England and
+        Wales (No. 08945634). Registered office: 50 Broadway, London, SW1H 0BL, United Kingdom.
+      </p>
+      <p>&copy; 2025 CHiME. All rights reserved.</p>
+
+      <div class="footer__legal-links">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/cookie-policy">Cookie Policy</a>
+      </div>
+
+      <!-- TODO: confirm with client whether to keep, replace, or remove this credit (tech spec §8, item 4) -->
+      <p class="footer__credit">Site by Perspectiv</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-grey-100);
+  }
+
+  .footer__inner {
+    padding-block: var(--space-section);
+  }
+
+  .footer__top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-gutter);
+    justify-content: space-between;
+    padding-bottom: var(--space-gutter);
+    border-bottom: 1px solid var(--color-grey-400);
+  }
+
+  .footer__nav {
+    display: flex;
+    gap: 3rem;
+  }
+
+  .footer__nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer__nav a,
+  .footer__contact a {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .footer__contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer__legal {
+    margin-top: var(--space-gutter);
+    font-size: 0.8rem;
+    color: var(--color-grey-400);
+  }
+
+  .footer__legal p + p {
+    margin-top: 0.75rem;
+  }
+
+  .footer__legal-links {
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer__credit {
+    margin-top: 1.5rem;
+  }
+</style>

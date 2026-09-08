@@ -1,7 +1,32 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import AcceleratingProductivity from '../components/AcceleratingProductivity.astro';
+import IndustryExpertise from '../components/IndustryExpertise.astro';
+import WhatChimeDelivers from '../components/WhatChimeDelivers.astro';
+import FeaturedQuote from '../components/FeaturedQuote.astro';
+import PartnerLogos from '../components/PartnerLogos.astro';
+import ChimeAdvantage from '../components/ChimeAdvantage.astro';
+import TestimonialCarousel from '../components/TestimonialCarousel.astro';
+import EnquireCta from '../components/EnquireCta.astro';
+import TrustBadges from '../components/TrustBadges.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <BaseLayout title="CHiME — Built for the Network Operator">
-  <!-- Scaffold placeholder — sections are built out in a later step -->
+  <Nav />
+  <main>
+    <Hero />
+    <AcceleratingProductivity />
+    <IndustryExpertise />
+    <WhatChimeDelivers />
+    <FeaturedQuote />
+    <PartnerLogos />
+    <ChimeAdvantage />
+    <TestimonialCarousel />
+    <EnquireCta />
+    <TrustBadges />
+  </main>
+  <Footer />
 </BaseLayout>

@@ -1,0 +1,154 @@
+---
+const testimonials = [
+  {
+    quote:
+      "CHIME let us train contractors quickly, deploy them using their own devices, and verify every job was done on-site – all while delivering the program ahead of schedule and under budget.",
+    name: 'Andy Horstead',
+    title: 'Senior Asset Engineer, UK Power Networks',
+  },
+  {
+    quote: 'CHIME is going to be everywhere, there is nothing like it.',
+    name: 'Andrew Roper',
+    title: 'Director, SSE Networks',
+  },
+  {
+    quote:
+      'CHiME Locate has transformed how we manage faults. It enables us to dispatch the right teams quickly to faults and inspections, improving response times and keeping operations efficient.',
+    name: 'Paul Rawlinson',
+    title: 'HV Control Manager, SP Electricity North West',
+  },
+  {
+    quote:
+      "Can't believe we have done two completely different processes in a trial and no programming needed.",
+    name: 'Chris Rison',
+    title: 'Head of Smart Network, Cadent Gas',
+  },
+  {
+    quote:
+      'We chose CHIME based on the brilliant feedback from our operational staff who were able to see how the solution could make their jobs easier, and the flexibility of the product to adapt as we identify continuous improvement ideas in our business.',
+    name: 'Suleman Alli',
+    title: 'Director, UK Power Networks',
+  },
+  {
+    quote:
+      'We needed a one-stop solution as our work intensifies and we prepare for a net zero future. The richness of CHIME functionality gives us a package that is better for us and cheaper for customers. CHIME simply fits our industry and goes from strength to strength.',
+    name: 'David Brocksom',
+    title: 'Ex-CFO, SP Electricity North West',
+  },
+];
+---
+
+<section class="section testimonials">
+  <div class="container">
+    <h2>What our Customers Say</h2>
+
+    <div class="testimonials__video">
+      <iframe
+        src="https://player.vimeo.com/video/1103214145"
+        title="CHIME customer testimonial"
+        loading="lazy"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <div class="testimonials__carousel">
+      <button type="button" class="testimonials__arrow testimonials__arrow--prev" aria-label="Previous testimonial">
+        &larr;
+      </button>
+
+      <ul class="testimonials__track" data-testimonial-track>
+        {testimonials.map((testimonial) => (
+          <li class="testimonials__slide">
+            <blockquote>
+              <p>"{testimonial.quote}"</p>
+              <footer>
+                <cite>{testimonial.name}</cite>, {testimonial.title}
+              </footer>
+            </blockquote>
+          </li>
+        ))}
+      </ul>
+
+      <button type="button" class="testimonials__arrow testimonials__arrow--next" aria-label="Next testimonial">
+        &rarr;
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials h2 {
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .testimonials__video {
+    margin-top: var(--space-gutter);
+    position: relative;
+    aspect-ratio: 16 / 9;
+    max-width: 56rem;
+  }
+
+  .testimonials__video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .testimonials__carousel {
+    margin-top: var(--space-gutter);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .testimonials__track {
+    display: flex;
+    gap: var(--space-gutter);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .testimonials__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .testimonials__slide {
+    flex: 0 0 min(24rem, 85vw);
+    scroll-snap-align: start;
+    padding: var(--space-gutter);
+    background: var(--color-grey-100);
+    border-radius: 12px;
+  }
+
+  .testimonials__slide p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .testimonials__slide footer {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--color-grey-400);
+  }
+
+  .testimonials__slide cite {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+
+  .testimonials__arrow {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-grey-100);
+    font-size: 1.1rem;
+  }
+</style>
