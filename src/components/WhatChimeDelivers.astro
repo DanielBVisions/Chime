@@ -23,8 +23,45 @@
     </div>
 
     <div class="delivers__infographics" data-reveal>
-      <img src="/images/infographic-1.png" alt="CHIME functionality overview, part one" width="600" height="800" loading="lazy" decoding="async" />
-      <img src="/images/infographic-2.png" alt="CHIME functionality overview, part two" width="600" height="800" loading="lazy" decoding="async" />
+      <div class="delivers__figure">
+        <img
+          src="/images/infographic-1.png"
+          alt="CHIME functionality overview, part one"
+          width="600"
+          height="800"
+          loading="lazy"
+          decoding="async"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <div class="delivers__figure-fallback">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" rx="2" />
+            <path d="M3 15 L9 10 L13 14 L21 7" />
+            <circle cx="8" cy="8" r="1.4" fill="currentColor" stroke="none" />
+          </svg>
+          <span>Infographic artwork pending</span>
+        </div>
+      </div>
+
+      <div class="delivers__figure">
+        <img
+          src="/images/infographic-2.png"
+          alt="CHIME functionality overview, part two"
+          width="600"
+          height="800"
+          loading="lazy"
+          decoding="async"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <div class="delivers__figure-fallback">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" rx="2" />
+            <path d="M3 15 L9 10 L13 14 L21 7" />
+            <circle cx="8" cy="8" r="1.4" fill="currentColor" stroke="none" />
+          </svg>
+          <span>Infographic artwork pending</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -46,6 +83,7 @@
     margin-top: 1rem;
     max-width: 56rem;
     line-height: 1.7;
+    color: var(--color-grey-600);
   }
 
   .delivers__functionality-heading {
@@ -53,6 +91,7 @@
     font-size: 1.5rem;
     font-weight: 700;
     max-width: 44rem;
+    color: var(--color-ink);
   }
 
   .delivers__infographics {
@@ -66,5 +105,42 @@
     .delivers__infographics {
       grid-template-columns: 1fr 1fr;
     }
+  }
+
+  .delivers__figure {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(160deg, var(--color-grey-100), #dce9f2 55%, #c9e4f0);
+  }
+
+  .delivers__figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .delivers__figure-fallback {
+    display: none;
+    position: absolute;
+    inset: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: var(--color-grey-600);
+  }
+
+  .delivers__figure-fallback svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .delivers__figure-fallback span {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 </style>
