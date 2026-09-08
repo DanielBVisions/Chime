@@ -7,7 +7,7 @@ interface Props {
 const { title, body } = Astro.props;
 ---
 
-<article class="feature-card">
+<article class="feature-card" data-reveal>
   <span class="feature-card__icon" aria-hidden="true"></span>
   <h3>{title}</h3>
   <p>{body}</p>
