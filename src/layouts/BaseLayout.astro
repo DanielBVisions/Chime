@@ -1,0 +1,31 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'CHiME — built for the network operator.' } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      import { initSmoothScroll } from '../scripts/smooth-scroll';
+      import { initRevealAnimations } from '../scripts/reveal-animations';
+
+      initSmoothScroll();
+      initRevealAnimations();
+    </script>
+  </body>
+</html>
