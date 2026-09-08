@@ -42,16 +42,20 @@ const testimonials = [
   <div class="container">
     <h2 data-reveal>What our Customers Say</h2>
 
-    <div class="testimonials__row" data-reveal>
-      <div class="testimonials__video">
-        <iframe
-          src="https://player.vimeo.com/video/1103214145"
-          title="CHIME customer testimonial"
-          loading="lazy"
-          allow="autoplay; fullscreen; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
+    <div class="testimonials__video" data-reveal>
+      <iframe
+        src="https://player.vimeo.com/video/1103214145"
+        title="CHIME customer testimonial"
+        loading="lazy"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <div class="testimonials__carousel" data-reveal>
+      <button type="button" class="testimonials__arrow" data-testimonial-prev aria-label="Previous testimonials">
+        &larr;
+      </button>
 
       <div
         class="testimonials__viewport"
@@ -76,17 +80,13 @@ const testimonials = [
           ))}
         </ul>
       </div>
-    </div>
 
-    <div class="testimonials__controls">
-      <button type="button" class="testimonials__arrow" data-testimonial-prev aria-label="Previous testimonials">
-        &larr;
-      </button>
-      <div class="testimonials__dots" data-testimonial-dots></div>
       <button type="button" class="testimonials__arrow" data-testimonial-next aria-label="Next testimonials">
         &rarr;
       </button>
     </div>
+
+    <div class="testimonials__dots" data-testimonial-dots></div>
 
     <p class="visually-hidden" role="status" aria-live="polite" data-testimonial-live></p>
   </div>
@@ -98,15 +98,9 @@ const testimonials = [
     font-weight: 800;
   }
 
-  .testimonials__row {
-    margin-top: 2.5rem;
-    display: flex;
-    gap: 2rem;
-    align-items: flex-start;
-  }
-
   .testimonials__video {
-    flex: 0 0 26.25rem;
+    margin: 2.5rem auto 0;
+    max-width: 40rem;
     position: relative;
     aspect-ratio: 16 / 9;
     border-radius: 20px;
@@ -119,6 +113,13 @@ const testimonials = [
     width: 100%;
     height: 100%;
     border: 0;
+  }
+
+  .testimonials__carousel {
+    margin-top: 3.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
   }
 
   .testimonials__viewport {
@@ -182,14 +183,6 @@ const testimonials = [
     color: var(--color-ink);
   }
 
-  .testimonials__controls {
-    margin-top: var(--space-gutter);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-  }
-
   .testimonials__arrow {
     flex-shrink: 0;
     width: 44px;
@@ -200,8 +193,10 @@ const testimonials = [
   }
 
   .testimonials__dots {
+    margin-top: 1.5rem;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.625rem;
   }
 
@@ -217,16 +212,5 @@ const testimonials = [
   .testimonials__dots :global(.testimonials__dot.is-active) {
     width: 22px;
     background: var(--color-blue-deep);
-  }
-
-  @media (max-width: 900px) {
-    .testimonials__row {
-      flex-direction: column;
-    }
-
-    .testimonials__video {
-      flex: none;
-      width: 100%;
-    }
   }
 </style>
