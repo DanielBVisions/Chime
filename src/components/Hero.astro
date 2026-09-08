@@ -7,8 +7,17 @@ import BrandArc from './BrandArc.astro';
 
   <div class="container hero__inner">
     <div class="hero__copy">
-      <p class="hero__eyebrow" data-hero-line>CHiME</p>
-      <h1 class="hero__headline" data-hero-line>Built for the Network Operator</h1>
+      <span class="hero__eyebrow" data-hero-line>Software for network operators</span>
+      <h1 class="hero__wordmark" data-hero-line>CHiME<sup>&reg;</sup></h1>
+      <p class="hero__subhead" data-hero-line>Built for the network operator.</p>
+      <p class="hero__body" data-hero-line>
+        The industry-first application designed to improve field force productivity while
+        addressing the industry-wide challenge of increasing regulatory volumes.
+      </p>
+      <div class="hero__actions" data-hero-line>
+        <a href="/contact" class="btn btn--lg">Enquire Now For a Demo</a>
+        <a href="/chime" class="hero__link">Discover the CHiME advantage &rarr;</a>
+      </div>
     </div>
 
     <div class="hero__media">
@@ -27,6 +36,15 @@ import BrandArc from './BrandArc.astro';
       </video>
     </div>
   </div>
+
+  <div class="container hero__trust" data-hero-line>
+    <span class="hero__trust-label">Trusted by</span>
+    <span>UK Power Networks</span>
+    <span>SSE</span>
+    <span>Cadent Gas</span>
+    <span>ESB Networks</span>
+    <span>SP Electricity North West</span>
+  </div>
 </section>
 
 <style>
@@ -34,7 +52,7 @@ import BrandArc from './BrandArc.astro';
     position: relative;
     overflow: hidden;
     background: var(--color-white);
-    padding-block: clamp(6rem, 12vw, 9rem) clamp(3rem, 6vw, 5rem);
+    padding-block: 4rem 3.5rem;
   }
 
   .hero__inner {
@@ -42,36 +60,71 @@ import BrandArc from './BrandArc.astro';
     z-index: 1;
     display: flex;
     align-items: center;
-    gap: clamp(2rem, 5vw, 4rem);
+    gap: 3.5rem;
   }
 
   .hero__copy {
-    flex: 1 1 28rem;
+    flex: 1 1 35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   .hero__eyebrow {
-    font-size: var(--fs-hero);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-blue-deep);
+  }
+
+  .hero__wordmark {
+    font-size: 4.5rem;
+    line-height: 1.02;
     font-weight: 800;
     letter-spacing: -0.02em;
-    line-height: 1;
     color: var(--color-ink);
   }
 
-  .hero__headline {
-    margin-top: 1rem;
-    font-size: var(--fs-h1);
+  .hero__wordmark sup {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-grey-600);
+  }
+
+  .hero__subhead {
+    font-size: 1.625rem;
+    line-height: 1.35;
+    font-weight: 600;
+    color: var(--color-ink);
+    max-width: 26ch;
+  }
+
+  .hero__body {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-grey-600);
+    max-width: 42ch;
+  }
+
+  .hero__actions {
+    display: flex;
+    align-items: center;
+    gap: 1.125rem;
+    margin-top: 0.5rem;
+  }
+
+  .hero__link {
+    font-size: 0.875rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    max-width: 20ch;
     color: var(--color-ink);
   }
 
   .hero__media {
     position: relative;
-    flex: 1 1 26rem;
+    flex: 1 1 30rem;
     aspect-ratio: 4 / 3;
-    border-radius: 28px;
+    border-radius: 1.75rem;
     overflow: hidden;
     box-shadow: 0 30px 70px -20px rgba(11, 92, 173, 0.35);
     background: linear-gradient(135deg, var(--color-blue-pale), var(--color-blue-mid) 55%, var(--color-blue-deep));
@@ -95,6 +148,29 @@ import BrandArc from './BrandArc.astro';
     .hero__video {
       display: none;
     }
+  }
+
+  .hero__trust {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 3rem;
+    margin-top: 2rem;
+    opacity: 0.7;
+  }
+
+  .hero__trust span {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-grey-600);
+  }
+
+  .hero__trust-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   @media (max-width: 900px) {

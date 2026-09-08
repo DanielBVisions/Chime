@@ -11,7 +11,7 @@ const badges = [
 ];
 ---
 
-<section class="section trust-badges">
+<section class="trust-badges">
   <div class="container">
     <ul class="trust-badges__list" data-reveal>
       {badges.map((badge) => (
@@ -22,15 +22,20 @@ const badges = [
 </section>
 
 <style>
+  .trust-badges {
+    border-bottom: 1px solid var(--color-grey-100);
+  }
+
   .trust-badges__list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1.5rem 2.5rem;
+    gap: 1.5rem 3.5rem;
+    padding-block: 3rem;
   }
 
   .trust-badges__list li {
-    font-size: 0.9rem;
+    font-size: 0.8125rem;
     font-weight: 700;
     color: var(--color-grey-600);
   }

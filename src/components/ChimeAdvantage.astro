@@ -7,52 +7,60 @@ const features = [
     title: 'Industry-leading expertise',
     body: "With over 25 years of experience, we understand the complexities of regulated industries and the challenges network operators face. CHIME was built to help them overcome these obstacles, improving field force productivity while tackling the industry-wide challenge of increasing regulatory requirements and growing work volumes.",
     icon: '<path d="M12 2 L21 6 V12 C21 17 17 20.5 12 22 C7 20.5 3 17 3 12 V6 Z"/>',
+    rotation: -3,
   },
   {
     title: 'The Only Solution Of Its Kind',
     body: 'CHIME is the first and only industry-specific application designed exclusively for network operators, solving workforce productivity challenges that no other solution can.',
     icon: '<path d="M12 3 L12 21 M3 12 L21 12"/><circle cx="12" cy="12" r="9"/>',
+    rotation: 2,
   },
   {
     title: 'Built for the workforce',
     body: 'Designed with field teams in mind, CHIME streamlines workflows, reduces administrative burdens, and allows teams to focus on delivering quality work efficiently.',
     icon: '<circle cx="12" cy="8" r="3.4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>',
+    rotation: -2,
   },
   {
     title: 'Optimised for productivity',
     body: 'CHIME significantly reduces data input time, enabling field teams to focus on their core tasks — getting the job done right and delivering excellent customer service.',
     icon: '<path d="M4 12 L10 18 L20 6"/>',
+    rotation: 3,
   },
   {
     title: 'Seamless implementation',
     body: 'Works straight out of the box with no need for customisation, ensuring a smooth transition without disrupting operations.',
     icon: '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9 L15 15 M15 9 L9 15"/>',
+    rotation: -3,
   },
   {
     title: 'Scalable and adaptable',
     body: 'Easily configurable to fit your business needs while ensuring compliance with regulatory requirements.',
     icon: '<path d="M4 20 L4 12 M10 20 L10 8 M16 20 L16 4 M22 20 L22 14"/>',
+    rotation: 2,
   },
   {
     title: 'Proven results',
     body: 'Increases work volumes, streamlines job completion, and keeps projects on time and within budget.',
     icon: '<path d="M3 17 L9 11 L13 15 L21 6"/><path d="M21 6 L21 11 M21 6 L16 6"/>',
+    rotation: -2,
   },
   {
     title: 'Innovative, patented technology',
     body: 'Recognised with European and US patents, CHIME sets the benchmark for efficiency and reliability in network operations.',
     icon: '<path d="M12 2 L14.5 9 L22 9 L16 13.5 L18 21 L12 16.5 L6 21 L8 13.5 L2 9 L9.5 9 Z"/>',
+    rotation: 3,
   },
 ];
 ---
 
-<section class="section advantage" data-advantage>
+<section class="advantage" data-advantage>
   <BrandArc size={420} anchor="top-right" style="top: -120px; right: -120px;" />
 
   <div class="container">
-    <div data-reveal>
-      <p class="eyebrow">What Sets Us Apart</p>
-      <h2>The CHIME Advantage</h2>
+    <div class="advantage__intro" data-reveal>
+      <span class="eyebrow">What Sets Us Apart</span>
+      <h2>The CHiME Advantage</h2>
       <p class="advantage__sub">
         The Industry's First Solution Built to Maximise Field Force Productivity for Network
         Operators
@@ -61,13 +69,13 @@ const features = [
     </div>
 
     <p class="advantage__hint" data-advantage-hint>Scroll to explore all 8 &rarr;</p>
-  </div>
 
-  <div class="advantage__viewport" data-advantage-viewport>
-    <div class="advantage__track" data-advantage-track>
-      {features.map((feature) => (
-        <FeatureCard title={feature.title} body={feature.body} icon={feature.icon} />
-      ))}
+    <div class="advantage__viewport" data-advantage-viewport>
+      <div class="advantage__track" data-advantage-track>
+        {features.map((feature) => (
+          <FeatureCard title={feature.title} body={feature.body} icon={feature.icon} rotation={feature.rotation} />
+        ))}
+      </div>
     </div>
   </div>
 </section>
@@ -76,35 +84,42 @@ const features = [
   .advantage {
     position: relative;
     overflow: hidden;
+    padding-block: 7rem 7.5rem;
+  }
+
+  .advantage__intro {
+    position: relative;
+    z-index: 1;
+    max-width: 40rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+    align-items: flex-start;
+    margin-bottom: 3.5rem;
   }
 
   .advantage h2 {
-    margin-top: 0.75rem;
-    font-size: var(--fs-h2);
-    font-weight: 700;
-    text-transform: uppercase;
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
   }
 
   .advantage__sub {
-    margin-top: 1.25rem;
-    max-width: 44rem;
-    font-size: 1.2rem;
-    line-height: 1.6;
+    font-size: 1.1875rem;
+    line-height: 1.5;
+    font-weight: 500;
     color: var(--color-grey-600);
   }
 
   .advantage__cta {
-    margin-top: var(--space-gutter);
-  }
-
-  .advantage > .container {
-    position: relative;
-    z-index: 1;
+    margin-top: 0.5rem;
   }
 
   .advantage__hint {
+    position: relative;
+    z-index: 1;
     display: none;
-    margin: var(--space-gutter) 0 0;
+    margin: 0 0 1.25rem;
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -116,14 +131,13 @@ const features = [
     position: relative;
     z-index: 1;
     overflow: hidden;
-    margin-top: var(--space-gutter);
   }
 
   .advantage__track {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-gutter);
-    padding-inline: var(--space-gutter);
+    gap: 1.5rem;
+    padding-block: 1.5rem;
   }
 
   @media (min-width: 640px) {
@@ -154,12 +168,12 @@ const features = [
   .advantage.is-scroll-pin .advantage__track {
     display: flex;
     flex-wrap: nowrap;
-    gap: 3rem;
+    gap: 2.25rem;
     width: max-content;
     padding-inline: 12vw;
   }
 
   .advantage.is-scroll-pin :global(.feature-card) {
-    flex: 0 0 21rem;
+    flex: 0 0 16.25rem;
   }
 </style>

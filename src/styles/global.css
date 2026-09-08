@@ -82,7 +82,7 @@ ol {
 
 @media (min-width: 1200px) {
   .container {
-    padding-inline: 3rem; /* large */
+    padding-inline: 4rem; /* large — matches the approved design's 64px gutter */
   }
 }
 
@@ -103,10 +103,10 @@ ol {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.85rem 1.75rem;
+  padding: 0.875rem 1.75rem;
   border-radius: 999px;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   background: var(--color-blue-deep);
@@ -117,6 +117,15 @@ ol {
 .btn:hover,
 .btn:focus-visible {
   background: var(--color-blue-mid);
+}
+
+.btn--sm {
+  padding: 0.75rem 1.625rem;
+  font-size: 0.8125rem;
+}
+
+.btn--lg {
+  padding: 1rem 1.875rem;
 }
 
 .visually-hidden {

@@ -1,34 +1,62 @@
 ---
 ---
 
-<section class="section accelerating">
+<section class="accelerating">
+  <div class="accelerating__blob"></div>
+
   <div class="container accelerating__inner" data-reveal>
-    <h2>Accelerating Productivity</h2>
-    <p>
+    <span class="eyebrow">Accelerating Productivity</span>
+    <p class="accelerating__statement">
       CHIME is the 'industry first' application for network operators, designed to improve field
       force productivity while addressing the industry-wide challenge of increasing regulatory
-      volumes. With over 25 years of experience and a dedicated focus on network operators since
-      2014, we understand the industry challenges, and ensure every aspect of CHiME is designed to
-      meet these unique challenges.
+      volumes.
+    </p>
+    <p class="accelerating__body">
+      With over 25 years of experience and a dedicated focus on network operators since 2014, we
+      understand the industry challenges, and ensure every aspect of CHiME is designed to meet
+      these unique challenges.
     </p>
   </div>
 </section>
 
 <style>
+  .accelerating {
+    position: relative;
+    background: var(--color-grey-100);
+    overflow: hidden;
+  }
+
+  .accelerating__blob {
+    position: absolute;
+    left: -7.5rem;
+    bottom: -10rem;
+    width: 28.75rem;
+    height: 28.75rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(63, 169, 218, 0.18), rgba(63, 169, 218, 0) 70%);
+  }
+
   .accelerating__inner {
-    max-width: 56rem;
+    position: relative;
+    z-index: 1;
+    max-width: 55rem;
+    padding-block: 7.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
   }
 
-  .accelerating h2 {
-    font-size: var(--fs-h2);
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  .accelerating p {
-    margin-top: 1.5rem;
-    font-size: 1.1rem;
-    line-height: 1.7;
+  .accelerating__statement {
+    font-size: 1.875rem;
+    line-height: 1.5;
+    font-weight: 600;
     color: var(--color-ink);
+  }
+
+  .accelerating__body {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-grey-600);
   }
 </style>
