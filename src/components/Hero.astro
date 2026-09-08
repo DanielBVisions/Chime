@@ -1,9 +1,12 @@
 ---
 ---
 
-<section class="hero">
+<section class="hero" data-hero>
+  <img class="hero__poster" src="/video/hero-poster.jpg" alt="" fetchpriority="high" />
+
   <video
     class="hero__video"
+    data-hero-video
     src="/video/hero.mp4"
     poster="/video/hero-poster.jpg"
     autoplay
@@ -15,8 +18,8 @@
   </video>
 
   <div class="hero__content container">
-    <p class="hero__eyebrow">CHiME</p>
-    <h1 class="hero__headline">Built for the Network Operator</h1>
+    <p class="hero__eyebrow" data-hero-line>CHiME</p>
+    <h1 class="hero__headline" data-hero-line>Built for the Network Operator</h1>
   </div>
 </section>
 
@@ -30,6 +33,7 @@
     background: var(--color-ink);
   }
 
+  .hero__poster,
   .hero__video {
     position: absolute;
     inset: 0;
@@ -37,6 +41,17 @@
     height: 100%;
     object-fit: cover;
     z-index: 0;
+  }
+
+  .hero__video {
+    opacity: 0;
+  }
+
+  /* Data-saver mode: skip the video entirely, poster stands in as the hero image. */
+  @media (prefers-reduced-data: reduce) {
+    .hero__video {
+      display: none;
+    }
   }
 
   .hero::after {
@@ -67,5 +82,15 @@
     text-transform: uppercase;
     letter-spacing: 0.02em;
     max-width: 20ch;
+  }
+
+  [data-hero-line] {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-hero-line] {
+      opacity: 1;
+    }
   }
 </style>
