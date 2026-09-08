@@ -8,22 +8,11 @@ export function initNav() {
   if (!nav) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const whiteLogo = nav.querySelector<HTMLElement>('[data-nav-logo-white]');
-  const blackLogo = nav.querySelector<HTMLElement>('[data-nav-logo-black]');
-
-  function setSolid(isSolid: boolean) {
-    nav!.classList.toggle('is-solid', isSolid);
-    if (whiteLogo && blackLogo) {
-      const duration = prefersReducedMotion ? 0 : 0.3;
-      gsap.to(whiteLogo, { opacity: isSolid ? 0 : 1, duration });
-      gsap.to(blackLogo, { opacity: isSolid ? 1 : 0, duration });
-    }
-  }
 
   ScrollTrigger.create({
     start: 80,
-    onEnter: () => setSolid(true),
-    onLeaveBack: () => setSolid(false),
+    onEnter: () => nav!.classList.add('is-solid'),
+    onLeaveBack: () => nav!.classList.remove('is-solid'),
   });
 
   const toggle = nav.querySelector<HTMLButtonElement>('[data-nav-toggle]');

@@ -11,8 +11,7 @@ const navLinks = [
 <header class="nav" data-nav>
   <div class="container nav__inner">
     <a href="/" class="nav__logo" aria-label="CHiME home">
-      <img data-nav-logo-white src="/logo/chime-horizontal-white.svg" alt="CHiME" width="140" height="32" />
-      <img data-nav-logo-black src="/logo/chime-horizontal-black.svg" alt="" aria-hidden="true" width="140" height="32" />
+      <img src="/logo/chime-horizontal-black.svg" alt="CHiME" width="140" height="32" />
     </a>
 
     <nav class="nav__links" aria-label="Primary">
@@ -55,12 +54,14 @@ const navLinks = [
     top: 0;
     z-index: 50;
     width: 100%;
-    background: transparent;
-    transition: background-color 0.3s ease;
+    background: var(--color-white);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   .nav.is-solid {
-    background: var(--color-white);
+    border-bottom-color: var(--color-grey-100);
+    box-shadow: 0 4px 16px rgba(11, 92, 173, 0.06);
   }
 
   .nav__inner {
@@ -71,22 +72,9 @@ const navLinks = [
     padding-block: 1.25rem;
   }
 
-  .nav__logo {
-    position: relative;
-    display: inline-block;
-    width: 140px;
-    height: 32px;
-  }
-
   .nav__logo img {
-    position: absolute;
-    inset: 0;
     height: 32px;
     width: auto;
-  }
-
-  .nav__logo img[data-nav-logo-black] {
-    opacity: 0;
   }
 
   .nav__links ul {
@@ -99,11 +87,6 @@ const navLinks = [
     font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 0.06em;
-    color: var(--color-white);
-    transition: color 0.3s ease;
-  }
-
-  .nav.is-solid .nav__links a {
     color: var(--color-ink);
   }
 
@@ -121,11 +104,6 @@ const navLinks = [
   .nav__toggle span {
     width: 22px;
     height: 2px;
-    background: var(--color-white);
-    transition: background-color 0.3s ease;
-  }
-
-  .nav.is-solid .nav__toggle span {
     background: var(--color-ink);
   }
 
@@ -148,7 +126,8 @@ const navLinks = [
       inset: 0;
       top: 72px;
       display: flex;
-      background: var(--color-ink);
+      background: var(--color-white);
+      box-shadow: 0 12px 24px rgba(11, 92, 173, 0.08);
       transform: translateY(-100%);
     }
 
@@ -161,7 +140,7 @@ const navLinks = [
     }
 
     .nav__mobile-menu a {
-      color: var(--color-white);
+      color: var(--color-ink);
       font-size: 1.1rem;
       font-weight: 700;
     }

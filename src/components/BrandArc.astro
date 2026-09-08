@@ -1,0 +1,66 @@
+---
+// Decorative brand mark: concentric arcs echoing the logo's signal/arc motif.
+// Purely decorative — aria-hidden, never conveys content.
+interface Props {
+  size?: number;
+  anchor?: 'top-right' | 'bottom-left';
+  variant?: 'gradient' | 'white';
+  style?: string;
+}
+
+const { size = 640, anchor = 'top-right', variant = 'gradient', style = '' } = Astro.props;
+
+const uid = Math.random().toString(36).slice(2, 9);
+const gradId = `brand-arc-grad-${uid}`;
+const blurId = `brand-arc-blur-${uid}`;
+
+// Radii/stroke-widths scale off the 640px design reference (220/340/460, 30/34/38).
+const r1 = Math.round(size * 0.34375);
+const r2 = Math.round(size * 0.53125);
+const r3 = Math.round(size * 0.71875);
+const sw1 = Math.round(size * 0.075);
+const sw2 = Math.round(size * 0.084);
+const sw3 = Math.round(size * 0.094);
+
+const paths =
+  anchor === 'top-right'
+    ? [
+        { d: `M${size} ${r3} A${r3} ${r3} 0 0 1 ${size - r3} 0`, sw: sw1, op: 0.28 },
+        { d: `M${size} ${r2} A${r2} ${r2} 0 0 1 ${size - r2} 0`, sw: sw2, op: 0.5 },
+        { d: `M${size} ${r1} A${r1} ${r1} 0 0 1 ${size - r1} 0`, sw: sw3, op: 0.85 },
+      ]
+    : [
+        { d: `M0 ${size - r3} A${r3} ${r3} 0 0 1 ${r3} ${size}`, sw: sw1, op: 0.22 },
+        { d: `M0 ${size - r2} A${r2} ${r2} 0 0 1 ${r2} ${size}`, sw: sw2, op: 0.4 },
+        { d: `M0 ${size - r1} A${r1} ${r1} 0 0 1 ${r1} ${size}`, sw: sw3, op: 0.65 },
+      ];
+
+const stroke = variant === 'white' ? '#FFFFFF' : `url(#${gradId})`;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox={`0 0 ${size} ${size}`}
+  fill="none"
+  aria-hidden="true"
+  style={`position: absolute; z-index: 0; pointer-events: none; ${style}`}
+>
+  <defs>
+    {variant === 'gradient' && (
+      <linearGradient id={gradId} x1="0" y1="0" x2={size} y2={size} gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#8FE1F2" />
+        <stop offset="0.55" stop-color="#3FA9DA" />
+        <stop offset="1" stop-color="#0B5CAD" />
+      </linearGradient>
+    )}
+    <filter id={blurId} x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation={Math.max(1.5, size / 260)} />
+    </filter>
+  </defs>
+  <g filter={`url(#${blurId})`}>
+    {paths.map((p) => (
+      <path d={p.d} stroke={stroke} stroke-width={p.sw} stroke-linecap="round" opacity={p.op} />
+    ))}
+  </g>
+</svg>

@@ -40,7 +40,7 @@ export function initHero() {
   if (prefersReducedMotion) return;
 
   gsap.to(video, {
-    yPercent: 15,
+    yPercent: 8,
     ease: 'none',
     scrollTrigger: {
       trigger: hero,

@@ -1,36 +1,80 @@
 ---
+import BrandArc from './BrandArc.astro';
 ---
 
 <section class="hero" data-hero>
-  <img class="hero__poster" src="/video/hero-poster.jpg" alt="" fetchpriority="high" />
+  <BrandArc size={640} anchor="top-right" style="top: -140px; right: -140px;" />
 
-  <video
-    class="hero__video"
-    data-hero-video
-    src="/video/hero.mp4"
-    poster="/video/hero-poster.jpg"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="metadata"
-  >
-  </video>
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <p class="hero__eyebrow" data-hero-line>CHiME</p>
+      <h1 class="hero__headline" data-hero-line>Built for the Network Operator</h1>
+    </div>
 
-  <div class="hero__content container">
-    <p class="hero__eyebrow" data-hero-line>CHiME</p>
-    <h1 class="hero__headline" data-hero-line>Built for the Network Operator</h1>
+    <div class="hero__media">
+      <img class="hero__poster" src="/video/hero-poster.jpg" alt="" fetchpriority="high" />
+      <video
+        class="hero__video"
+        data-hero-video
+        src="/video/hero.mp4"
+        poster="/video/hero-poster.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+      >
+      </video>
+    </div>
   </div>
 </section>
 
 <style>
   .hero {
     position: relative;
-    min-height: 100vh;
+    overflow: hidden;
+    background: var(--color-white);
+    padding-block: clamp(6rem, 12vw, 9rem) clamp(3rem, 6vw, 5rem);
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .hero__copy {
+    flex: 1 1 28rem;
+  }
+
+  .hero__eyebrow {
+    font-size: var(--fs-hero);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--color-ink);
+  }
+
+  .hero__headline {
+    margin-top: 1rem;
+    font-size: var(--fs-h1);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    max-width: 20ch;
+    color: var(--color-ink);
+  }
+
+  .hero__media {
+    position: relative;
+    flex: 1 1 26rem;
+    aspect-ratio: 4 / 3;
+    border-radius: 28px;
     overflow: hidden;
-    background: var(--color-ink);
+    box-shadow: 0 30px 70px -20px rgba(11, 92, 173, 0.35);
+    background: linear-gradient(135deg, var(--color-blue-pale), var(--color-blue-mid) 55%, var(--color-blue-deep));
   }
 
   .hero__poster,
@@ -40,7 +84,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: 0;
   }
 
   .hero__video {
@@ -54,34 +97,11 @@
     }
   }
 
-  .hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(10, 10, 10, 0.35), rgba(10, 10, 10, 0.6));
-    z-index: 1;
-  }
-
-  .hero__content {
-    position: relative;
-    z-index: 2;
-    color: var(--color-white);
-  }
-
-  .hero__eyebrow {
-    font-size: var(--fs-hero);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-
-  .hero__headline {
-    margin-top: 1rem;
-    font-size: var(--fs-h1);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    max-width: 20ch;
+  @media (max-width: 900px) {
+    .hero__inner {
+      flex-direction: column;
+      align-items: stretch;
+    }
   }
 
   [data-hero-line] {

@@ -1,7 +1,10 @@
 ---
+import BrandArc from './BrandArc.astro';
 ---
 
 <section class="section enquire" id="contact">
+  <BrandArc size={460} anchor="top-right" variant="white" style="bottom: -140px; right: -100px;" />
+
   <div class="container enquire__inner" data-reveal>
     <h2>Enquire Now For a Demo</h2>
     <p>Transform your field operations with our innovative solutions designed for network operators.</p>
@@ -31,11 +34,26 @@
 
 <style>
   .enquire {
-    background: var(--color-blue-deep);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(120deg, var(--color-blue-deep), var(--color-blue-mid) 130%);
     color: var(--color-white);
   }
 
+  /* Darkening scrim so white text/inputs stay WCAG-AA legible wherever they
+     land on the gradient — the lighter end alone (blue-mid) only gives
+     white text ~2.7:1 contrast, well under the 4.5:1 normal-text minimum. */
+  .enquire::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: rgba(0, 0, 0, 0.35);
+  }
+
   .enquire__inner {
+    position: relative;
+    z-index: 1;
     max-width: 40rem;
   }
 
