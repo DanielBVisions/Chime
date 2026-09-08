@@ -1,6 +1,4 @@
 ---
-import RoleTicker from './RoleTicker.astro';
-import BrandArc from './BrandArc.astro';
 ---
 
 <section class="industry">
@@ -22,38 +20,7 @@ import BrandArc from './BrandArc.astro';
         across the industry, ensuring it meets the real-world needs of those working on the front
         lines.
       </p>
-
-      <div class="industry__divider"></div>
-
-      <div class="industry__professionals">
-        <h3>Industry Professionals</h3>
-        <p>
-          At the heart of every successful network operation are the dedicated professionals who
-          bring expertise, precision, and innovation to their roles. From design and construction
-          to maintenance and oversight, these specialists ensure the seamless function and
-          evolution of critical infrastructure.
-        </p>
-        <p>
-          CHIME is built on the collective experience of these industry experts, offering
-          solutions to those shaping the future of network operations.
-        </p>
-      </div>
     </div>
-  </div>
-
-  <div class="industry__ticker-band">
-    <BrandArc size={480} anchor="bottom-left" style="bottom: -140px; left: -140px;" />
-    <RoleTicker />
-  </div>
-
-  <div class="container industry__clear-horizon" data-reveal>
-    <span class="industry__clear-horizon-label">Clear Horizon</span>
-    <p>
-      Our team specialises in the business of regulated network operators. We have consultants
-      with over 20 years industry experience combined with highly skilled business analysts,
-      solution design and secure enterprise IT service architecture. Our reputation at the most
-      senior levels in the industry is built on the strength of our exceptional team.
-    </p>
   </div>
 </section>
 
@@ -66,7 +33,7 @@ import BrandArc from './BrandArc.astro';
     display: flex;
     align-items: center;
     gap: 4rem;
-    padding-block: 7rem 6rem;
+    padding-block: 7rem;
   }
 
   .industry__media {
@@ -97,68 +64,10 @@ import BrandArc from './BrandArc.astro';
     color: var(--color-ink);
   }
 
-  .industry__divider {
-    height: 1px;
-    background: var(--color-grey-100);
-    margin-block: 0.5rem;
-  }
-
-  .industry__professionals {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .industry__professionals h3 {
-    font-size: 0.9375rem;
-    font-weight: 700;
-    color: var(--color-ink);
-  }
-
-  .industry__professionals p {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--color-grey-600);
-  }
-
-  .industry__ticker-band {
-    position: relative;
-    background: linear-gradient(120deg, #e8f6fb, var(--color-grey-100) 60%);
-    padding-block: 2.5rem;
-    overflow: hidden;
-  }
-
-  .industry__clear-horizon {
-    display: flex;
-    align-items: center;
-    gap: 2.5rem;
-    padding-block: 4.5rem;
-  }
-
-  .industry__clear-horizon-label {
-    flex: 0 0 13.75rem;
-    font-size: 1.25rem;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    color: var(--color-grey-600);
-  }
-
-  .industry__clear-horizon p {
-    flex: 1;
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--color-grey-600);
-  }
-
   @media (max-width: 900px) {
     .industry__split {
       flex-direction: column;
       align-items: stretch;
-    }
-
-    .industry__clear-horizon {
-      flex-direction: column;
-      align-items: flex-start;
     }
   }
 </style>

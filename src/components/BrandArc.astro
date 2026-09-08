@@ -12,7 +12,6 @@ const { size = 640, anchor = 'top-right', variant = 'gradient', style = '' } = A
 
 const uid = Math.random().toString(36).slice(2, 9);
 const gradId = `brand-arc-grad-${uid}`;
-const blurId = `brand-arc-blur-${uid}`;
 
 // Radii/stroke-widths scale off the 640px design reference (220/340/460, 30/34/38).
 const r1 = Math.round(size * 0.34375);
@@ -54,11 +53,8 @@ const stroke = variant === 'white' ? '#FFFFFF' : `url(#${gradId})`;
         <stop offset="1" stop-color="#0B5CAD" />
       </linearGradient>
     )}
-    <filter id={blurId} x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation={Math.max(1.5, size / 260)} />
-    </filter>
   </defs>
-  <g filter={`url(#${blurId})`}>
+  <g>
     {paths.map((p) => (
       <path d={p.d} stroke={stroke} stroke-width={p.sw} stroke-linecap="round" opacity={p.op} />
     ))}
