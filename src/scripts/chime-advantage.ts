@@ -55,8 +55,8 @@ export function initChimeAdvantage() {
         scrollTrigger: {
           trigger: card,
           containerAnimation: scrollTween,
-          start: 'left 115%',
-          end: 'right 5%',
+          start: 'left 80%',
+          end: 'right 20%',
           scrub: true,
         },
       }

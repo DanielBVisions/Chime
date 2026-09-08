@@ -17,12 +17,15 @@ export function initHero() {
       line.style.transform = 'none';
     });
   } else {
-    gsap.timeline({ defaults: { ease: 'power4.out' } }).from(lines, {
-      y: 40,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.15,
-    });
+    // fromTo, not from: the CSS default is opacity:0 (to avoid a flash of
+    // unstyled content before this runs), so a bare .from() would capture
+    // that same 0 as its implied end value and the text would silently
+    // stay invisible — it only ever looked like it was sliding into place.
+    gsap.timeline({ defaults: { ease: 'power4.out' } }).fromTo(
+      lines,
+      { y: 40, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, stagger: 0.15 }
+    );
   }
 
   if (!video) return;

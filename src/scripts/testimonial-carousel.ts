@@ -7,18 +7,48 @@ export function initTestimonialCarousel() {
   const track = document.querySelector<HTMLElement>('[data-testimonial-track]');
   const prevBtn = document.querySelector<HTMLButtonElement>('[data-testimonial-prev]');
   const nextBtn = document.querySelector<HTMLButtonElement>('[data-testimonial-next]');
+  const dotsContainer = document.querySelector<HTMLElement>('[data-testimonial-dots]');
   const liveRegion = document.querySelector<HTMLElement>('[data-testimonial-live]');
   if (!viewport || !track || !prevBtn || !nextBtn) return;
 
   const slides = Array.from(track.children) as HTMLElement[];
-  const slideCount = slides.length;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  let index = 0;
+  let perView = 1;
+  let pageCount = 1;
+  let page = 0;
+  let dots: HTMLButtonElement[] = [];
 
-  function goTo(nextIndex: number, { instant = false } = {}) {
-    index = (nextIndex + slideCount) % slideCount;
-    const x = -index * viewport!.offsetWidth;
+  // --per-view is set in CSS per breakpoint (1/2/3 cards visible) — read it
+  // back here so the JS paging math always matches what's actually laid out.
+  function getPerView() {
+    const value = parseFloat(getComputedStyle(viewport!).getPropertyValue('--per-view'));
+    return Number.isFinite(value) && value > 0 ? Math.round(value) : 1;
+  }
+
+  function updateDots() {
+    dots.forEach((dot, i) => dot.classList.toggle('is-active', i === page));
+  }
+
+  function buildDots() {
+    if (!dotsContainer) return;
+    dotsContainer.innerHTML = '';
+    dots = [];
+    for (let i = 0; i < pageCount; i++) {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'testimonials__dot';
+      dot.setAttribute('aria-label', `Go to testimonials page ${i + 1} of ${pageCount}`);
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+      dots.push(dot);
+    }
+    updateDots();
+  }
+
+  function goTo(nextPage: number, { instant = false } = {}) {
+    page = (nextPage + pageCount) % pageCount;
+    const x = -page * viewport!.offsetWidth;
 
     gsap.to(track, {
       x,
@@ -26,28 +56,41 @@ export function initTestimonialCarousel() {
       ease: 'power3.out',
     });
 
+    updateDots();
+
     if (liveRegion) {
-      liveRegion.textContent = slides[index].dataset.testimonialLabel ?? '';
+      const first = slides[page * perView];
+      liveRegion.textContent = first?.dataset.testimonialLabel ?? '';
     }
   }
 
-  prevBtn.addEventListener('click', () => goTo(index - 1));
-  nextBtn.addEventListener('click', () => goTo(index + 1));
+  function recalculate({ instant = true } = {}) {
+    perView = getPerView();
+    pageCount = Math.max(1, Math.ceil(slides.length / perView));
+    page = Math.min(page, pageCount - 1);
+    buildDots();
+    goTo(page, { instant });
+  }
+
+  recalculate();
+
+  prevBtn.addEventListener('click', () => goTo(page - 1));
+  nextBtn.addEventListener('click', () => goTo(page + 1));
 
   viewport.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft') goTo(index - 1);
-    if (event.key === 'ArrowRight') goTo(index + 1);
+    if (event.key === 'ArrowLeft') goTo(page - 1);
+    if (event.key === 'ArrowRight') goTo(page + 1);
   });
 
-  window.addEventListener('resize', () => goTo(index, { instant: true }));
+  window.addEventListener('resize', () => recalculate({ instant: true }));
 
-  if (prefersReducedMotion) return; // manual arrow/keyboard nav still works; no autoplay
+  if (prefersReducedMotion) return; // manual arrow/keyboard/dot nav still works; no autoplay
 
-  let autoplay = window.setInterval(() => goTo(index + 1), AUTOPLAY_INTERVAL_MS);
+  let autoplay = window.setInterval(() => goTo(page + 1), AUTOPLAY_INTERVAL_MS);
   const stopAutoplay = () => window.clearInterval(autoplay);
   const restartAutoplay = () => {
     stopAutoplay();
-    autoplay = window.setInterval(() => goTo(index + 1), AUTOPLAY_INTERVAL_MS);
+    autoplay = window.setInterval(() => goTo(page + 1), AUTOPLAY_INTERVAL_MS);
   };
 
   viewport.addEventListener('mouseenter', stopAutoplay);

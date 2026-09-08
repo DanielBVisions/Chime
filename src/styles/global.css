@@ -69,9 +69,21 @@ ol {
 
 /* Layout utilities shared across section components */
 .container {
-  max-width: 1280px;
+  max-width: 1200px;
   margin-inline: auto;
-  padding-inline: var(--space-gutter);
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-inline: 2rem; /* medium */
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    padding-inline: 3rem; /* large */
+  }
 }
 
 .section {
