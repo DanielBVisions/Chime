@@ -8,7 +8,8 @@
   --color-ink: #0A0A0A;
   --color-white: #FFFFFF;
   --color-grey-100: #F5F7F9;
-  --color-grey-400: #9AA5AD;
+  --color-grey-400: #9AA5AD; /* decorative use only (borders, dividers) — fails AA contrast for text on white */
+  --color-grey-600: #5A6672; /* muted body/secondary text — passes WCAG AA (~5.9:1) on white */
 
   /* Gradient used for arc mark / accents */
   --gradient-signal: linear-gradient(135deg, var(--color-blue-pale), var(--color-blue-mid) 50%, var(--color-blue-deep));
