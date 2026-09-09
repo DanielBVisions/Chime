@@ -55,7 +55,7 @@ const features = [
 ---
 
 <section class="advantage" data-advantage>
-  <BrandArc size={420} anchor="top-right" style="top: -120px; right: -120px;" />
+  <BrandArc size={420} anchor="top-right" variant="white" style="top: -120px; right: -120px;" />
 
   <div class="container">
     <div class="advantage__intro" data-reveal>
@@ -85,6 +85,18 @@ const features = [
     position: relative;
     overflow: hidden;
     padding-block: 7rem 7.5rem;
+    background: linear-gradient(120deg, var(--color-blue-deep), var(--color-blue-mid) 130%);
+    color: var(--color-white);
+  }
+
+  /* Same scrim recipe as EnquireCta's gradient band, for the same reason:
+     the lighter gradient end alone only gives white text ~2.7:1 contrast. */
+  .advantage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: rgba(0, 0, 0, 0.35);
   }
 
   .advantage__intro {
@@ -98,21 +110,32 @@ const features = [
     margin-bottom: 3.5rem;
   }
 
+  .advantage .eyebrow {
+    color: var(--color-blue-pale);
+  }
+
   .advantage h2 {
-    font-size: 2.5rem;
+    font-size: 2.75rem;
     font-weight: 800;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.025em;
   }
 
   .advantage__sub {
     font-size: 1.1875rem;
     line-height: 1.5;
     font-weight: 500;
-    color: var(--color-grey-600);
+    color: rgba(255, 255, 255, 0.8);
   }
 
   .advantage__cta {
     margin-top: 0.5rem;
+    background: var(--color-white);
+    color: var(--color-blue-deep);
+  }
+
+  .advantage__cta:hover,
+  .advantage__cta:focus-visible {
+    background: var(--color-blue-pale);
   }
 
   .advantage__hint {
@@ -124,7 +147,7 @@ const features = [
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-grey-600);
+    color: rgba(255, 255, 255, 0.75);
   }
 
   /* A horizontally-scrolling row is the base layout everywhere — native

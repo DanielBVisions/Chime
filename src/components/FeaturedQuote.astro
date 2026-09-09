@@ -2,9 +2,9 @@
 ---
 
 <section class="quote">
-  <div class="container quote__inner" data-reveal>
-    <div class="quote__avatar" aria-hidden="true">SA</div>
+  <div class="quote__avatar" aria-hidden="true">SA</div>
 
+  <div class="container quote__inner" data-reveal>
     <svg class="quote__mark" width="34" height="26" viewBox="0 0 34 26" fill="none" aria-hidden="true">
       <path
         d="M0 26 V13 C0 5.8 5 0.9 12.4 0 V6.4 C8.4 7.1 6.4 9.4 6.2 13.1 H12.4 V26 H0 Z M18.9 26 V13 C18.9 5.8 23.9 0.9 31.3 0 V6.4 C27.3 7.1 25.3 9.4 25.1 13.1 H31.3 V26 H18.9 Z"
@@ -29,6 +29,7 @@
 
 <style>
   .quote {
+    position: relative;
     background: var(--color-grey-100);
   }
 
@@ -39,10 +40,17 @@
     gap: 1.5rem;
     text-align: center;
     max-width: 47.5rem;
-    padding-block: 6rem;
+    padding-block: 8.5rem 6rem;
   }
 
+  /* Floats above the section's own top edge — visually straddling the
+     seam with whatever comes before it, like the delivers hub icon. */
   .quote__avatar {
+    position: absolute;
+    top: -2.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
     width: 5.5rem;
     height: 5.5rem;
     border-radius: 50%;
@@ -53,6 +61,7 @@
     font-size: 0.8125rem;
     font-weight: 700;
     color: var(--color-white);
+    box-shadow: 0 16px 28px -10px rgba(11, 92, 173, 0.45);
   }
 
   blockquote p {
