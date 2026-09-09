@@ -165,3 +165,15 @@ textarea:focus-visible {
   outline: 2px solid var(--color-blue-mid);
   outline-offset: 2px;
 }
+
+/* Word masks for the per-word heading reveal (heading-reveal.ts splits
+   [data-reveal-heading] text into these at runtime). */
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.word-inner {
+  display: inline-block;
+}
