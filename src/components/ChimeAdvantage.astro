@@ -159,18 +159,8 @@ const features = [
     }
   }
 
-  /* Bento-style width rhythm (after Eddie.eco's card grid, which spans
-     most cards wider and drops a few to a narrower span at fixed
-     positions) rather than one uniform card width all the way across. */
   .advantage__viewport :global(.feature-card) {
-    flex: 0 0 17.5rem;
-  }
-
-  .advantage__viewport :global(.feature-card:nth-child(8n + 2)),
-  .advantage__viewport :global(.feature-card:nth-child(8n + 3)),
-  .advantage__viewport :global(.feature-card:nth-child(8n + 6)),
-  .advantage__viewport :global(.feature-card:nth-child(8n + 7)) {
-    flex-basis: 14.5rem;
+    flex: 0 0 16.25rem;
   }
 
   /* Scroll-pin state — added by chime-advantage.ts when motion is allowed
