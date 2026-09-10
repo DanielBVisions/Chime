@@ -75,44 +75,46 @@ const columns = [
         </p>
       </div>
 
-      <div class="delivers__timeline" data-delivers-timeline>
-        <div class="delivers__rail" aria-hidden="true">
-          <span class="delivers__rail-marker" data-delivers-marker></span>
-        </div>
+      <div class="delivers__timeline-track" data-delivers-track>
+        <div class="delivers__timeline" data-delivers-timeline>
+          <div class="delivers__rail" aria-hidden="true">
+            <span class="delivers__rail-marker" data-delivers-marker></span>
+          </div>
 
-        <div class="delivers__steps">
-          {columns.map((column, index) => (
-            <div class="delivers__step" data-delivers-step>
-              <button
-                type="button"
-                class="delivers__step-header"
-                data-delivers-step-header
-                aria-expanded={index === 0 ? 'true' : 'false'}
-              >
-                <span class="delivers__step-number">{String(index + 1).padStart(2, '0')}</span>
-                <span class="delivers__step-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" set:html={column.icon} />
-                </span>
-                <span class="delivers__step-title">
-                  <strong>{column.title}</strong>
-                  <span>{column.subtitle}</span>
-                </span>
-              </button>
+          <div class="delivers__steps">
+            {columns.map((column, index) => (
+              <div class="delivers__step" data-delivers-step>
+                <button
+                  type="button"
+                  class="delivers__step-header"
+                  data-delivers-step-header
+                  aria-expanded={index === 0 ? 'true' : 'false'}
+                >
+                  <span class="delivers__step-number">{String(index + 1).padStart(2, '0')}</span>
+                  <span class="delivers__step-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" set:html={column.icon} />
+                  </span>
+                  <span class="delivers__step-title">
+                    <strong>{column.title}</strong>
+                    <span>{column.subtitle}</span>
+                  </span>
+                </button>
 
-              <div class="delivers__step-body" data-delivers-step-body>
-                <ul>
-                  {column.points.map((point) => (
-                    <li>
-                      <svg class="delivers__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <path d="M4 12 L10 18 L20 6" />
-                      </svg>
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div class="delivers__step-body" data-delivers-step-body>
+                  <ul>
+                    {column.points.map((point) => (
+                      <li>
+                        <svg class="delivers__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                          <path d="M4 12 L10 18 L20 6" />
+                        </svg>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -195,14 +197,30 @@ const columns = [
   }
 
   /* Sui-style scroll-driven accordion: a dotted rail with a marker that
-     travels down it, opening one step at a time. delivers-timeline.ts
-     pins this block and drives both, but only on wide, motion-allowed
-     viewports — every step renders open by default below, so nothing is
-     ever gated behind a scroll-jacked interaction. */
+     travels down it, opening one step at a time as you scroll through the
+     track below. Built on native position: sticky rather than a GSAP
+     pin — sticky stays constrained to its own parent's box using the
+     browser's own layout engine, so it can't end up detached in the
+     viewport corner or left stranded on top of later content the way a
+     JS-driven position: fixed pin can if anything about its surrounding
+     layout doesn't match what the pin math assumed. delivers-timeline.ts
+     only sets the track's scroll height and drives the marker/active
+     step — the "stays in place while you scroll" part is plain CSS. */
+  .delivers__timeline-track {
+    position: relative;
+  }
+
   .delivers__timeline {
     margin-top: var(--space-section);
     display: flex;
     gap: 3rem;
+  }
+
+  @media (min-width: 900px) {
+    .delivers__timeline.is-stepped {
+      position: sticky;
+      top: 88px;
+    }
   }
 
   .delivers__rail {
