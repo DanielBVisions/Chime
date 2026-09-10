@@ -154,12 +154,13 @@ const columns = [
 
   .delivers__hub {
     position: relative;
-    max-width: 40rem;
+    max-width: 52rem;
     margin-inline: auto;
-    padding: 2.5rem 2rem 2rem;
+    padding: 3.5rem 3rem 3rem;
     text-align: center;
     background: var(--color-grey-100);
     border-radius: 20px;
+    box-shadow: 0 24px 48px -24px rgba(20, 24, 29, 0.22);
   }
 
   .delivers__hub-icon {
@@ -170,28 +171,29 @@ const columns = [
     border-radius: 50%;
     background: var(--gradient-signal);
     position: absolute;
-    top: -1.75rem;
+    top: -2.125rem;
     left: 50%;
     transform: translateX(-50%);
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 4.25rem;
+    height: 4.25rem;
   }
 
   .delivers__hub-icon svg {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.75rem;
+    height: 1.75rem;
   }
 
   .delivers__hub h4 {
-    font-size: 1.375rem;
+    font-size: 1.625rem;
     font-weight: 800;
     color: var(--color-blue-deep);
   }
 
   .delivers__hub p {
-    margin-top: 0.75rem;
-    max-width: 34rem;
+    margin-top: 1rem;
+    max-width: 40rem;
     margin-inline: auto;
+    font-size: 1.0625rem;
   }
 
   /* Cards scroll normally — the rail's dotted line runs the full length
@@ -368,6 +370,24 @@ const columns = [
     display: flex;
     flex-direction: column;
     gap: 1.125rem;
+    /* The container's own height/opacity change is subtle at a glance —
+       this makes the reveal itself visible: the checklist slides up and
+       fades in on top of that, instead of the height change being the
+       only thing animating. Only hidden once JS has actually engaged
+       the accordion (.is-stepped) — visible by default otherwise, same
+       as the step body itself. */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .delivers__timeline.is-stepped .delivers__step-body ul {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+
+  .delivers__timeline.is-stepped .delivers__step.is-active .delivers__step-body ul {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s;
   }
 
   .delivers__step-body li {
