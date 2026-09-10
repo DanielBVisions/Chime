@@ -21,6 +21,13 @@ export function initRevealAnimations() {
         y: 0,
         duration: 0.8,
         ease: 'power3.out',
+        // Once the reveal settles, drop the inline transform entirely
+        // rather than leaving GSAP's translate3d(0,0,0) sitting on the
+        // element. A lingering transform — even a no-op one — makes the
+        // element a new containing block for any position:fixed
+        // descendant, which breaks pin:true for anything nested inside
+        // (e.g. the delivers timeline's pinned scroll accordion).
+        clearProps: 'transform',
         scrollTrigger: {
           trigger: el,
           start: 'top 85%',
