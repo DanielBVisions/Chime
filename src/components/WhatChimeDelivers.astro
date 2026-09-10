@@ -205,35 +205,36 @@ const columns = [
      JS-driven position: fixed pin can if anything about its surrounding
      layout doesn't match what the pin math assumed. delivers-timeline.ts
      only sets the track's scroll height and drives the marker/active
-     step — the "stays in place while you scroll" part is plain CSS. */
+     step — the "stays in place while you scroll" part is plain CSS.
+
+     Layout: the rail runs down the centre, and steps are cards that
+     alternate left/right of it (odd = right, even = left) with generous
+     gaps between them — not a flex row with the rail on one side and a
+     full-width column on the other, which is what made every card look
+     like it was hugging the left edge regardless of any width/centring
+     rule, since the *steps column itself* was always the one stretching
+     full-width, not any individual card. */
   .delivers__timeline-track {
     position: relative;
   }
 
   .delivers__timeline {
+    position: relative;
     margin-top: var(--space-section);
-    display: flex;
-    gap: 3rem;
   }
 
   @media (min-width: 900px) {
     .delivers__timeline.is-stepped {
       position: sticky;
       top: 88px;
-      /* Belt-and-braces: force the same centred, capped width .container
-         already gives it, so switching to position: sticky can't leave it
-         stretched full-bleed and reading as flush to the left edge
-         instead of matching the rest of the page's centred column — no
-         padding added here, .container's own padding still applies
-         around it, this only re-asserts the centring. */
-      max-width: 1200px;
-      margin-inline: auto;
     }
   }
 
   .delivers__rail {
-    position: relative;
-    flex: 0 0 1.5rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
     display: none;
   }
 
@@ -246,14 +247,14 @@ const columns = [
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 50%;
+    left: 0;
     border-left: 2px dotted var(--color-grey-400);
     transform: translateX(-50%);
   }
 
   .delivers__rail-marker {
     position: absolute;
-    left: 50%;
+    left: 0;
     top: 0;
     width: 10px;
     height: 10px;
@@ -264,18 +265,32 @@ const columns = [
   }
 
   .delivers__steps {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    min-width: 0;
+    gap: 6rem;
   }
 
   .delivers__step {
-    border-top: 1px solid var(--color-grey-100);
+    background: var(--color-white);
+    border-radius: 20px;
+    box-shadow: 0 24px 48px -24px rgba(20, 24, 29, 0.22);
+    padding: 1.75rem 2rem;
   }
 
-  .delivers__step:last-child {
-    border-bottom: 1px solid var(--color-grey-100);
+  @media (min-width: 900px) {
+    .delivers__step {
+      width: calc(50% - 2.5rem);
+    }
+
+    /* 01 and 03 sit right of the rail, 02 sits left — the staggered
+       zig-zag look, rather than every card stacked in one column. */
+    .delivers__step:nth-child(odd) {
+      margin-left: auto;
+    }
+
+    .delivers__step:nth-child(even) {
+      margin-right: auto;
+    }
   }
 
   .delivers__step-header {
@@ -283,7 +298,6 @@ const columns = [
     align-items: center;
     gap: 1.25rem;
     width: 100%;
-    padding-block: 2rem;
     background: none;
     border: none;
     text-align: left;
