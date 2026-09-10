@@ -27,20 +27,29 @@ export function initDeliversTimeline() {
   const headers = steps.map((step) => step.querySelector<HTMLButtonElement>('[data-delivers-step-header]'));
   const bodies = steps.map((step) => step.querySelector<HTMLElement>('[data-delivers-step-body]'));
 
+  // Duration/easing lives here, driven directly by GSAP, rather than as a
+  // CSS `transition` on height that JS merely sets a value for — that
+  // route wasn't visibly changing no matter what duration was tried, so
+  // this animates it explicitly instead of hoping a CSS transition picks
+  // the style change up.
+  const OPEN_DURATION = 0.6;
+
   const setActive = (index: number) => {
     steps.forEach((step, i) => {
       const isActive = i === index;
       step.classList.toggle('is-active', isActive);
       headers[i]?.setAttribute('aria-expanded', String(isActive));
       const body = bodies[i];
-      if (body) body.style.height = isActive ? `${body.scrollHeight}px` : '0px';
-    });
+      if (!body) return;
 
-    // Expanding/collapsing a card shifts every later card's position, and
-    // each has its own ScrollTrigger keyed to that position. Refreshing
-    // only after the (0.35s, see the stylesheet) height transition settles
-    // means it measures the real final layout, not a mid-transition one.
-    window.setTimeout(() => ScrollTrigger.refresh(), 350);
+      gsap.to(body, {
+        height: isActive ? body.scrollHeight : 0,
+        opacity: isActive ? 1 : 0,
+        duration: OPEN_DURATION,
+        ease: 'power2.inOut',
+        onComplete: () => ScrollTrigger.refresh(),
+      });
+    });
   };
 
   setActive(0);

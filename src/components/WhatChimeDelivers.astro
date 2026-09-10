@@ -154,9 +154,14 @@ const columns = [
 
   .delivers__hub {
     position: relative;
-    max-width: 52rem;
+    max-width: none;
     margin-inline: auto;
-    padding: 3.5rem 3rem 3rem;
+    padding: 4.5rem 3rem;
+    min-height: 22rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     background: var(--color-grey-100);
     border-radius: 20px;
@@ -343,25 +348,17 @@ const columns = [
 
   .delivers__step-body {
     overflow: hidden;
-    /* Height only changes at discrete step-change moments (not every
-       scroll frame — that's the marker), so easing it here doesn't fight
-       anything the way it would have under the old GSAP pin, which
-       needed the pinned box's total height to stay pixel-identical for
-       its whole duration. position: sticky has no such constraint. */
-    /* Triggers now fire at 70%/30% (see delivers-timeline.ts), well before
-       a card reaches the marker's centre point, so there's buffer to
-       afford a smoother, slightly longer reveal without it lagging behind
-       scroll the way the original 0.4s did before that change. */
-    transition: height 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+    /* No CSS transition here on purpose — delivers-timeline.ts animates
+       height/opacity directly with GSAP (duration + easing live there),
+       so this only needs to hold whatever value JS sets. A CSS
+       transition on the same properties GSAP is actively tweening would
+       fight it, restarting a mini-ease on every per-frame value GSAP
+       writes. */
   }
 
   .delivers__timeline.is-stepped .delivers__step-body {
     height: 0;
     opacity: 0;
-  }
-
-  .delivers__timeline.is-stepped .delivers__step.is-active .delivers__step-body {
-    opacity: 1;
   }
 
   .delivers__step-body ul {
@@ -412,10 +409,6 @@ const columns = [
 
   @media (prefers-reduced-motion: reduce) {
     .delivers__step-number {
-      transition: none;
-    }
-
-    .delivers__step-body {
       transition: none;
     }
   }
