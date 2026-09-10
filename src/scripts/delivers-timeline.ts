@@ -25,13 +25,22 @@ export function initDeliversTimeline() {
   const headers = steps.map((step) => step.querySelector<HTMLButtonElement>('[data-delivers-step-header]'));
   const bodies = steps.map((step) => step.querySelector<HTMLElement>('[data-delivers-step-body]'));
 
+  // A pinned element's box height has to stay constant for the whole pin —
+  // GSAP sizes its spacer once and expects that. Expanding each body to its
+  // own scrollHeight let the timeline's total height change as different
+  // (differently-sized) steps opened, which desynced the spacer from the
+  // real layout and showed up as leftover blank space and jumpiness in
+  // this section and whatever follows it. Expanding every step to the
+  // same shared max height keeps the box height identical throughout.
+  const maxBodyHeight = Math.max(...bodies.map((body) => body?.scrollHeight ?? 0));
+
   const setActive = (index: number) => {
     steps.forEach((step, i) => {
       const isActive = i === index;
       step.classList.toggle('is-active', isActive);
       headers[i]?.setAttribute('aria-expanded', String(isActive));
       const body = bodies[i];
-      if (body) body.style.maxHeight = isActive ? `${body.scrollHeight}px` : '';
+      if (body) body.style.maxHeight = isActive ? `${maxBodyHeight}px` : '0px';
     });
   };
 
