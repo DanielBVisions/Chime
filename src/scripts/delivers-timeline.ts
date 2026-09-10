@@ -52,8 +52,12 @@ export function initDeliversTimeline() {
   steps.forEach((step, i) => {
     ScrollTrigger.create({
       trigger: step,
-      start: 'top center',
-      end: 'bottom center',
+      // Fires while the card is still well below the marker's fixed
+      // centre point (70% down the viewport, not 50%) so it's already
+      // open by the time it actually reaches centre, rather than
+      // triggering right at the crossing and visibly playing catch-up.
+      start: 'top 70%',
+      end: 'bottom 30%',
       onEnter: () => setActive(i),
       onEnterBack: () => setActive(i),
     });
