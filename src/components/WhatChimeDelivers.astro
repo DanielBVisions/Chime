@@ -220,6 +220,14 @@ const columns = [
     .delivers__timeline.is-stepped {
       position: sticky;
       top: 88px;
+      /* Belt-and-braces: force the same centred, capped width .container
+         already gives it, so switching to position: sticky can't leave it
+         stretched full-bleed and reading as flush to the left edge
+         instead of matching the rest of the page's centred column — no
+         padding added here, .container's own padding still applies
+         around it, this only re-asserts the centring. */
+      max-width: 1200px;
+      margin-inline: auto;
     }
   }
 
