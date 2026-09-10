@@ -362,13 +362,12 @@ const columns = [
 
   .delivers__step-body {
     overflow: hidden;
-    /* height itself is set inline by delivers-timeline.ts, not eased —
-       the pinned container's total height has to stay pixel-identical
-       throughout the whole pin, and a lingering CSS transition here would
-       mean the real layout height keeps moving for 0.4s after every
-       scroll-driven step change, fighting GSAP's frozen-height assumption
-       for the pin. Only opacity fades. */
-    transition: opacity 0.3s ease;
+    /* Height only changes at discrete step-change moments (not every
+       scroll frame — that's the marker), so easing it here doesn't fight
+       anything the way it would have under the old GSAP pin, which
+       needed the pinned box's total height to stay pixel-identical for
+       its whole duration. position: sticky has no such constraint. */
+    transition: height 0.4s ease, opacity 0.3s ease;
   }
 
   .delivers__timeline.is-stepped .delivers__step-body {
