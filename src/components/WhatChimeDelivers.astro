@@ -75,36 +75,45 @@ const columns = [
         </p>
       </div>
 
-      <div class="delivers__stems" data-reveal-stems aria-hidden="true">
-        <div class="delivers__stem-bus"></div>
-        <span class="delivers__stem"><span class="delivers__stem-dot"></span></span>
-        <span class="delivers__stem"><span class="delivers__stem-dot"></span></span>
-        <span class="delivers__stem"><span class="delivers__stem-dot"></span></span>
-      </div>
+      <div class="delivers__timeline" data-delivers-timeline>
+        <div class="delivers__rail" aria-hidden="true">
+          <span class="delivers__rail-marker" data-delivers-marker></span>
+        </div>
 
-      <div class="delivers__columns">
-        {columns.map((column) => (
-          <div class="delivers__column">
-            <div class="delivers__column-header">
-              <span class="delivers__column-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" set:html={column.icon} />
-              </span>
-              <h5>{column.title}</h5>
-              <p>{column.subtitle}</p>
+        <div class="delivers__steps">
+          {columns.map((column, index) => (
+            <div class="delivers__step" data-delivers-step>
+              <button
+                type="button"
+                class="delivers__step-header"
+                data-delivers-step-header
+                aria-expanded={index === 0 ? 'true' : 'false'}
+              >
+                <span class="delivers__step-number">{String(index + 1).padStart(2, '0')}</span>
+                <span class="delivers__step-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" set:html={column.icon} />
+                </span>
+                <span class="delivers__step-title">
+                  <strong>{column.title}</strong>
+                  <span>{column.subtitle}</span>
+                </span>
+              </button>
+
+              <div class="delivers__step-body" data-delivers-step-body>
+                <ul>
+                  {column.points.map((point) => (
+                    <li>
+                      <svg class="delivers__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M4 12 L10 18 L20 6" />
+                      </svg>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-
-            <ul>
-              {column.points.map((point) => (
-                <li>
-                  <svg class="delivers__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M4 12 L10 18 L20 6" />
-                  </svg>
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
@@ -153,17 +162,13 @@ const columns = [
     border-radius: 20px;
   }
 
-  .delivers__hub-icon,
-  .delivers__column-icon {
+  .delivers__hub-icon {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     border-radius: 50%;
     background: var(--gradient-signal);
-  }
-
-  .delivers__hub-icon {
     position: absolute;
     top: -1.75rem;
     left: 50%;
@@ -189,134 +194,155 @@ const columns = [
     margin-inline: auto;
   }
 
-  /* Hub-and-spoke connectors — hidden below the 3-column breakpoint, where
-     the hub/column stack already reads as a single flow with no lines
-     needed. diagram-reveal.ts draws the bus and stems in on scroll. */
-  .delivers__stems {
+  /* Sui-style scroll-driven accordion: a dotted rail with a marker that
+     travels down it, opening one step at a time. delivers-timeline.ts
+     pins this block and drives both, but only on wide, motion-allowed
+     viewports — every step renders open by default below, so nothing is
+     ever gated behind a scroll-jacked interaction. */
+  .delivers__timeline {
+    margin-top: var(--space-section);
+    display: flex;
+    gap: 2rem;
+  }
+
+  .delivers__rail {
     position: relative;
+    flex: 0 0 1.5rem;
     display: none;
   }
 
-  @media (min-width: 900px) {
-    .delivers__stems {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      height: 2.5rem;
-      margin-top: 1.5rem;
-    }
+  .delivers__timeline.is-stepped .delivers__rail {
+    display: block;
   }
 
-  .delivers__stem-bus {
+  .delivers__rail::before {
+    content: '';
     position: absolute;
     top: 0;
-    left: calc(100% / 6);
-    right: calc(100% / 6);
-    height: 2px;
-    background: var(--color-blue-mid);
-    transform: scaleX(0);
-    transform-origin: center;
-  }
-
-  .delivers__stem {
-    position: relative;
-    justify-self: center;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(to bottom, var(--color-blue-mid), var(--color-blue-deep));
-    transform: scaleY(0);
-    transform-origin: top;
-  }
-
-  .delivers__stem-dot {
-    position: absolute;
-    bottom: -4px;
+    bottom: 0;
     left: 50%;
+    border-left: 2px dotted var(--color-grey-400);
     transform: translateX(-50%);
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
+  }
+
+  .delivers__rail-marker {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
     background: var(--color-blue-deep);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 0 4px rgba(11, 92, 173, 0.15);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .delivers__stem-bus,
-    .delivers__stem {
-      transform: none;
-    }
+  .delivers__steps {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
   }
 
-  .delivers__columns {
-    margin-top: 3rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+  .delivers__step {
+    border-top: 1px solid var(--color-grey-100);
   }
 
-  @media (min-width: 900px) {
-    .delivers__columns {
-      /* The stems row above already carries the hub-to-column spacing at
-         this breakpoint, so this margin would otherwise double up. */
-      margin-top: 0;
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .delivers__column {
-    background: var(--color-white);
-    border: 1px solid var(--color-grey-100);
-    border-radius: 18px;
-    padding: 1.75rem;
-    box-shadow: 0 8px 20px -6px rgba(20, 24, 29, 0.08);
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-  }
-
-  .delivers__column:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 32px -12px rgba(11, 92, 173, 0.2);
-  }
-
-  .delivers__column-header {
-    padding-bottom: 1.25rem;
+  .delivers__step:last-child {
     border-bottom: 1px solid var(--color-grey-100);
   }
 
-  .delivers__column-icon {
+  .delivers__step-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding-block: 1.5rem;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+  }
+
+  .delivers__step-number {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-grey-400);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-grey-600);
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .delivers__step.is-active .delivers__step-number {
+    background: var(--color-blue-deep);
+    border-color: var(--color-blue-deep);
+    color: var(--color-white);
+  }
+
+  .delivers__step-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 2.75rem;
     height: 2.75rem;
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border-radius: 50%;
+    background: var(--gradient-signal);
   }
 
-  .delivers__column:hover .delivers__column-icon {
-    transform: scale(1.15) rotate(-8deg);
-  }
-
-  .delivers__column-icon svg {
+  .delivers__step-icon svg {
     width: 1.25rem;
     height: 1.25rem;
   }
 
-  .delivers__column-header h5 {
-    margin-top: 1rem;
+  .delivers__step-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .delivers__step-title strong {
     font-size: 1.0625rem;
     font-weight: 700;
     color: var(--color-ink);
   }
 
-  .delivers__column-header p {
-    margin-top: 0.25rem;
+  .delivers__step-title span {
     font-size: 0.8125rem;
     color: var(--color-grey-600);
-    max-width: none;
   }
 
-  .delivers__column ul {
-    margin-top: 1.25rem;
+  .delivers__step-body {
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+  }
+
+  .delivers__timeline.is-stepped .delivers__step-body {
+    max-height: 0;
+    opacity: 0;
+  }
+
+  .delivers__timeline.is-stepped .delivers__step.is-active .delivers__step-body {
+    opacity: 1;
+  }
+
+  .delivers__step-body ul {
+    padding-bottom: 1.5rem;
+    padding-left: 3.25rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
 
-  .delivers__column li {
+  .delivers__step-body li {
     display: flex;
     align-items: flex-start;
     gap: 0.625rem;
@@ -330,15 +356,18 @@ const columns = [
     color: var(--color-blue-deep);
   }
 
-  .delivers__column li span {
+  .delivers__step-body li span {
     font-size: 0.875rem;
     line-height: 1.55;
     color: var(--color-grey-600);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .delivers__column,
-    .delivers__column-icon {
+    .delivers__step-number {
+      transition: none;
+    }
+
+    .delivers__step-body {
       transition: none;
     }
   }
