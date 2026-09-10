@@ -52,13 +52,24 @@ export function initDeliversTimeline() {
     header?.addEventListener('click', () => setActive(i));
   });
 
-  const distance = window.innerHeight * (steps.length - 1) * 0.8;
+  // A full viewport height per step, not a fraction of one — the earlier,
+  // shorter distance meant a normal scroll gesture raced through all 3
+  // steps in barely half a screen each, so step 2/3 never fully opened
+  // before the pin released and the page jumped on to the next section.
+  const distance = window.innerHeight * steps.length;
 
   ScrollTrigger.create({
     trigger: timeline,
-    start: 'top top',
+    // Clears the sticky nav bar (72px) rather than pinning flush under it.
+    start: 'top 72px',
     end: '+=' + distance,
     pin: true,
+    // Reparents to <body> while pinned so nothing about this element's own
+    // ancestors (container padding, section backgrounds, etc.) can throw
+    // off the fixed-position math GSAP uses — the documented fix for a
+    // pinned element rendering off in the viewport's top-left corner
+    // instead of staying where it visually was.
+    pinReparent: true,
     scrub: true,
     onUpdate: (self) => {
       marker.style.top = `${self.progress * 100}%`;
