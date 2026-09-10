@@ -71,4 +71,20 @@ export function initDeliversTimeline() {
       onEnterBack: () => setActive(i),
     });
   });
+
+  // Solid trail behind the marker, filling in from the top of the rail
+  // down to wherever the marker's fixed centre point currently lines up
+  // — the same 0-1 span the marker itself already sits within.
+  const trail = timeline.querySelector<HTMLElement>('[data-delivers-trail]');
+  if (trail) {
+    ScrollTrigger.create({
+      trigger: timeline,
+      start: 'top center',
+      end: 'bottom center',
+      scrub: true,
+      onUpdate: (self) => {
+        trail.style.height = `${self.progress * 100}%`;
+      },
+    });
+  }
 }

@@ -77,6 +77,7 @@ const columns = [
 
       <div class="delivers__timeline" data-delivers-timeline>
         <div class="delivers__rail" aria-hidden="true">
+          <span class="delivers__rail-trail" data-delivers-trail></span>
           <span class="delivers__rail-marker" data-delivers-marker></span>
         </div>
 
@@ -238,6 +239,18 @@ const columns = [
     transform: translateX(-50%);
   }
 
+  /* Solid fill behind the marker showing how far through the section
+     you've scrolled — grows from 0 to 100% of the rail's height
+     (delivers-timeline.ts), left as a plain block under the dotted line. */
+  .delivers__rail-trail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    border-left: 2px solid var(--color-blue-deep);
+    transform: translateX(-50%);
+  }
+
   .delivers__rail-marker {
     position: sticky;
     top: 50vh;
@@ -247,7 +260,6 @@ const columns = [
     border-radius: 2px;
     background: var(--color-blue-deep);
     transform: translate(-50%, -50%);
-    box-shadow: 0 0 0 4px rgba(11, 92, 173, 0.15);
   }
 
   .delivers__steps {
