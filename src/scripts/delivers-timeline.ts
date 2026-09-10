@@ -38,9 +38,9 @@ export function initDeliversTimeline() {
 
     // Expanding/collapsing a card shifts every later card's position, and
     // each has its own ScrollTrigger keyed to that position. Refreshing
-    // only after the (0.4s, see the stylesheet) height transition settles
+    // only after the (0.15s, see the stylesheet) height transition settles
     // means it measures the real final layout, not a mid-transition one.
-    window.setTimeout(() => ScrollTrigger.refresh(), 400);
+    window.setTimeout(() => ScrollTrigger.refresh(), 150);
   };
 
   setActive(0);

@@ -346,7 +346,10 @@ const columns = [
        anything the way it would have under the old GSAP pin, which
        needed the pinned box's total height to stay pixel-identical for
        its whole duration. position: sticky has no such constraint. */
-    transition: height 0.4s ease, opacity 0.3s ease;
+    /* Short on purpose — at normal/fast scroll speed a slower reveal
+       visually lags behind where you already are by the time it finishes
+       opening; it only looked "on time" scrolling slowly. */
+    transition: height 0.15s ease, opacity 0.15s ease;
   }
 
   .delivers__timeline.is-stepped .delivers__step-body {
