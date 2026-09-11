@@ -40,11 +40,18 @@ import BrandArc from './BrandArc.astro';
 
   <div class="container hero__trust" data-hero-line>
     <span class="hero__trust-label">Trusted by</span>
-    <span>UK Power Networks</span>
-    <span>SSE</span>
-    <span>Cadent Gas</span>
-    <span>ESB Networks</span>
-    <span>SP Electricity North West</span>
+
+    <div class="hero__trust-marquee" data-hero-trust>
+      <div class="hero__trust-group" data-hero-trust-group>
+        <ul class="hero__trust-list" data-hero-trust-track>
+          <li>UK Power Networks</li>
+          <li>SSE</li>
+          <li>Cadent Gas</li>
+          <li>ESB Networks</li>
+          <li>SP Electricity North West</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -53,6 +60,10 @@ import BrandArc from './BrandArc.astro';
     position: relative;
     overflow: hidden;
     background: var(--color-white);
+    min-height: 95svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding-block: 4rem 3.5rem;
   }
 
@@ -94,11 +105,11 @@ import BrandArc from './BrandArc.astro';
   }
 
   .hero__wordmark {
-    font-size: 4.5rem;
-    line-height: 1.02;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    line-height: 1;
     font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--color-ink);
+    letter-spacing: -0.03em;
+    color: var(--color-blue-deep);
   }
 
   .hero__wordmark sup {
@@ -169,29 +180,68 @@ import BrandArc from './BrandArc.astro';
     position: relative;
     z-index: 1;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 3rem;
+    gap: 2rem;
     margin-top: 2rem;
     opacity: 0.7;
   }
 
-  .hero__trust span {
-    font-size: 0.9375rem;
-    font-weight: 700;
-    color: var(--color-grey-600);
-  }
-
   .hero__trust-label {
+    flex-shrink: 0;
     font-size: 0.75rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    color: var(--color-grey-600);
+  }
+
+  /* Looping marquee — same clone-and-scroll mechanism as the partner
+     logos strip further down the page (role-ticker.ts), just with its
+     own selectors/speed. Wrapped, non-looping list is the base/reduced-
+     motion state; is-marquee is added once JS clones the track. */
+  .hero__trust-marquee {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .hero__trust-group {
+    display: flex;
+  }
+
+  .hero__trust-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 3rem;
+    width: 100%;
+  }
+
+  .hero__trust-list li {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-grey-600);
+    white-space: nowrap;
+  }
+
+  .hero__trust-marquee.is-marquee .hero__trust-group {
+    width: max-content;
+  }
+
+  .hero__trust-marquee.is-marquee .hero__trust-list {
+    flex-wrap: nowrap;
+    width: max-content;
+    padding-inline-end: 3rem;
   }
 
   @media (max-width: 900px) {
     .hero__inner {
       flex-direction: column;
       align-items: stretch;
+    }
+
+    .hero__trust {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
     }
   }
 

@@ -56,7 +56,7 @@ const navLinks = [
     width: 100%;
     background: var(--color-white);
     border-bottom: 1px solid transparent;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   .nav.is-solid {
@@ -64,17 +64,30 @@ const navLinks = [
     box-shadow: 0 4px 16px rgba(11, 92, 173, 0.06);
   }
 
+  /* Slides fully out of view on scroll-down, back in on scroll-up —
+     see nav.ts. Sticky positioning keeps it at top:0 while shown, so
+     hiding it just needs a transform, not touching layout/flow. */
+  .nav.is-hidden {
+    transform: translateY(-100%);
+  }
+
   .nav__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-gutter);
-    padding-block: 1.75rem;
+    padding-block: 1.125rem;
   }
 
   .nav__logo img {
-    height: 32px;
+    height: 26px;
     width: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav {
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
   }
 
   .nav__links ul {
@@ -124,7 +137,7 @@ const navLinks = [
     .nav__mobile-menu {
       position: fixed;
       inset: 0;
-      top: 72px;
+      top: 62px;
       display: flex;
       background: var(--color-white);
       box-shadow: 0 12px 24px rgba(11, 92, 173, 0.08);

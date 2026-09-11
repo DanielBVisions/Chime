@@ -15,6 +15,24 @@ export function initNav() {
     onLeaveBack: () => nav!.classList.remove('is-solid'),
   });
 
+  // Slides out of view scrolling down, back in scrolling up — always
+  // shown near the very top regardless of direction, so it doesn't hide
+  // itself the instant the page loads.
+  const navHeight = nav.offsetHeight;
+  ScrollTrigger.create({
+    start: 0,
+    end: 'max',
+    onUpdate: (self) => {
+      if (self.scroll() < navHeight) {
+        nav!.classList.remove('is-hidden');
+      } else if (self.direction === 1) {
+        nav!.classList.add('is-hidden');
+      } else {
+        nav!.classList.remove('is-hidden');
+      }
+    },
+  });
+
   const toggle = nav.querySelector<HTMLButtonElement>('[data-nav-toggle]');
   const mobileMenu = nav.querySelector<HTMLElement>('[data-nav-mobile-menu]');
   if (!toggle || !mobileMenu) return;

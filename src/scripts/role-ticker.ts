@@ -43,3 +43,7 @@ export function initRoleTicker() {
 export function initPartnerMarquee() {
   initMarquee('[data-partner-logos]', '[data-partner-group]', '[data-partner-track]', { speed: 25 });
 }
+
+export function initHeroTrustMarquee() {
+  initMarquee('[data-hero-trust]', '[data-hero-trust-group]', '[data-hero-trust-track]', { speed: 20 });
+}
