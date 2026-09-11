@@ -105,7 +105,10 @@ import BrandArc from './BrandArc.astro';
   }
 
   .hero__wordmark {
-    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    /* Capped at 5.5rem, not higher — much past this, the unbreakable
+       word "CHiME" gets wide enough to force .hero__copy past its own
+       flex-basis, which squeezes .hero__media down small to compensate. */
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
     line-height: 1;
     font-weight: 800;
     letter-spacing: -0.03em;
@@ -149,6 +152,7 @@ import BrandArc from './BrandArc.astro';
   .hero__media {
     position: relative;
     flex: 1 1 30rem;
+    min-width: 22rem;
     aspect-ratio: 4 / 3;
     border-radius: 1.75rem;
     overflow: hidden;
