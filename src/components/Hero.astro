@@ -89,7 +89,13 @@ import BrandArc from './BrandArc.astro';
     position: relative;
     z-index: 1;
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
+    /* minmax(0, Nfr), not bare Nfr — a bare fr track has an implicit
+       "auto" (min-content) minimum, and .hero__copy's min-content width
+       is inflated by the wide, unbreakable "CHiME" word at 5.5rem. That
+       reserved-but-invisible minimum was distorting the actual 1.1:1
+       split away from what the ratio implies. minmax(0, ...) removes the
+       content-based minimum so the split is genuinely proportional. */
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
     align-items: center;
     gap: 3.5rem;
   }
