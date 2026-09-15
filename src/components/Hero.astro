@@ -88,6 +88,14 @@ import BrandArc from './BrandArc.astro';
   .hero__inner {
     position: relative;
     z-index: 1;
+    /* Confirmed via computed styles: as a grid-display flex item, this
+       was sizing itself to fit its own grid columns' content (1125.86px)
+       instead of stretching to fill .hero first — leaving ~450px of
+       unclaimed margin on each side despite max-width: 1800px never
+       being reached. Forcing width: 100% makes it actually fill its
+       parent before max-width caps it, instead of relying on flex
+       stretch to do that implicitly. */
+    width: 100%;
     display: grid;
     /* minmax(0, Nfr), not bare Nfr — a bare fr track has an implicit
        "auto" (min-content) minimum, and .hero__copy's min-content width
@@ -193,6 +201,7 @@ import BrandArc from './BrandArc.astro';
   .hero__trust {
     position: relative;
     z-index: 1;
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 2rem;
