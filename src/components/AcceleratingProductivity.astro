@@ -3,21 +3,38 @@ import BrandArc from './BrandArc.astro';
 ---
 
 <section class="accelerating">
-  <BrandArc
-    size={640}
-    anchor="top-right"
-    style="top: auto; bottom: -12rem; right: -12rem; transform: scaleY(-1);"
-  />
+  <div class="accelerating__inner" data-reveal>
+    <div class="accelerating__top">
+      <div class="accelerating__intro">
+        <span class="eyebrow accelerating__eyebrow">Accelerating Productivity</span>
+        <h2 class="accelerating__heading">
+          CHiME is the 'industry first' application for network operators, designed to improve
+          field force productivity while addressing the industry-wide challenge of increasing
+          regulatory volumes.
+        </h2>
+      </div>
 
-  <div class="container accelerating__inner" data-reveal>
-    <h2 class="accelerating__heading">Accelerating Productivity</h2>
-    <p class="accelerating__body">
-      CHiME is the 'industry first' application for network operators, designed to improve field
-      force productivity while addressing the industry-wide challenge of increasing regulatory
-      volumes. With over 25 years of experience and a dedicated focus on network operators since
-      2014, we understand the industry challenges, and ensure every aspect of CHiME is designed to
-      meet these unique challenges.
-    </p>
+      <div class="accelerating__media" aria-hidden="true">
+        <BrandArc
+          size={320}
+          anchor="top-right"
+          variant="white"
+          style="position: relative; top: auto; right: auto; width: 65%; height: auto;"
+        />
+      </div>
+    </div>
+
+    <div class="accelerating__bottom">
+      <p class="accelerating__stat">
+        <span class="accelerating__stat-number">25+</span>
+        Years of network operator experience
+      </p>
+      <p class="accelerating__body">
+        With over 25 years of experience and a dedicated focus on network operators since 2014, we
+        understand the industry challenges, and ensure every aspect of CHiME is designed to meet
+        these unique challenges.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -25,8 +42,33 @@ import BrandArc from './BrandArc.astro';
   .accelerating {
     position: relative;
     overflow: hidden;
-    background: var(--color-white);
-    padding-block: 7rem;
+    margin-inline: 1.25rem;
+    border-radius: 2rem;
+    background: linear-gradient(120deg, var(--color-blue-deep), var(--color-blue-mid) 130%);
+    color: var(--color-white);
+  }
+
+  @media (min-width: 768px) {
+    .accelerating {
+      margin-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .accelerating {
+      margin-inline: 5rem;
+      border-radius: 2.5rem;
+    }
+  }
+
+  /* Same scrim recipe as EnquireCta's gradient band: the lighter end alone
+     only gives white text ~2.7:1 contrast, under the 4.5:1 AA minimum. */
+  .accelerating::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: rgba(0, 0, 0, 0.35);
   }
 
   .accelerating__inner {
@@ -34,25 +76,101 @@ import BrandArc from './BrandArc.astro';
     z-index: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 2rem;
-    max-width: 56rem;
+    gap: 3rem;
+    padding: 3rem 1.25rem;
   }
 
-  /* Amber accent matched from the reference screenshot of the live site —
-     not yet in tokens.css since nothing else on the page uses it. */
+  @media (min-width: 768px) {
+    .accelerating__inner {
+      padding: 4rem 2rem;
+      gap: 3.5rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .accelerating__inner {
+      padding: 5rem;
+      gap: 4rem;
+    }
+  }
+
+  .accelerating__top {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .accelerating__intro {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .accelerating .accelerating__eyebrow {
+    color: var(--color-blue-pale);
+  }
+
   .accelerating__heading {
-    font-size: clamp(1.75rem, 3vw, 2.75rem);
+    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+    line-height: 1.4;
+    font-weight: 700;
+    color: var(--color-white);
+  }
+
+  .accelerating__media {
+    flex: 0 0 16rem;
+    aspect-ratio: 4 / 3;
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .accelerating__bottom {
+    display: flex;
+    gap: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .accelerating__stat {
+    flex: 0 0 16rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-white);
+  }
+
+  .accelerating__stat-number {
+    display: block;
+    font-size: 2.5rem;
     font-weight: 800;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: #E8A33D;
+    letter-spacing: -0.02em;
   }
 
   .accelerating__body {
-    font-size: 1.25rem;
-    line-height: 1.6;
-    color: var(--color-ink);
+    flex: 1;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  @media (max-width: 700px) {
+    .accelerating__top {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .accelerating__media {
+      width: 100%;
+      flex-basis: auto;
+    }
+
+    .accelerating__bottom {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
   }
 </style>
