@@ -9,6 +9,7 @@
 html {
   scroll-behavior: auto; /* Lenis drives smooth scroll; native smooth-scroll would fight it */
   -webkit-text-size-adjust: 100%;
+  font-size: var(--size-font); /* Osmo scaling system (tokens.css) — every rem-sized value on the site scales with this */
 }
 
 body {
@@ -70,7 +71,7 @@ ol {
 
 /* Layout utilities shared across section components */
 .container {
-  max-width: 1800px;
+  max-width: var(--size-container); /* Osmo scaling system (tokens.css) — fluid per breakpoint tier instead of one fixed value */
   margin-inline: auto;
   padding-inline: 1.25rem;
 }

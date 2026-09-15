@@ -29,3 +29,49 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-base: 0.8s;
 }
+
+/* ------------------------- Scaling System by Osmo [https://osmo.supply/] -------------------------
+   Fluid-scales the root font-size (and .container's max-width) against
+   the viewport, anchored to what the design looked like at a given
+   reference width per breakpoint tier — everything sized in rem across
+   the site scales with it, rather than each component clamp()-ing its
+   own type scale independently. Applied to html (root), not body: rem
+   units are relative to the root element's font-size specifically, and
+   this codebase sizes almost everything in rem. */
+
+/* Desktop */
+:root {
+  --size-unit: 16; /* body font-size in design - no px */
+  --size-container-ideal: 1440; /* screen-size in design - no px */
+  --size-container-min: 992px;
+  --size-container-max: 1920px;
+  --size-container: clamp(var(--size-container-min), 100vw, var(--size-container-max));
+  --size-font: calc(var(--size-container) / (var(--size-container-ideal) / var(--size-unit)));
+}
+
+/* Tablet */
+@media screen and (max-width: 991px) {
+  :root {
+    --size-container-ideal: 834; /* screen-size in design - no px */
+    --size-container-min: 768px;
+    --size-container-max: 991px;
+  }
+}
+
+/* Mobile Landscape */
+@media screen and (max-width: 767px) {
+  :root {
+    --size-container-ideal: 550; /* screen-size in design - no px */
+    --size-container-min: 480px;
+    --size-container-max: 767px;
+  }
+}
+
+/* Mobile Portrait */
+@media screen and (max-width: 479px) {
+  :root {
+    --size-container-ideal: 390; /* screen-size in design - no px */
+    --size-container-min: 320px;
+    --size-container-max: 479px;
+  }
+}
