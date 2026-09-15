@@ -8,10 +8,14 @@ import BrandArc from './BrandArc.astro';
       <div class="accelerating__intro">
         <span class="eyebrow accelerating__eyebrow">Accelerating Productivity</span>
         <h2 class="accelerating__heading">
-          CHiME is the 'industry first' application for network operators, designed to improve
+          CHIME is the 'industry first' application for network operators, designed to improve
           field force productivity while addressing the industry-wide challenge of increasing
           regulatory volumes.
         </h2>
+        <p class="accelerating__stat">
+          <span class="accelerating__stat-number">25+</span>
+          Years of network operator experience
+        </p>
       </div>
 
       <div class="accelerating__media" aria-hidden="true">
@@ -25,10 +29,6 @@ import BrandArc from './BrandArc.astro';
     </div>
 
     <div class="accelerating__bottom">
-      <p class="accelerating__stat">
-        <span class="accelerating__stat-number">25+</span>
-        Years of network operator experience
-      </p>
       <p class="accelerating__body">
         With over 25 years of experience and a dedicated focus on network operators since 2014, we
         understand the industry challenges, and ensure every aspect of CHiME is designed to meet
@@ -129,15 +129,7 @@ import BrandArc from './BrandArc.astro';
     overflow: hidden;
   }
 
-  .accelerating__bottom {
-    display: flex;
-    gap: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.18);
-  }
-
   .accelerating__stat {
-    flex: 0 0 16rem;
     font-size: 1.125rem;
     font-weight: 700;
     color: var(--color-white);
@@ -150,8 +142,13 @@ import BrandArc from './BrandArc.astro';
     letter-spacing: -0.02em;
   }
 
+  .accelerating__bottom {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
   .accelerating__body {
-    flex: 1;
+    max-width: 48rem;
     font-size: 1.0625rem;
     line-height: 1.7;
     color: rgba(255, 255, 255, 0.8);
@@ -166,11 +163,6 @@ import BrandArc from './BrandArc.astro';
     .accelerating__media {
       width: 100%;
       flex-basis: auto;
-    }
-
-    .accelerating__bottom {
-      flex-direction: column;
-      gap: 1.5rem;
     }
   }
 </style>
