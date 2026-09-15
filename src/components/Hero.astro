@@ -8,12 +8,10 @@ import BrandArc from './BrandArc.astro';
 
   <div class="container hero__inner">
     <div class="hero__copy">
-      <span class="hero__eyebrow" data-hero-line>Software for network operators</span>
       <h1 class="hero__wordmark" data-hero-line>CHiME<sup>&reg;</sup></h1>
-      <p class="hero__subhead" data-hero-line>Built for the network operator.</p>
-      <p class="hero__body" data-hero-line>
-        The industry-first application designed to improve field force productivity while
-        addressing the industry-wide challenge of increasing regulatory volumes.
+      <p class="hero__subhead" data-hero-line>
+        Built for<br />
+        <span class="hero__subhead-accent">the network operator</span>
       </p>
       <div class="hero__actions" data-hero-line>
         <a href="/contact" class="btn btn--lg">Enquire Now For a Demo</a>
@@ -104,14 +102,6 @@ import BrandArc from './BrandArc.astro';
     gap: 1.75rem;
   }
 
-  .hero__eyebrow {
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-blue-deep);
-  }
-
   .hero__wordmark {
     /* Capped at 5.5rem, not higher — much past this, the unbreakable
        word "CHiME" gets wide enough to overflow .hero__copy's max-width. */
@@ -129,25 +119,16 @@ import BrandArc from './BrandArc.astro';
   }
 
   .hero__subhead {
-    /* This carries the actual headline statement — was sized like a
-       secondary line under the wordmark (1.625rem), when it needs to
-       read with the same weight the wordmark does, not underneath it.
-       No max-width/ch cap here — a fixed character width forces a wrap
-       at that count regardless of how much room is actually available,
-       which reads like a hard-coded line break. Letting it wrap
-       naturally against .hero__copy's own max-width instead. */
-    font-size: clamp(2rem, 3.2vw, 3rem);
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    font-weight: 700;
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    font-weight: 800;
+    text-transform: uppercase;
     color: var(--color-ink);
   }
 
-  .hero__body {
-    font-size: 1.0625rem;
-    line-height: 1.6;
-    color: var(--color-grey-600);
-    max-width: 42rem;
+  .hero__subhead-accent {
+    color: var(--color-blue-mid);
   }
 
   .hero__actions {
