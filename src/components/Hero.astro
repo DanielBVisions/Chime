@@ -103,7 +103,7 @@ import BrandArc from './BrandArc.astro';
        reserved-but-invisible minimum was distorting the actual 1.1:1
        split away from what the ratio implies. minmax(0, ...) removes the
        content-based minimum so the split is genuinely proportional. */
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
     align-items: center;
     gap: 3.5rem;
   }
@@ -112,7 +112,7 @@ import BrandArc from './BrandArc.astro';
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.75rem;
   }
 
   .hero__eyebrow {
@@ -140,11 +140,15 @@ import BrandArc from './BrandArc.astro';
   }
 
   .hero__subhead {
-    font-size: 1.625rem;
-    line-height: 1.35;
-    font-weight: 600;
+    /* This carries the actual headline statement — was sized like a
+       secondary line under the wordmark (1.625rem), when it needs to
+       read with the same weight the wordmark does, not underneath it. */
+    font-size: clamp(2rem, 3.2vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    font-weight: 700;
     color: var(--color-ink);
-    max-width: 32ch;
+    max-width: 15ch;
   }
 
   .hero__body {
