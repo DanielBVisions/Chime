@@ -4,7 +4,7 @@
 <section class="accelerating">
   <div class="accelerating__blob"></div>
 
-  <div class="container accelerating__inner" data-reveal>
+  <div class="accelerating__inner" data-reveal>
     <div class="accelerating__stat">
       <span class="accelerating__stat-number">25+</span>
       <span class="accelerating__stat-label">Years of network operator experience</span>
@@ -27,11 +27,29 @@
 </section>
 
 <style>
+  /* Inset rounded card, not a full-bleed band — margin-inline mirrors
+     .container's own gutters (global.css) so it lines up with the rest
+     of the page's content edge rather than reaching the viewport edge. */
   .accelerating {
     position: relative;
     overflow: hidden;
+    margin-inline: 1.25rem;
+    border-radius: 2rem;
     background: linear-gradient(120deg, var(--color-blue-deep), var(--color-blue-mid) 130%);
     color: var(--color-white);
+  }
+
+  @media (min-width: 768px) {
+    .accelerating {
+      margin-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .accelerating {
+      margin-inline: 5rem;
+      border-radius: 2.5rem;
+    }
   }
 
   /* Same scrim recipe as EnquireCta's gradient band: the lighter end alone
@@ -60,7 +78,19 @@
     display: flex;
     align-items: center;
     gap: 3.5rem;
-    padding-block: 7.5rem;
+    padding: 3rem 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .accelerating__inner {
+      padding: 4rem 2rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .accelerating__inner {
+      padding: 5rem;
+    }
   }
 
   .accelerating__stat {

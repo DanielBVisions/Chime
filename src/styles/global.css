@@ -84,7 +84,7 @@ ol {
 
 @media (min-width: 1200px) {
   .container {
-    padding-inline: 2.5rem; /* large — ~40px gutter instead of scaling the margin with viewport width */
+    padding-inline: 5rem; /* large — ~80px gutter instead of scaling the margin with viewport width */
   }
 }
 
