@@ -4,26 +4,26 @@ import BrandArc from './BrandArc.astro';
 
 <section class="accelerating">
   <div class="accelerating__inner" data-reveal>
-    <div class="accelerating__top">
+    <div class="accelerating__copy">
       <h2 class="accelerating__heading">Accelerating Productivity</h2>
 
-      <div class="accelerating__media" aria-hidden="true">
-        <BrandArc
-          size={320}
-          anchor="top-right"
-          variant="white"
-          style="position: relative; top: auto; right: auto; width: 65%; height: auto;"
-        />
-      </div>
+      <p class="accelerating__body">
+        CHIME is the 'industry first' application for network operators, designed to improve field
+        force productivity while addressing the industry-wide challenge of increasing regulatory
+        volumes. With over 25 years of experience and a dedicated focus on network operators since
+        2014, we understand the industry challenges, and ensure every aspect of CHiME is designed to
+        meet these unique challenges.
+      </p>
     </div>
 
-    <p class="accelerating__body">
-      CHIME is the 'industry first' application for network operators, designed to improve field
-      force productivity while addressing the industry-wide challenge of increasing regulatory
-      volumes. With over 25 years of experience and a dedicated focus on network operators since
-      2014, we understand the industry challenges, and ensure every aspect of CHiME is designed to
-      meet these unique challenges.
-    </p>
+    <div class="accelerating__media" aria-hidden="true">
+      <BrandArc
+        size={320}
+        anchor="top-right"
+        variant="white"
+        style="position: relative; top: auto; right: auto; width: 60%; height: auto;"
+      />
+    </div>
   </div>
 </section>
 
@@ -60,12 +60,17 @@ import BrandArc from './BrandArc.astro';
     background: rgba(0, 0, 0, 0.35);
   }
 
+  /* Two columns, both stretched to the same height: copy (heading pinned to
+     the top, paragraph pinned to the bottom, via space-between) alongside
+     an image column running the FULL height of the card - not a small
+     icon tucked in a corner with dead space around it. */
   .accelerating__inner {
     position: relative;
     z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 3rem;
     padding: 2.5rem 1.25rem;
   }
 
@@ -81,14 +86,14 @@ import BrandArc from './BrandArc.astro';
     }
   }
 
-  .accelerating__top {
+  .accelerating__copy {
     display: flex;
-    align-items: center;
-    gap: 3rem;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2.5rem;
   }
 
   .accelerating__heading {
-    flex: 1;
     font-size: clamp(1.5rem, 2.5vw, 2rem);
     font-weight: 800;
     letter-spacing: 0.02em;
@@ -96,9 +101,14 @@ import BrandArc from './BrandArc.astro';
     color: var(--color-blue-pale);
   }
 
+  .accelerating__body {
+    max-width: 32rem;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
   .accelerating__media {
-    flex: 0 0 16rem;
-    aspect-ratio: 4 / 3;
     border-radius: 1.5rem;
     background: rgba(255, 255, 255, 0.08);
     display: flex;
@@ -107,22 +117,14 @@ import BrandArc from './BrandArc.astro';
     overflow: hidden;
   }
 
-  .accelerating__body {
-    max-width: 48rem;
-    font-size: 1.0625rem;
-    line-height: 1.7;
-    color: rgba(255, 255, 255, 0.85);
-  }
-
   @media (max-width: 700px) {
-    .accelerating__top {
-      flex-direction: column;
-      align-items: flex-start;
+    .accelerating__inner {
+      grid-template-columns: 1fr;
     }
 
     .accelerating__media {
-      width: 100%;
-      flex-basis: auto;
+      order: -1;
+      aspect-ratio: 4 / 3;
     }
   }
 </style>
