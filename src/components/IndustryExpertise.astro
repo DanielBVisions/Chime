@@ -3,24 +3,48 @@
 
 <section class="industry">
   <div class="container industry__split">
-    <div class="industry__media" data-reveal data-parallax-wrap>
+    <div class="industry__media" data-reveal data-parallax-wrap data-industry-media>
       <img
+        class="industry__media-img industry__media-img--1"
         src="/images/industry-professionals-bg.jpg"
         alt=""
         loading="lazy"
         decoding="async"
         data-parallax-image
       />
+      <img
+        class="industry__media-img industry__media-img--2"
+        src="/images/industry-professionals-bg-2.jpg"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
     </div>
 
-    <div class="industry__text" data-reveal>
-      <span class="eyebrow">Industry Expertise</span>
-      <p class="industry__intro">
-        We understand the challenges faced by network operators and the expertise required to
-        drive operational success. That's why CHIME was developed with insights from professionals
-        across the industry, ensuring it meets the real-world needs of those working on the front
-        lines.
-      </p>
+    <div class="industry__text">
+      <div class="industry__block" data-reveal>
+        <span class="eyebrow">Industry Expertise</span>
+        <p class="industry__intro">
+          We understand the challenges faced by network operators and the expertise required to
+          drive operational success. That's why CHIME was developed with insights from professionals
+          across the industry, ensuring it meets the real-world needs of those working on the front
+          lines.
+        </p>
+      </div>
+
+      <div class="industry__block" data-reveal data-industry-frame-2>
+        <h2 class="industry__heading" data-reveal-heading>Industry Professionals</h2>
+        <p class="industry__body">
+          At the heart of every successful network operation are the dedicated professionals who
+          bring expertise, precision, and innovation to their roles. From design and construction to
+          maintenance and oversight, these specialists ensure the seamless function and evolution of
+          critical infrastructure.
+        </p>
+        <p class="industry__body">
+          CHIME is built on the collective experience of these industry experts, offering solutions
+          to those shaping the future of network operations.
+        </p>
+      </div>
     </div>
   </div>
 </section>
@@ -30,15 +54,23 @@
     background: var(--color-white);
   }
 
+  /* Narrower than the page's own container (global.css) — this section
+     reads as a contained two-column block, not a full-width band. */
   .industry__split {
+    max-width: 68rem;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 4rem;
     padding-block: 7rem;
   }
 
+  /* Sticky while the (now taller, two-block) text column scrolls past it -
+     align-items: flex-start above keeps this column at its own natural
+     height instead of stretching to match the text column, which is what
+     gives the sticky effect room to work. */
   .industry__media {
-    position: relative;
+    position: sticky;
+    top: 6rem;
     flex: 0 0 28.75rem;
     aspect-ratio: 4 / 5;
     border-radius: 24px;
@@ -51,14 +83,32 @@
      never uncover the frame's edges. Both live on custom properties, not
      the transform property itself, so the two effects compose instead of
      one overwriting the other's inline style. */
-  .industry__media img {
+  .industry__media-img {
     position: absolute;
     inset: -8%;
     width: 116%;
     height: 116%;
     object-fit: cover;
+    transition: opacity 0.6s ease;
+  }
+
+  .industry__media-img--1 {
+    opacity: 1;
     transform: translateY(var(--parallax-y, 0px)) scale(var(--hover-scale, 1));
-    transition: transform 0.5s ease;
+  }
+
+  .industry__media-img--2 {
+    opacity: 0;
+  }
+
+  /* Toggled by industry-crossfade.ts once the second text block scrolls
+     into view. */
+  .industry__media.is-frame-2 .industry__media-img--1 {
+    opacity: 0;
+  }
+
+  .industry__media.is-frame-2 .industry__media-img--2 {
+    opacity: 1;
   }
 
   .industry__media:hover img {
@@ -66,13 +116,19 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .industry__media img {
+    .industry__media-img {
       transition: none;
     }
   }
 
   .industry__text {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .industry__block {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
@@ -85,10 +141,27 @@
     color: var(--color-ink);
   }
 
+  .industry__heading {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+  }
+
+  .industry__body {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-grey-600);
+  }
+
   @media (max-width: 900px) {
     .industry__split {
       flex-direction: column;
       align-items: stretch;
+    }
+
+    .industry__media {
+      position: static;
     }
   }
 </style>
