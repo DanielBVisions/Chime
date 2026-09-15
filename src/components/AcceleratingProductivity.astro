@@ -3,14 +3,20 @@ import BrandArc from './BrandArc.astro';
 ---
 
 <section class="accelerating">
-  <BrandArc
-    size={640}
-    anchor="top-right"
-    style="top: auto; bottom: -12rem; right: -12rem; transform: scaleY(-1);"
-  />
+  <div class="accelerating__inner" data-reveal>
+    <div class="accelerating__top">
+      <h2 class="accelerating__heading">Accelerating Productivity</h2>
 
-  <div class="container accelerating__inner" data-reveal>
-    <h2 class="accelerating__heading">Accelerating Productivity</h2>
+      <div class="accelerating__media" aria-hidden="true">
+        <BrandArc
+          size={320}
+          anchor="top-right"
+          variant="white"
+          style="position: relative; top: auto; right: auto; width: 65%; height: auto;"
+        />
+      </div>
+    </div>
+
     <p class="accelerating__body">
       CHIME is the 'industry first' application for network operators, designed to improve field
       force productivity while addressing the industry-wide challenge of increasing regulatory
@@ -59,24 +65,30 @@ import BrandArc from './BrandArc.astro';
     z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    padding: 3rem 1.25rem;
-    max-width: 48rem;
+    gap: 2.5rem;
+    padding: 2.5rem 1.25rem;
   }
 
   @media (min-width: 768px) {
     .accelerating__inner {
-      padding: 4rem 2rem;
+      padding: 3rem 2rem;
     }
   }
 
   @media (min-width: 1200px) {
     .accelerating__inner {
-      padding: 5rem;
+      padding: 4rem;
     }
   }
 
+  .accelerating__top {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+
   .accelerating__heading {
+    flex: 1;
     font-size: clamp(1.5rem, 2.5vw, 2rem);
     font-weight: 800;
     letter-spacing: 0.02em;
@@ -84,9 +96,33 @@ import BrandArc from './BrandArc.astro';
     color: var(--color-blue-pale);
   }
 
+  .accelerating__media {
+    flex: 0 0 16rem;
+    aspect-ratio: 4 / 3;
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
   .accelerating__body {
+    max-width: 48rem;
     font-size: 1.0625rem;
     line-height: 1.7;
     color: rgba(255, 255, 255, 0.85);
+  }
+
+  @media (max-width: 700px) {
+    .accelerating__top {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .accelerating__media {
+      width: 100%;
+      flex-basis: auto;
+    }
   }
 </style>
