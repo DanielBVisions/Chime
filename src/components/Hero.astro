@@ -81,37 +81,26 @@ import BrandArc from './BrandArc.astro';
     opacity: 1;
   }
 
-  /* Grid, not flex — fr units split the row's actual full width in a
-     fixed, unambiguous ratio. No flex-basis/grow/shrink/min-content
-     interaction that can quietly under-size a column regardless of what
-     values are set. */
+  /* Centred and stacked: copy on top, media below — contained within the
+     container's normal padding rather than bleeding to the viewport
+     edge. Was a two-column side-by-side grid; that's gone entirely, not
+     just re-tuned. */
   .hero__inner {
     position: relative;
     z-index: 1;
-    /* Confirmed via computed styles: as a grid-display flex item, this
-       was sizing itself to fit its own grid columns' content (1125.86px)
-       instead of stretching to fill .hero first — leaving ~450px of
-       unclaimed margin on each side despite max-width: 1800px never
-       being reached. Forcing width: 100% makes it actually fill its
-       parent before max-width caps it, instead of relying on flex
-       stretch to do that implicitly. */
     width: 100%;
-    display: grid;
-    /* minmax(0, Nfr), not bare Nfr — a bare fr track has an implicit
-       "auto" (min-content) minimum, and .hero__copy's min-content width
-       is inflated by the wide, unbreakable "CHiME" word at 5.5rem. That
-       reserved-but-invisible minimum was distorting the actual 1.1:1
-       split away from what the ratio implies. minmax(0, ...) removes the
-       content-based minimum so the split is genuinely proportional. */
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
     gap: 3.5rem;
   }
 
   .hero__copy {
-    min-width: 0;
+    max-width: 46rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1.75rem;
   }
 
@@ -125,7 +114,7 @@ import BrandArc from './BrandArc.astro';
 
   .hero__wordmark {
     /* Capped at 5.5rem, not higher — much past this, the unbreakable
-       word "CHiME" gets wide enough to overflow its grid column. */
+       word "CHiME" gets wide enough to overflow .hero__copy's max-width. */
     font-size: clamp(3.5rem, 6vw, 5.5rem);
     line-height: 1;
     font-weight: 800;
@@ -142,25 +131,30 @@ import BrandArc from './BrandArc.astro';
   .hero__subhead {
     /* This carries the actual headline statement — was sized like a
        secondary line under the wordmark (1.625rem), when it needs to
-       read with the same weight the wordmark does, not underneath it. */
+       read with the same weight the wordmark does, not underneath it.
+       No max-width/ch cap here — a fixed character width forces a wrap
+       at that count regardless of how much room is actually available,
+       which reads like a hard-coded line break. Letting it wrap
+       naturally against .hero__copy's own max-width instead. */
     font-size: clamp(2rem, 3.2vw, 3rem);
     line-height: 1.15;
     letter-spacing: -0.01em;
     font-weight: 700;
     color: var(--color-ink);
-    max-width: 15ch;
   }
 
   .hero__body {
     font-size: 1.0625rem;
     line-height: 1.6;
     color: var(--color-grey-600);
-    max-width: 50ch;
+    max-width: 42rem;
   }
 
   .hero__actions {
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 1.125rem;
     margin-top: 0.5rem;
   }
@@ -171,11 +165,16 @@ import BrandArc from './BrandArc.astro';
     color: var(--color-ink);
   }
 
+  /* Wide band below the copy, not a side column any more — 4:3 was sized
+     for sitting next to the text; full-width at that ratio would now be
+     absurdly tall. width: 100% of .hero__inner (which already carries
+     the container's own padding) keeps it contained within the normal
+     margins rather than bleeding to the viewport edge. */
   .hero__media {
     position: relative;
     width: 100%;
-    min-width: 0;
-    aspect-ratio: 4 / 3;
+    max-width: 64rem;
+    aspect-ratio: 16 / 9;
     border-radius: 1.75rem;
     overflow: hidden;
     box-shadow: 0 30px 70px -20px rgba(11, 92, 173, 0.35);
@@ -260,11 +259,6 @@ import BrandArc from './BrandArc.astro';
   }
 
   @media (max-width: 900px) {
-    .hero__inner {
-      grid-template-columns: 1fr;
-      align-items: stretch;
-    }
-
     .hero__trust {
       flex-direction: column;
       align-items: flex-start;
