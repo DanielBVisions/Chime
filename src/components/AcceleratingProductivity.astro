@@ -1,150 +1,58 @@
 ---
+import BrandArc from './BrandArc.astro';
 ---
 
 <section class="accelerating">
-  <div class="accelerating__blob"></div>
+  <BrandArc
+    size={640}
+    anchor="top-right"
+    style="top: auto; bottom: -12rem; right: -12rem; transform: scaleY(-1);"
+  />
 
-  <div class="accelerating__inner" data-reveal>
-    <div class="accelerating__stat">
-      <span class="accelerating__stat-number">25+</span>
-      <span class="accelerating__stat-label">Years of network operator experience</span>
-    </div>
-
-    <div class="accelerating__copy">
-      <span class="eyebrow">Accelerating Productivity</span>
-      <p class="accelerating__statement">
-        CHIME is the 'industry first' application for network operators, designed to improve field
-        force productivity while addressing the industry-wide challenge of increasing regulatory
-        volumes.
-      </p>
-      <p class="accelerating__body">
-        With over 25 years of experience and a dedicated focus on network operators since 2014, we
-        understand the industry challenges, and ensure every aspect of CHiME is designed to meet
-        these unique challenges.
-      </p>
-    </div>
+  <div class="container accelerating__inner" data-reveal>
+    <h2 class="accelerating__heading">Accelerating Productivity</h2>
+    <p class="accelerating__body">
+      CHiME is the 'industry first' application for network operators, designed to improve field
+      force productivity while addressing the industry-wide challenge of increasing regulatory
+      volumes. With over 25 years of experience and a dedicated focus on network operators since
+      2014, we understand the industry challenges, and ensure every aspect of CHiME is designed to
+      meet these unique challenges.
+    </p>
   </div>
 </section>
 
 <style>
-  /* Inset rounded card, not a full-bleed band — margin-inline mirrors
-     .container's own gutters (global.css) so it lines up with the rest
-     of the page's content edge rather than reaching the viewport edge. */
   .accelerating {
     position: relative;
     overflow: hidden;
-    margin-inline: 1.25rem;
-    border-radius: 2rem;
-    background: linear-gradient(120deg, var(--color-blue-deep), var(--color-blue-mid) 130%);
-    color: var(--color-white);
-  }
-
-  @media (min-width: 768px) {
-    .accelerating {
-      margin-inline: 2rem;
-    }
-  }
-
-  @media (min-width: 1200px) {
-    .accelerating {
-      margin-inline: 5rem;
-      border-radius: 2.5rem;
-    }
-  }
-
-  /* Same scrim recipe as EnquireCta's gradient band: the lighter end alone
-     only gives white text ~2.7:1 contrast, under the 4.5:1 AA minimum. */
-  .accelerating::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background: rgba(0, 0, 0, 0.35);
-  }
-
-  .accelerating__blob {
-    position: absolute;
-    left: -7.5rem;
-    bottom: -10rem;
-    width: 28.75rem;
-    height: 28.75rem;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 70%);
+    background: var(--color-white);
+    padding-block: 7rem;
   }
 
   .accelerating__inner {
     position: relative;
     z-index: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 3.5rem;
-    padding: 3rem 1.25rem;
+    text-align: center;
+    gap: 2rem;
+    max-width: 56rem;
   }
 
-  @media (min-width: 768px) {
-    .accelerating__inner {
-      padding: 4rem 2rem;
-    }
-  }
-
-  @media (min-width: 1200px) {
-    .accelerating__inner {
-      padding: 5rem;
-    }
-  }
-
-  .accelerating__stat {
-    flex: 0 0 14rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .accelerating__stat-number {
-    font-size: 4.5rem;
-    line-height: 1;
+  /* Amber accent matched from the reference screenshot of the live site —
+     not yet in tokens.css since nothing else on the page uses it. */
+  .accelerating__heading {
+    font-size: clamp(1.75rem, 3vw, 2.75rem);
     font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--color-white);
-  }
-
-  .accelerating__stat-label {
-    max-width: 12rem;
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-  .accelerating__copy {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: flex-start;
-    max-width: 42rem;
-  }
-
-  .accelerating .eyebrow {
-    color: var(--color-blue-pale);
-  }
-
-  .accelerating__statement {
-    font-size: 1.875rem;
-    line-height: 1.5;
-    font-weight: 600;
-    color: var(--color-white);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #E8A33D;
   }
 
   .accelerating__body {
-    font-size: 1.0625rem;
-    line-height: 1.7;
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-  @media (max-width: 700px) {
-    .accelerating__inner {
-      flex-direction: column;
-      align-items: flex-start;
-    }
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--color-ink);
   }
 </style>
