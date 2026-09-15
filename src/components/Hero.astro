@@ -119,8 +119,12 @@ import BrandArc from './BrandArc.astro';
   }
 
   .hero__headline {
-    /* ~120px at the top end. */
-    font-size: clamp(3rem, 9vw, 7.5rem);
+    /* Fixed rem, no local clamp/vw: the Osmo root scaling (tokens.css)
+       already makes the root font-size fluid, so a local clamp() here
+       would compound with it. Since both this and .hero__copy's
+       max-width are in rem, the fit is a ratio, not a pixel target —
+       4.5rem keeps "the network operator" on one line at 64rem. */
+    font-size: 4.5rem;
     line-height: 1.05;
     letter-spacing: -0.02em;
     font-weight: 800;

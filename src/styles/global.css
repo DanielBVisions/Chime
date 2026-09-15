@@ -101,14 +101,16 @@ ol {
   color: var(--color-blue-mid);
 }
 
+/* Sized in px, not rem: buttons are UI chrome and shouldn't inflate with
+   the Osmo fluid root font-size (tokens.css) the way display type does. */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.875rem 1.75rem;
+  gap: 8px;
+  padding: 14px 28px;
   border-radius: 999px;
   font-weight: 700;
-  font-size: 0.875rem;
+  font-size: 14px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   background: var(--color-blue-deep);
@@ -122,12 +124,12 @@ ol {
 }
 
 .btn--sm {
-  padding: 0.75rem 1.625rem;
-  font-size: 0.8125rem;
+  padding: 12px 26px;
+  font-size: 13px;
 }
 
 .btn--lg {
-  padding: 1rem 1.875rem;
+  padding: 16px 30px;
 }
 
 .visually-hidden {
