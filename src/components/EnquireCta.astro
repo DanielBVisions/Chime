@@ -48,13 +48,34 @@
     background: linear-gradient(120deg, var(--color-blue-deep), var(--color-blue-mid) 130%);
   }
 
+  /* Same scrim recipe as AcceleratingProductivity/ChimeAdvantage's gradient
+     bands: the lighter gradient end alone only gives white text ~2.7:1
+     contrast, under the 4.5:1 AA minimum. This card had drifted from that
+     shared recipe during earlier redesigns - restoring it. Scoped to just
+     the gradient top half (not the whole card) since the flat blue-deep
+     bottom bar doesn't have that same lighter-end contrast problem, and
+     already got its own colour fix last round. */
   .enquire__top {
+    position: relative;
     padding: 3.5rem 3rem 3rem;
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
     gap: 2.5rem;
+  }
+
+  .enquire__top::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: rgba(0, 0, 0, 0.35);
+  }
+
+  .enquire__top > * {
+    position: relative;
+    z-index: 1;
   }
 
   /* Matches ChimeAdvantage's h2 exactly (2.75rem/800) rather than its
@@ -82,6 +103,8 @@
      cue (a visibly separate, darker tier under the headline), not a
      colour to copy outright. */
   .enquire__bar {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
