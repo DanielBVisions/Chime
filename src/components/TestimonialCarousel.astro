@@ -97,9 +97,14 @@ const testimonials = [
     gap: 1.5rem;
   }
 
+  /* padding-block gives the active card's own box-shadow (0 24px 40px
+     -16px, offset downward) room to render - it extends past the card's
+     own layout box, so with no buffer here it was getting clipped by
+     this element's overflow:hidden at the bottom. */
   .testimonials__viewport {
     flex: 1;
     min-width: 0;
+    padding-block: 3rem;
     overflow: hidden;
   }
 
