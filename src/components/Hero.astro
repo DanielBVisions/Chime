@@ -1,5 +1,14 @@
 ---
 import BrandArc from './BrandArc.astro';
+
+const trustedBy = [
+  { name: 'UK Power Networks', logo: '/images/partner-logos/uk-power-networks.avif' },
+  { name: 'SSE', logo: '/images/partner-logos/sse.svg' },
+  { name: 'Cadent Gas' },
+  { name: 'ESB Networks', logo: '/images/partner-logos/esb-networks.png' },
+  { name: 'SP Energy', logo: '/images/partner-logos/sp-energy.png' },
+  { name: 'Electricity North West', logo: '/images/partner-logos/electricity-north-west.avif' },
+];
 ---
 
 <section class="hero" data-hero>
@@ -42,11 +51,15 @@ import BrandArc from './BrandArc.astro';
     <div class="hero__trust-marquee" data-hero-trust>
       <div class="hero__trust-group" data-hero-trust-group>
         <ul class="hero__trust-list" data-hero-trust-track>
-          <li>UK Power Networks</li>
-          <li>SSE</li>
-          <li>Cadent Gas</li>
-          <li>ESB Networks</li>
-          <li>SP Electricity North West</li>
+          {trustedBy.map((partner) => (
+            <li>
+              {partner.logo ? (
+                <img src={partner.logo} alt={partner.name} loading="lazy" decoding="async" />
+              ) : (
+                partner.name
+              )}
+            </li>
+          ))}
         </ul>
       </div>
     </div>
@@ -223,16 +236,27 @@ import BrandArc from './BrandArc.astro';
 
   .hero__trust-list {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     gap: 1.5rem 3rem;
     width: 100%;
   }
 
   .hero__trust-list li {
+    display: flex;
+    align-items: center;
     font-size: 0.9375rem;
     font-weight: 700;
     color: var(--color-grey-600);
     white-space: nowrap;
+  }
+
+  .hero__trust-list li img {
+    height: 1.75rem;
+    width: auto;
+    max-width: 8rem;
+    opacity: 0.75;
+    filter: grayscale(1);
   }
 
   .hero__trust-marquee.is-marquee .hero__trust-group {

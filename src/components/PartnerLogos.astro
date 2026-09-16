@@ -1,17 +1,18 @@
 ---
-// Rendered as text wordmarks for now — swap each span for an <img> once real
-// partner SVGs land in public/images/partner-logos/ (tech spec §8, item 5-adjacent).
-// role-ticker.ts progressively enhances this into a single-track infinite
-// marquee (tech spec §5.7), skipped under prefers-reduced-motion.
+// Real logos where we have them (public/images/partner-logos/); plain text
+// wordmarks for partners without an asset yet. role-ticker.ts progressively
+// enhances this into a single-track infinite marquee (tech spec §5.7),
+// skipped under prefers-reduced-motion.
 const partners = [
-  'UK Power Networks',
-  'SSE',
-  'Cadent Gas',
-  'ESB Networks',
-  'NRE Services Ltd',
-  'TreeSmiths',
-  'Oakwick',
-  'SP Electricity North West',
+  { name: 'UK Power Networks', logo: '/images/partner-logos/uk-power-networks.avif' },
+  { name: 'SSE', logo: '/images/partner-logos/sse.svg' },
+  { name: 'Cadent Gas' },
+  { name: 'ESB Networks', logo: '/images/partner-logos/esb-networks.png' },
+  { name: 'NRE Services Ltd' },
+  { name: 'TreeSmiths' },
+  { name: 'Oakwick' },
+  { name: 'SP Energy', logo: '/images/partner-logos/sp-energy.png' },
+  { name: 'Electricity North West', logo: '/images/partner-logos/electricity-north-west.avif' },
 ];
 ---
 
@@ -23,7 +24,13 @@ const partners = [
       <div class="partners__group" data-partner-group>
         <ul class="partners__list" data-partner-track>
           {partners.map((partner) => (
-            <li>{partner}</li>
+            <li>
+              {partner.logo ? (
+                <img src={partner.logo} alt={partner.name} loading="lazy" decoding="async" />
+              ) : (
+                partner.name
+              )}
+            </li>
           ))}
         </ul>
       </div>
@@ -52,6 +59,7 @@ const partners = [
 
   .partners__list {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     justify-content: center;
     gap: 2rem 3rem;
@@ -59,17 +67,30 @@ const partners = [
   }
 
   .partners__list li {
+    display: flex;
+    align-items: center;
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--color-grey-600);
     filter: grayscale(1);
     white-space: nowrap;
-    transition: color 0.2s ease, filter 0.2s ease;
+    transition: color 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+  }
+
+  .partners__list li img {
+    height: 2rem;
+    width: auto;
+    max-width: 9rem;
+    opacity: 0.7;
   }
 
   .partners__list li:hover {
     color: var(--color-blue-deep);
     filter: grayscale(0);
+  }
+
+  .partners__list li:hover img {
+    opacity: 1;
   }
 
   /* Marquee state — added by role-ticker.ts once it clones the track;

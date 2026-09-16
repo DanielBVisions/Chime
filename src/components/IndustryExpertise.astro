@@ -125,13 +125,21 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 16rem;
+    gap: 24rem;
   }
 
   .industry__block {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+  }
+
+  /* Centres the first block's text vertically against the sticky image
+     beside it (28.75rem wide × 4:5 aspect-ratio = 35.9375rem tall),
+     rather than sitting pinned to its top edge. */
+  .industry__block:first-child {
+    min-height: 35.9375rem;
+    justify-content: center;
   }
 
   .industry__heading {
@@ -155,6 +163,10 @@
 
     .industry__media {
       position: static;
+    }
+
+    .industry__block:first-child {
+      min-height: 0;
     }
   }
 </style>
