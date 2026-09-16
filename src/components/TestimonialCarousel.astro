@@ -97,17 +97,10 @@ const testimonials = [
     gap: 1.5rem;
   }
 
-  /* overflow-x only (not a blanket overflow:hidden): transform:scale()
-     on the active card doesn't change its layout footprint, only how it
-     paints, so the scaled-up card is visually taller than the row's own
-     layout height - a plain overflow:hidden here clipped the top (and
-     bottom) of that card. Horizontal clipping still hides off-screen
-     slides; vertical stays open so the scale has room to paint. */
   .testimonials__viewport {
     flex: 1;
     min-width: 0;
-    overflow-x: hidden;
-    overflow-y: visible;
+    overflow: hidden;
   }
 
   .testimonials__viewport:focus-visible {
@@ -121,11 +114,14 @@ const testimonials = [
   }
 
   /* Centre-focused carousel: every slide is the same flex-basis (so the
-     track's offset math stays simple), but the active slide's card is
-     scaled up to full size/opacity, its immediate neighbours are
-     mid-sized and partly faded, and everything beyond that is smaller
-     again and faded further - same card markup throughout, only the
-     transform/opacity treatment changes with distance from active. */
+     track's offset math stays simple). The active card renders at its
+     true, unscaled size (1) - full opacity, no transform - while its
+     neighbours and everything beyond scale DOWN instead of the active
+     card scaling UP. Scaling up was what caused the clipping: transform
+     doesn't change an element's layout footprint, so a scaled-up card
+     painted taller than the row's own layout height and got cut off by
+     the viewport's overflow:hidden. Nothing here ever paints larger
+     than its own box, so that can't happen. */
   .testimonials__slide {
     flex: 0 0 80%;
     max-width: 80%;
@@ -163,7 +159,7 @@ const testimonials = [
     border-radius: 18px;
     box-sizing: border-box;
     overflow: hidden;
-    transform: scale(0.82);
+    transform: scale(0.78);
     opacity: 0.35;
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, box-shadow 0.3s ease;
   }
@@ -177,14 +173,14 @@ const testimonials = [
   }
 
   .testimonials__slide.is-adjacent .testimonials__card {
-    transform: scale(0.94);
+    transform: scale(0.88);
     opacity: 0.65;
   }
 
   .testimonials__slide.is-active .testimonials__card {
     position: relative;
     z-index: 1;
-    transform: scale(1.08);
+    transform: scale(1);
     opacity: 1;
     box-shadow: 0 24px 40px -16px rgba(11, 92, 173, 0.22);
   }
