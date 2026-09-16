@@ -51,8 +51,14 @@ export function initTestimonialCarousel() {
       return clone;
     });
 
-    leadingClones.forEach((clone) => track.insertBefore(clone, track.firstChild));
-    trailingClones.forEach((clone) => track.appendChild(clone));
+    // prepend/append (not a loop of insertBefore(clone, track.firstChild))
+    // - that loop was inserting each clone before whatever the *current*
+    // first child was, which changes after every insertion, so the two
+    // leading clones ended up in reversed order relative to the real
+    // slides they stand in for. prepend/append take multiple nodes and
+    // insert them all in the given order in one call.
+    track.prepend(...leadingClones);
+    track.append(...trailingClones);
   }
 
   const slides = Array.from(track.children) as HTMLElement[];
