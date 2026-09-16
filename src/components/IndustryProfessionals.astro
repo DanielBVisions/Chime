@@ -5,7 +5,7 @@ import BrandArc from './BrandArc.astro';
 
 <section class="professionals">
   <div class="professionals__ticker-band">
-    <BrandArc size={480} anchor="bottom-left" style="bottom: -140px; left: -140px;" />
+    <BrandArc size={480} anchor="bottom-left" variant="white" style="bottom: -140px; left: -140px;" />
     <RoleTicker />
   </div>
 
@@ -27,7 +27,7 @@ import BrandArc from './BrandArc.astro';
 
   .professionals__ticker-band {
     position: relative;
-    background: linear-gradient(120deg, #e8f6fb, var(--color-grey-100) 60%);
+    background: linear-gradient(120deg, var(--color-blue-deep), var(--color-blue-mid) 130%);
     padding-block: 2.5rem;
     overflow: hidden;
   }

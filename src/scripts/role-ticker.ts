@@ -14,8 +14,17 @@ function buildMarquee(wrapper: HTMLElement, group: HTMLElement, track: HTMLEleme
   const distance = track.offsetWidth;
   const duration = distance / speed;
 
+  // Role ticker rows alternate direction (see RoleTicker.astro's
+  // data-marquee-direction) so the three rows visually counter-scroll
+  // instead of all drifting the same way.
+  const reverse = wrapper.dataset.marqueeDirection === 'reverse';
+
   const tl = gsap.timeline({ repeat: -1 });
-  tl.fromTo(group, { xPercent: 0 }, { xPercent: -50, duration, ease: 'none' });
+  if (reverse) {
+    tl.fromTo(group, { xPercent: -50 }, { xPercent: 0, duration, ease: 'none' });
+  } else {
+    tl.fromTo(group, { xPercent: 0 }, { xPercent: -50, duration, ease: 'none' });
+  }
 
   wrapper.addEventListener('mouseenter', () => tl.pause());
   wrapper.addEventListener('mouseleave', () => tl.play());
@@ -23,17 +32,23 @@ function buildMarquee(wrapper: HTMLElement, group: HTMLElement, track: HTMLEleme
   wrapper.addEventListener('focusout', () => tl.play());
 }
 
+// Wrapper selector may match more than one element (the role ticker
+// renders one marquee per row) - every match gets its own independent
+// marquee instance.
 function initMarquee(wrapperSelector: string, groupSelector: string, trackSelector: string, options: MarqueeOptions) {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return; // static wrapped list stays as rendered — no marquee
 
-  const wrapper = document.querySelector<HTMLElement>(wrapperSelector);
-  const group = wrapper?.querySelector<HTMLElement>(groupSelector);
-  const track = wrapper?.querySelector<HTMLElement>(trackSelector);
-  if (!wrapper || !group || !track) return;
+  const wrappers = document.querySelectorAll<HTMLElement>(wrapperSelector);
 
-  wrapper.classList.add('is-marquee');
-  buildMarquee(wrapper, group, track, options);
+  wrappers.forEach((wrapper) => {
+    const group = wrapper.querySelector<HTMLElement>(groupSelector);
+    const track = wrapper.querySelector<HTMLElement>(trackSelector);
+    if (!group || !track) return;
+
+    wrapper.classList.add('is-marquee');
+    buildMarquee(wrapper, group, track, options);
+  });
 }
 
 export function initRoleTicker() {

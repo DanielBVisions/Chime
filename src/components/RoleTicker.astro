@@ -1,7 +1,10 @@
 ---
-// Deduped canonical role list. Renders as a static wrapped list by default;
-// role-ticker.ts progressively enhances it into a two-track infinite marquee
-// (tech spec §5.4), skipped entirely under prefers-reduced-motion.
+// Deduped canonical role list. Split round-robin into three rows so each
+// row's total pill width is roughly balanced, rather than just slicing
+// the list into three ranges. Each row renders as a static wrapped list
+// by default; role-ticker.ts progressively enhances every row into its
+// own infinite marquee, alternating scroll direction row to row, skipped
+// entirely under prefers-reduced-motion.
 const roles = [
   'Fault engineers',
   'network designers',
@@ -23,24 +26,41 @@ const roles = [
   'civils work teams',
   'job estimators',
 ];
+
+const rows: string[][] = [[], [], []];
+roles.forEach((role, i) => rows[i % 3].push(role));
 ---
 
-<div class="role-ticker" data-role-ticker data-reveal>
-  <div class="role-ticker__group" data-role-ticker-group>
-    <ul class="role-ticker__list" data-role-ticker-track>
-      {roles.map((role) => (
-        <li>{role}</li>
-      ))}
-    </ul>
-  </div>
+<div class="role-ticker" data-reveal>
+  {rows.map((rowRoles, i) => (
+    <div
+      class="role-ticker__row"
+      data-role-ticker
+      data-marquee-direction={i % 2 === 1 ? 'reverse' : undefined}
+    >
+      <div class="role-ticker__group" data-role-ticker-group>
+        <ul class="role-ticker__list" data-role-ticker-track>
+          {rowRoles.map((role) => (
+            <li>{role}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  ))}
 </div>
 
 <style>
   .role-ticker {
     position: relative;
     z-index: 1;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     padding-block: 2.5rem;
+  }
+
+  .role-ticker__row {
+    overflow: hidden;
   }
 
   .role-ticker__group {
@@ -60,7 +80,7 @@ const roles = [
     align-items: center;
     padding: 0.625rem 1.125rem;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(11, 92, 173, 0.15);
     font-size: 0.875rem;
     font-weight: 600;
@@ -68,14 +88,14 @@ const roles = [
     white-space: nowrap;
   }
 
-  /* Marquee state — added by role-ticker.ts once it clones the track;
-     never applied under prefers-reduced-motion, so the static wrapped
-     list above is the reduced-motion fallback by construction. */
-  .role-ticker.is-marquee .role-ticker__group {
+  /* Marquee state — added by role-ticker.ts once it clones each row's
+     track; never applied under prefers-reduced-motion, so the static
+     wrapped list above is the reduced-motion fallback by construction. */
+  .role-ticker__row.is-marquee .role-ticker__group {
     width: max-content;
   }
 
-  .role-ticker.is-marquee .role-ticker__list {
+  .role-ticker__row.is-marquee .role-ticker__list {
     flex-wrap: nowrap;
     justify-content: flex-start;
     flex-shrink: 0;
