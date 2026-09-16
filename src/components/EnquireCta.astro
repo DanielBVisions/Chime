@@ -3,77 +3,110 @@ import BrandArc from './BrandArc.astro';
 ---
 
 <section class="enquire" id="contact">
-  <div class="enquire__glow" aria-hidden="true"></div>
-  <BrandArc size={460} anchor="top-right" variant="white" style="bottom: -140px; right: -100px;" />
+  <div class="enquire__backdrop" aria-hidden="true"></div>
+  <BrandArc size={720} anchor="top-right" variant="white" style="top: -220px; right: -220px; opacity: 0.5;" />
+  <BrandArc size={560} anchor="bottom-left" variant="white" style="bottom: -180px; left: -180px; opacity: 0.35;" />
 
-  <div class="container enquire__inner" data-reveal>
-    <h2 data-reveal-heading>Enquire Now For a Demo</h2>
-    <p class="enquire__sub">Transform your field operations with our innovative solutions designed for network operators.</p>
+  <div class="container enquire__inner">
+    <div class="enquire__panel" data-reveal>
+      <span class="eyebrow enquire__eyebrow">Get Started</span>
+      <h2 data-reveal-heading>
+        Enquire Now <span class="enquire__accent">For a Demo</span>
+      </h2>
+      <p class="enquire__sub">Transform your field operations with our innovative solutions designed for network operators.</p>
 
-    <form class="enquire__form" data-enquire-form novalidate>
-      <div class="enquire__field">
-        <label for="name" class="visually-hidden">Name</label>
-        <input type="text" id="name" name="name" autocomplete="name" placeholder="Full Name" required />
-      </div>
+      <form class="enquire__form" data-enquire-form novalidate>
+        <div class="enquire__field">
+          <label for="name" class="visually-hidden">Name</label>
+          <input type="text" id="name" name="name" autocomplete="name" placeholder="Full Name" required />
+        </div>
 
-      <div class="enquire__field">
-        <label for="email" class="visually-hidden">Email</label>
-        <input type="email" id="email" name="email" autocomplete="email" placeholder="Your Email" required />
-      </div>
+        <div class="enquire__field">
+          <label for="email" class="visually-hidden">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" placeholder="Your Email" required />
+        </div>
 
-      <button type="submit" class="btn enquire__submit">Enquire Now</button>
-    </form>
+        <button type="submit" class="btn enquire__submit">Enquire Now</button>
+      </form>
 
-    <p class="enquire__status" data-enquire-status role="status" aria-live="polite" hidden></p>
+      <p class="enquire__status" data-enquire-status role="status" aria-live="polite" hidden></p>
+    </div>
   </div>
 </section>
 
 <style>
+  /* Genuinely different from a re-themed version of the old flat
+     gradient band: a layered, textured backdrop with a floating glass
+     panel on top, rather than text+form sitting directly on a solid
+     background. */
   .enquire {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(160deg, #050b14, var(--color-blue-deep) 55%, #081522);
+    background: #04070d;
     color: var(--color-white);
+    padding-block: 6rem;
   }
 
-  /* Soft radial glow behind the form for depth, echoing the moody/lit
-     look of the reference rather than a flat gradient. */
-  .enquire__glow {
+  .enquire__backdrop {
     position: absolute;
     inset: 0;
     z-index: 0;
-    background: radial-gradient(60% 60% at 50% 40%, rgba(63, 169, 218, 0.28), transparent 70%);
+    background:
+      radial-gradient(45% 60% at 18% 15%, rgba(63, 169, 218, 0.35), transparent 70%),
+      radial-gradient(55% 65% at 85% 90%, rgba(240, 169, 58, 0.16), transparent 70%),
+      radial-gradient(80% 80% at 50% 50%, var(--color-blue-deep), #04070d 75%);
   }
 
   .enquire__inner {
     position: relative;
     z-index: 1;
-    max-width: 44rem;
+  }
+
+  /* The floating "glass" card - the actual structural difference from
+     the old design, which had copy/form sitting flush on the section's
+     own background with nothing separating them from it. */
+  .enquire__panel {
+    max-width: 46rem;
     margin-inline: auto;
+    padding: 3.5rem 3rem;
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.6);
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 1.25rem;
-    padding-block: 7rem;
+  }
+
+  .enquire__eyebrow {
+    color: #f0a93a;
   }
 
   .enquire h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2rem, 4vw, 2.875rem);
     font-weight: 800;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
     text-transform: uppercase;
+    line-height: 1.15;
+  }
+
+  .enquire__accent {
+    color: var(--color-blue-pale);
   }
 
   .enquire__sub {
-    max-width: 34rem;
+    max-width: 32rem;
     font-size: 1.0625rem;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.7);
   }
 
   .enquire__form {
-    margin-top: 1rem;
+    margin-top: 0.75rem;
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
@@ -93,14 +126,14 @@ import BrandArc from './BrandArc.astro';
     box-sizing: border-box;
     padding: 0.875rem 1.125rem;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
     color: var(--color-white);
     font: inherit;
   }
 
   .enquire__field input::placeholder {
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.5);
   }
 
   .enquire__field input:focus-visible {
@@ -108,9 +141,9 @@ import BrandArc from './BrandArc.astro';
     outline-offset: 2px;
   }
 
-  /* Warm accent against the dark, cool background — deliberately a
-     different colour from the site's blue CTAs elsewhere, for contrast
-     on a section that's meant to read as the conversion moment. */
+  /* Warm accent against the dark, cool backdrop — deliberately a
+     different colour from the site's blue CTAs elsewhere, since this
+     section is meant to read as the conversion moment. */
   .enquire__submit {
     flex-shrink: 0;
     background: #f0a93a;
@@ -128,13 +161,15 @@ import BrandArc from './BrandArc.astro';
   }
 
   .enquire__status {
-    position: relative;
-    z-index: 1;
-    margin-top: 1rem;
+    margin-top: 0.75rem;
     font-weight: 700;
   }
 
   @media (max-width: 640px) {
+    .enquire__panel {
+      padding: 2.5rem 1.75rem;
+    }
+
     .enquire__form {
       flex-direction: column;
       align-items: stretch;
