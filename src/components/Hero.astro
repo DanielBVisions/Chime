@@ -251,12 +251,15 @@ const trustedBy = [
     white-space: nowrap;
   }
 
+  /* Fixed height + object-fit:contain gives every logo the same visual
+     footprint, regardless of how much whitespace is baked into its own
+     source file (a square badge like ESB vs. a wide wordmark like
+     "Electricity North West") — full colour, no grayscale/dimming. */
   .hero__trust-list li img {
-    height: 1.75rem;
+    height: 2.75rem;
     width: auto;
-    max-width: 8rem;
-    opacity: 0.75;
-    filter: grayscale(1);
+    max-width: 10rem;
+    object-fit: contain;
   }
 
   .hero__trust-marquee.is-marquee .hero__trust-group {
