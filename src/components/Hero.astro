@@ -251,14 +251,15 @@ const trustedBy = [
     white-space: nowrap;
   }
 
-  /* Fixed height + object-fit:contain gives every logo the same visual
-     footprint, regardless of how much whitespace is baked into its own
-     source file (a square badge like ESB vs. a wide wordmark like
-     "Electricity North West") — full colour, no grayscale/dimming. */
+  /* Fixed width AND height (not just height + max-width) so every logo
+     sits in the exact same bounding box regardless of its own aspect
+     ratio — a tall square badge (ESB) and a wide wordmark (Electricity
+     North West) both get scaled to fit this box via object-fit, instead
+     of a wide logo simply rendering much wider than a narrow one at the
+     same nominal height. Full colour, no grayscale/dimming. */
   .hero__trust-list li img {
-    height: 2.75rem;
-    width: auto;
-    max-width: 10rem;
+    width: 7rem;
+    height: 2.25rem;
     object-fit: contain;
   }
 
