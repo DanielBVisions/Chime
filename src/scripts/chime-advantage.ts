@@ -29,13 +29,16 @@ export function initChimeAdvantage() {
     x: -distance,
     ease: 'none',
     scrollTrigger: {
-      trigger: section,
-      pin: true,
+      // Trigger is the card row itself, not the whole section - the
+      // section is much taller than the card row (intro text/CTA sit
+      // above it), so "section centre meets viewport centre" was
+      // reached while the cards themselves were still sitting below
+      // the middle of the screen. Pinning still locks the whole
+      // section in place; only the position used to decide *when* to
+      // start is now based on the cards' own position.
+      trigger: track,
+      pin: section,
       scrub: true,
-      // Pins (and the horizontal scroll starts) once the section's own
-      // centre reaches the viewport's centre, rather than as soon as its
-      // top edge appears - so the cards are already centred on screen
-      // before any scroll-jacking kicks in.
       start: 'center center',
       end: '+=' + distance,
     },
