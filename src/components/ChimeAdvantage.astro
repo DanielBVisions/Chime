@@ -173,7 +173,11 @@ const features = [
     gap: 2.25rem;
     width: max-content;
     padding-inline: 1.25rem;
-    padding-block: 1.5rem;
+    /* Generous vertical headroom - each card's own rotate() transform
+       widens its bounding box beyond its unrotated height, and this is
+       the buffer that keeps that from clipping against the viewport's
+       overflow-y:hidden. */
+    padding-block: 4rem;
   }
 
   @media (min-width: 768px) {
@@ -188,8 +192,13 @@ const features = [
     }
   }
 
+  /* Wider than before (16.25rem) so the longer body copy (the first
+     feature's especially) needs fewer line-wraps - narrower cards made
+     that card much taller than the rest, and combined with each card's
+     own rotate() transform, its bounding box could clip against
+     advantage__viewport's overflow-y:hidden. */
   .advantage__viewport :global(.feature-card) {
-    flex: 0 0 16.25rem;
+    flex: 0 0 20rem;
   }
 
   /* Scroll-pin state — added by chime-advantage.ts when motion is allowed
