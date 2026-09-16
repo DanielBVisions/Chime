@@ -40,14 +40,16 @@
     padding-block: var(--space-section);
   }
 
-  /* Bright, high-contrast card in two tiers - a pale-blue "headline"
-     top half and a full-bleed dark bar along the bottom holding the
-     actual form - rather than everything sitting on one flat
-     background at the same visual weight. */
+  /* Two-tier card - gradient "headline" top half, full-bleed dark bar
+     along the bottom holding the actual form - rather than everything
+     sitting on one flat background at the same visual weight. Uses the
+     same blue gradient already established for AcceleratingProductivity
+     and ChimeAdvantage: the reference's bright-cyan/black pairing was a
+     layout cue, not a colour one. */
   .enquire__card {
     border-radius: 2.5rem;
     overflow: hidden;
-    background: var(--color-blue-pale);
+    background: linear-gradient(120deg, var(--color-blue-deep), var(--color-blue-mid) 130%);
   }
 
   .enquire__top {
@@ -65,7 +67,7 @@
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.1;
-    color: var(--color-ink);
+    color: var(--color-white);
   }
 
   .enquire__sub {
@@ -73,7 +75,7 @@
     margin-top: 0.5rem;
     font-size: 1rem;
     line-height: 1.6;
-    color: rgba(10, 10, 10, 0.7);
+    color: rgba(255, 255, 255, 0.8);
   }
 
   .enquire__bar {
