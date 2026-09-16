@@ -14,10 +14,16 @@ const BUFFER = 2; // cloned slides on each end - see note below
 // its full width in one visible leap, and at either end the active slide
 // would run out of a real neighbour on one side. So BUFFER real slides are
 // cloned from the tail and prepended, and BUFFER from the head and
-// appended - "active" moves freely up and down this extended list, and
-// once a transition lands on a clone, the track snaps (no animation,
-// imperceptible since the clone is identical) to the equivalent real
-// slide in the same visual position.
+// appended - "active" is allowed to land on a clone (that transition
+// looks like a completely normal step, since the clone is identical to
+// the real slide it stands in for), and the very next time the carousel
+// is asked to move, it first snaps - instantly, no animation - from
+// that clone back to the equivalent real slide, before starting the new
+// animated step. Doing the snap at the *start* of the next interaction,
+// with nothing else animating, keeps it fully decoupled from any
+// in-flight tween's own final frame - an earlier version did this snap
+// inside the previous tween's onComplete instead, which visibly
+// collided with that tween settling and read as a glitch/jump.
 export function initTestimonialCarousel() {
   const viewport = document.querySelector<HTMLElement>('[data-testimonial-viewport]');
   const track = document.querySelector<HTMLElement>('[data-testimonial-track]');
@@ -68,6 +74,26 @@ export function initTestimonialCarousel() {
     });
   }
 
+  function centreOn(slide: HTMLElement) {
+    // Slide sizing is set by flex-basis (CSS), unaffected by the card's
+    // own transform:scale, so offsetLeft/offsetWidth stay reliable for
+    // centring math regardless of which slide is currently scaled up.
+    return viewport!.offsetWidth / 2 - slide.offsetLeft - slide.offsetWidth / 2;
+  }
+
+  // If `active` is currently sitting on a clone, jump back to the
+  // equivalent real slide instantly (no animation) before anything else
+  // happens - see the note above the export for why this lives here
+  // rather than in the previous tween's onComplete.
+  function snapToReal() {
+    if (!hasBuffer) return;
+    if (active < offset || active >= offset + count) {
+      active = offset + realIndexOf(active);
+      setActiveClasses();
+      gsap.set(track, { x: centreOn(slides[active]) });
+    }
+  }
+
   function buildDots() {
     if (!dotsContainer) return;
     dotsContainer.innerHTML = '';
@@ -77,7 +103,10 @@ export function initTestimonialCarousel() {
       dot.type = 'button';
       dot.className = 'testimonials__dot';
       dot.setAttribute('aria-label', `Go to testimonial ${i + 1} of ${count}`);
-      dot.addEventListener('click', () => goTo(offset + i));
+      dot.addEventListener('click', () => {
+        snapToReal();
+        animateTo(offset + i);
+      });
       dotsContainer.appendChild(dot);
       dots.push(dot);
     }
@@ -89,56 +118,15 @@ export function initTestimonialCarousel() {
     dots.forEach((dot, i) => dot.classList.toggle('is-active', i === realIndex));
   }
 
-  // If a previous transition was interrupted before its end-of-loop snap
-  // could fire (e.g. the next arrow clicked again before the 0.6s tween
-  // finished, which kills the pending tween's onComplete along with it),
-  // `active` can be left sitting on a clone. This must check the same
-  // "unsafe" range the onComplete snap below does ([offset, offset+count))
-  // - checking against the full slides array bounds instead (as this used
-  // to) let repeated fast clicks walk `active` past the last clone
-  // entirely, indexing off the end of the array and breaking the loop.
-  function normalizeActive() {
-    if (active < offset || active >= offset + count) {
-      active = offset + realIndexOf(active);
-    }
-  }
-
-  function goTo(target: number, { instant = false } = {}) {
+  function animateTo(target: number, { instant = false } = {}) {
     active = target;
     setActiveClasses();
     updateDots();
 
-    const activeSlide = slides[active];
-    // Slide sizing is set by flex-basis (CSS), unaffected by the card's
-    // own transform:scale, so offsetLeft/offsetWidth stay reliable for
-    // centring math regardless of which slide is currently scaled up.
-    const x = viewport!.offsetWidth / 2 - activeSlide.offsetLeft - activeSlide.offsetWidth / 2;
-
     gsap.to(track, {
-      x,
+      x: centreOn(slides[active]),
       duration: instant || prefersReducedMotion ? 0 : 0.6,
       ease: 'power3.out',
-      onComplete: () => {
-        if (!hasBuffer) return;
-        if (active < offset || active >= offset + count) {
-          // The clone we just landed on and the real slide we're about to
-          // snap to are meant to look pixel-identical - but setActiveClasses()
-          // below flips is-active/is-adjacent onto a different set of DOM
-          // elements, and .testimonials__card has its own CSS transition on
-          // transform/opacity. Without suppressing that, the class swap
-          // visibly eases between the two even though the track's position
-          // jumps instantly, which is exactly the "jump" that was reported -
-          // a real snap has to be instant on both axes, not just position.
-          track!.classList.add('is-snapping');
-          active = offset + realIndexOf(active);
-          const realSlide = slides[active];
-          const snapX = viewport!.offsetWidth / 2 - realSlide.offsetLeft - realSlide.offsetWidth / 2;
-          gsap.set(track, { x: snapX });
-          setActiveClasses();
-          void track!.offsetWidth; // force layout so the transition:none above is committed before it's removed
-          requestAnimationFrame(() => track!.classList.remove('is-snapping'));
-        }
-      },
     });
 
     if (liveRegion) {
@@ -147,48 +135,33 @@ export function initTestimonialCarousel() {
     }
   }
 
+  // Advances by one step, snapping back to a real slide first if we're
+  // currently resting on a clone from the previous step.
+  function step(delta: number, opts?: { instant?: boolean }) {
+    snapToReal();
+    animateTo(active + delta, opts);
+  }
+
   buildDots();
-  goTo(active, { instant: true });
+  animateTo(active, { instant: true });
 
-  prevBtn.addEventListener('click', () => {
-    normalizeActive();
-    goTo(active - 1);
-  });
-
-  nextBtn.addEventListener('click', () => {
-    normalizeActive();
-    goTo(active + 1);
-  });
+  prevBtn.addEventListener('click', () => step(-1));
+  nextBtn.addEventListener('click', () => step(1));
 
   viewport.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft') {
-      normalizeActive();
-      goTo(active - 1);
-    }
-    if (event.key === 'ArrowRight') {
-      normalizeActive();
-      goTo(active + 1);
-    }
+    if (event.key === 'ArrowLeft') step(-1);
+    if (event.key === 'ArrowRight') step(1);
   });
 
-  window.addEventListener('resize', () => {
-    normalizeActive();
-    goTo(active, { instant: true });
-  });
+  window.addEventListener('resize', () => step(0, { instant: true }));
 
   if (prefersReducedMotion) return; // manual arrow/keyboard/dot nav still works; no autoplay
 
-  let autoplay = window.setInterval(() => {
-    normalizeActive();
-    goTo(active + 1);
-  }, AUTOPLAY_INTERVAL_MS);
+  let autoplay = window.setInterval(() => step(1), AUTOPLAY_INTERVAL_MS);
   const stopAutoplay = () => window.clearInterval(autoplay);
   const restartAutoplay = () => {
     stopAutoplay();
-    autoplay = window.setInterval(() => {
-      normalizeActive();
-      goTo(active + 1);
-    }, AUTOPLAY_INTERVAL_MS);
+    autoplay = window.setInterval(() => step(1), AUTOPLAY_INTERVAL_MS);
   };
 
   viewport.addEventListener('mouseenter', stopAutoplay);
