@@ -90,10 +90,15 @@ export function initTestimonialCarousel() {
   }
 
   // If a previous transition was interrupted before its end-of-loop snap
-  // could fire, `active` might still be sitting past the buffered clones -
-  // pull it back into the safe extended range before computing a new step.
+  // could fire (e.g. the next arrow clicked again before the 0.6s tween
+  // finished, which kills the pending tween's onComplete along with it),
+  // `active` can be left sitting on a clone. This must check the same
+  // "unsafe" range the onComplete snap below does ([offset, offset+count))
+  // - checking against the full slides array bounds instead (as this used
+  // to) let repeated fast clicks walk `active` past the last clone
+  // entirely, indexing off the end of the array and breaking the loop.
   function normalizeActive() {
-    if (active < 0 || active >= slides.length) {
+    if (active < offset || active >= offset + count) {
       active = offset + realIndexOf(active);
     }
   }
