@@ -97,10 +97,17 @@ const testimonials = [
     gap: 1.5rem;
   }
 
+  /* overflow-x only (not a blanket overflow:hidden): transform:scale()
+     on the active card doesn't change its layout footprint, only how it
+     paints, so the scaled-up card is visually taller than the row's own
+     layout height - a plain overflow:hidden here clipped the top (and
+     bottom) of that card. Horizontal clipping still hides off-screen
+     slides; vertical stays open so the scale has room to paint. */
   .testimonials__viewport {
     flex: 1;
     min-width: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: visible;
   }
 
   .testimonials__viewport:focus-visible {
