@@ -162,8 +162,14 @@ const features = [
     -webkit-overflow-scrolling: touch;
   }
 
+  /* align-items: flex-start so each card sizes to its own content -
+     without this, the default flex stretch makes every card match the
+     height of whichever one has the longest body copy (the first
+     feature's is far longer than the rest), leaving the short-copy
+     cards mostly empty and oversized. */
   .advantage__track {
     display: flex;
+    align-items: flex-start;
     gap: 2.25rem;
     width: max-content;
     padding-inline: 1.25rem;

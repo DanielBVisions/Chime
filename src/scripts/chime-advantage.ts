@@ -32,7 +32,11 @@ export function initChimeAdvantage() {
       trigger: section,
       pin: true,
       scrub: true,
-      start: 'top top',
+      // Pins (and the horizontal scroll starts) once the section's own
+      // centre reaches the viewport's centre, rather than as soon as its
+      // top edge appears - so the cards are already centred on screen
+      // before any scroll-jacking kicks in.
+      start: 'center center',
       end: '+=' + distance,
     },
   });
