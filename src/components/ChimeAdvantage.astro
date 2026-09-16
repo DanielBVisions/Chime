@@ -89,16 +89,6 @@ const features = [
     color: var(--color-white);
   }
 
-  /* Same scrim recipe as EnquireCta's gradient band, for the same reason:
-     the lighter gradient end alone only gives white text ~2.7:1 contrast. */
-  .advantage::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background: rgba(0, 0, 0, 0.35);
-  }
-
   .advantage__intro {
     position: relative;
     z-index: 1;

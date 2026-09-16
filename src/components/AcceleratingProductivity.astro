@@ -50,15 +50,6 @@ import BrandArc from './BrandArc.astro';
     }
   }
 
-  /* Same scrim recipe as EnquireCta's gradient band: the lighter end alone
-     only gives white text ~2.7:1 contrast, under the 4.5:1 AA minimum. */
-  .accelerating::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background: rgba(0, 0, 0, 0.35);
-  }
 
   /* Two columns, both stretched to the same height: copy (heading pinned to
      the top, paragraph pinned to the bottom, via space-between) alongside
