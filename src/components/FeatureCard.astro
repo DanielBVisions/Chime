@@ -18,11 +18,16 @@ const { title, body, icon, rotation = 0 } = Astro.props;
 </article>
 
 <style>
+  /* Fixed height (not content-driven) so all 8 cards match, regardless
+     of how much longer the first feature's body copy is than the rest -
+     that copy is clamped below instead of growing the card. */
   .feature-card {
+    height: 17rem;
     background: var(--color-white);
     border: 1px solid var(--color-grey-100);
     border-radius: 18px;
     padding: 1.625rem;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -67,6 +72,10 @@ const { title, body, icon, rotation = 0 } = Astro.props;
     font-size: 0.875rem;
     line-height: 1.6;
     color: var(--color-grey-600);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    overflow: hidden;
   }
 
   @media (prefers-reduced-motion: reduce) {
