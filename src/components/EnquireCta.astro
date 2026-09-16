@@ -1,21 +1,18 @@
 ---
-import BrandArc from './BrandArc.astro';
 ---
 
 <section class="enquire" id="contact">
-  <div class="enquire__backdrop" aria-hidden="true"></div>
-  <BrandArc size={720} anchor="top-right" variant="white" style="top: -220px; right: -220px; opacity: 0.5;" />
-  <BrandArc size={560} anchor="bottom-left" variant="white" style="bottom: -180px; left: -180px; opacity: 0.35;" />
+  <div class="container">
+    <div class="enquire__card" data-reveal>
+      <div class="enquire__top">
+        <h2 data-reveal-heading>Ready to transform your field operations?</h2>
+        <p class="enquire__sub">
+          Schedule a demo today and see how CHiME can transform field force productivity for your
+          network operations.
+        </p>
+      </div>
 
-  <div class="container enquire__inner">
-    <div class="enquire__panel" data-reveal>
-      <span class="eyebrow enquire__eyebrow">Get Started</span>
-      <h2 data-reveal-heading>
-        Enquire Now <span class="enquire__accent">For a Demo</span>
-      </h2>
-      <p class="enquire__sub">Transform your field operations with our innovative solutions designed for network operators.</p>
-
-      <form class="enquire__form" data-enquire-form novalidate>
+      <form class="enquire__bar" data-enquire-form novalidate>
         <div class="enquire__field">
           <label for="name" class="visually-hidden">Name</label>
           <input type="text" id="name" name="name" autocomplete="name" placeholder="Full Name" required />
@@ -26,133 +23,114 @@ import BrandArc from './BrandArc.astro';
           <input type="email" id="email" name="email" autocomplete="email" placeholder="Your Email" required />
         </div>
 
-        <button type="submit" class="btn enquire__submit">Enquire Now</button>
+        <button type="submit" class="enquire__submit" aria-label="Submit enquiry">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </button>
       </form>
-
-      <p class="enquire__status" data-enquire-status role="status" aria-live="polite" hidden></p>
     </div>
+
+    <p class="enquire__status" data-enquire-status role="status" aria-live="polite" hidden></p>
   </div>
 </section>
 
 <style>
-  /* Genuinely different from a re-themed version of the old flat
-     gradient band: a layered, textured backdrop with a floating glass
-     panel on top, rather than text+form sitting directly on a solid
-     background. */
   .enquire {
-    position: relative;
+    padding-block: var(--space-section);
+  }
+
+  /* Bright, high-contrast card in two tiers - a pale-blue "headline"
+     top half and a full-bleed dark bar along the bottom holding the
+     actual form - rather than everything sitting on one flat
+     background at the same visual weight. */
+  .enquire__card {
+    border-radius: 2.5rem;
     overflow: hidden;
-    background: #04070d;
-    color: var(--color-white);
-    padding-block: 6rem;
+    background: var(--color-blue-pale);
   }
 
-  .enquire__backdrop {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background:
-      radial-gradient(45% 60% at 18% 15%, rgba(63, 169, 218, 0.35), transparent 70%),
-      radial-gradient(55% 65% at 85% 90%, rgba(240, 169, 58, 0.16), transparent 70%),
-      radial-gradient(80% 80% at 50% 50%, var(--color-blue-deep), #04070d 75%);
-  }
-
-  .enquire__inner {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* The floating "glass" card - the actual structural difference from
-     the old design, which had copy/form sitting flush on the section's
-     own background with nothing separating them from it. */
-  .enquire__panel {
-    max-width: 46rem;
-    margin-inline: auto;
-    padding: 3.5rem 3rem;
-    border-radius: 28px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+  .enquire__top {
+    padding: 3.5rem 3rem 3rem;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1.25rem;
-  }
-
-  .enquire__eyebrow {
-    color: #f0a93a;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2.5rem;
   }
 
   .enquire h2 {
-    font-size: clamp(2rem, 4vw, 2.875rem);
+    max-width: 26rem;
+    font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 800;
-    letter-spacing: -0.015em;
-    text-transform: uppercase;
-    line-height: 1.15;
-  }
-
-  .enquire__accent {
-    color: var(--color-blue-pale);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--color-ink);
   }
 
   .enquire__sub {
-    max-width: 32rem;
-    font-size: 1.0625rem;
+    max-width: 22rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(10, 10, 10, 0.7);
   }
 
-  .enquire__form {
-    margin-top: 0.75rem;
+  .enquire__bar {
     display: flex;
-    flex-wrap: wrap;
     align-items: stretch;
-    justify-content: center;
-    gap: 0.75rem;
-    width: 100%;
+    gap: 1.25rem;
+    background: var(--color-ink);
+    padding: 1.5rem 2rem;
   }
 
   .enquire__field {
-    flex: 1 1 13rem;
-    min-width: 12rem;
+    flex: 1;
+    min-width: 8rem;
+    display: flex;
+    align-items: center;
   }
 
   .enquire__field input {
     width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    padding: 0.875rem 1.125rem;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.08);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    padding-block: 0.625rem;
     color: var(--color-white);
     font: inherit;
+    font-size: 1.125rem;
+    font-weight: 700;
   }
 
   .enquire__field input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 700;
   }
 
   .enquire__field input:focus-visible {
-    outline: 2px solid var(--color-white);
-    outline-offset: 2px;
+    outline: none;
+    border-bottom-color: var(--color-blue-pale);
   }
 
-  /* Warm accent against the dark, cool backdrop — deliberately a
-     different colour from the site's blue CTAs elsewhere, since this
-     section is meant to read as the conversion moment. */
   .enquire__submit {
     flex-shrink: 0;
-    background: #f0a93a;
-    color: #241000;
+    width: 3.5rem;
+    height: 3.5rem;
+    align-self: center;
+    border-radius: 999px;
+    background: var(--color-blue-pale);
+    color: var(--color-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s var(--ease-out-expo), transform 0.2s var(--ease-out-expo);
   }
 
   .enquire__submit:hover,
   .enquire__submit:focus-visible {
-    background: #f7bd5f;
+    background: var(--color-white);
+    transform: translateX(3px);
   }
 
   .enquire__submit:disabled {
@@ -161,18 +139,25 @@ import BrandArc from './BrandArc.astro';
   }
 
   .enquire__status {
-    margin-top: 0.75rem;
+    margin-top: 1rem;
+    text-align: center;
     font-weight: 700;
+    color: var(--color-ink);
   }
 
   @media (max-width: 640px) {
-    .enquire__panel {
-      padding: 2.5rem 1.75rem;
+    .enquire__top {
+      padding: 2.5rem 1.75rem 2rem;
     }
 
-    .enquire__form {
+    .enquire__bar {
       flex-direction: column;
       align-items: stretch;
+      padding: 1.5rem;
+    }
+
+    .enquire__submit {
+      align-self: flex-end;
     }
   }
 </style>
