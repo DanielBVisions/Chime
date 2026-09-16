@@ -121,11 +121,22 @@ export function initTestimonialCarousel() {
       onComplete: () => {
         if (!hasBuffer) return;
         if (active < offset || active >= offset + count) {
+          // The clone we just landed on and the real slide we're about to
+          // snap to are meant to look pixel-identical - but setActiveClasses()
+          // below flips is-active/is-adjacent onto a different set of DOM
+          // elements, and .testimonials__card has its own CSS transition on
+          // transform/opacity. Without suppressing that, the class swap
+          // visibly eases between the two even though the track's position
+          // jumps instantly, which is exactly the "jump" that was reported -
+          // a real snap has to be instant on both axes, not just position.
+          track!.classList.add('is-snapping');
           active = offset + realIndexOf(active);
           const realSlide = slides[active];
           const snapX = viewport!.offsetWidth / 2 - realSlide.offsetLeft - realSlide.offsetWidth / 2;
           gsap.set(track, { x: snapX });
           setActiveClasses();
+          void track!.offsetWidth; // force layout so the transition:none above is committed before it's removed
+          requestAnimationFrame(() => track!.classList.remove('is-snapping'));
         }
       },
     });

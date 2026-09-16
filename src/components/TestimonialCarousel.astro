@@ -113,6 +113,14 @@ const testimonials = [
     align-items: center;
   }
 
+  /* Added for one frame by testimonial-carousel.ts during the end-of-loop
+     snap, so the is-active/is-adjacent class swap (clone -> equivalent
+     real slide) is instant instead of visibly easing through the card's
+     own transform/opacity transition. */
+  .testimonials__track.is-snapping .testimonials__card {
+    transition: none;
+  }
+
   /* Centre-focused carousel: every slide is the same flex-basis (so the
      track's offset math stays simple), but the active slide's card is
      scaled up to full size/opacity, its immediate neighbours are
