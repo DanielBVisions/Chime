@@ -259,12 +259,30 @@ const trustedBy = [
     object-fit: contain;
   }
 
-  /* sse.svg's own canvas has a huge amount of transparent padding baked
-     around the actual wordmark, so at a matching bounding box it renders
-     far smaller than the other logos here - scaled up and clipped to
-     the same footprint (the li's own overflow:hidden) to compensate. */
+  /* Per-logo scale corrections - each source file has a different amount
+     of its own baked-in padding/whitespace around the actual mark, so
+     even with an identical bounding box + object-fit:contain, some
+     render much larger or smaller than others. Same values as
+     PartnerLogos.astro, tuned by eye against a screenshot rather than
+     measured pixel-for-pixel - flag any that still look off. */
+  .hero__trust-list li img[src$="esb-networks.png"] {
+    transform: scale(1.3);
+  }
+
+  .hero__trust-list li img[src$="sp-energy.png"] {
+    transform: scale(0.85);
+  }
+
+  .hero__trust-list li img[src$="electricity-north-west.avif"] {
+    transform: scale(0.72);
+  }
+
+  .hero__trust-list li img[src$="uk-power-networks.avif"] {
+    transform: scale(1.1);
+  }
+
   .hero__trust-list li img[src$="sse.svg"] {
-    transform: scale(2.4);
+    transform: scale(3.2);
   }
 
   .hero__trust-marquee.is-marquee .hero__trust-group {

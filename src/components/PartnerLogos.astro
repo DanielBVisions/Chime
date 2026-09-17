@@ -79,15 +79,31 @@ const partners = [
     object-fit: contain;
   }
 
-  /* sse.svg's own canvas has a huge amount of transparent padding baked
-     around the actual wordmark (confirmed by reading the file - the
-     visible mark occupies a small fraction of its intrinsic viewBox),
-     so at a matching bounding box it renders far smaller than every
-     other logo here. Scaled up and clipped to the same footprint (the
-     li's own overflow:hidden) to compensate, since the source file
-     itself can't be safely re-cropped by hand. */
+  /* Per-logo scale corrections - each source file has a different amount
+     of its own baked-in padding/whitespace around the actual mark, so
+     even with an identical bounding box + object-fit:contain, some
+     render much larger or smaller than others (confirmed against a
+     screenshot of the actual rendered strip). Tuned by eye against that
+     screenshot, not measured pixel-for-pixel - flag any that still look
+     off after this pass. */
+  .partners__list li img[src$="esb-networks.png"] {
+    transform: scale(1.3);
+  }
+
+  .partners__list li img[src$="sp-energy.png"] {
+    transform: scale(0.85);
+  }
+
+  .partners__list li img[src$="electricity-north-west.avif"] {
+    transform: scale(0.72);
+  }
+
+  .partners__list li img[src$="uk-power-networks.avif"] {
+    transform: scale(1.1);
+  }
+
   .partners__list li img[src$="sse.svg"] {
-    transform: scale(2.4);
+    transform: scale(3.2);
   }
 
   .partners__list li:hover {
