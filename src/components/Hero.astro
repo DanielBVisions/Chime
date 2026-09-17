@@ -188,6 +188,16 @@ const trustedBy = [
     .hero__media {
       aspect-ratio: 4 / 3;
     }
+
+    /* 4.5rem is a fixed rem value, not a clamp() - deliberately, so it
+       stays proportional to .hero__copy's own rem-based max-width at
+       desktop sizes (see the comment above). That reasoning doesn't
+       carry over to phone widths, where the container is nowhere near
+       64rem wide any more - unreduced, 4.5rem (72px at the root's normal
+       16px) ran enormous and forced ugly mid-word wraps. */
+    .hero__headline {
+      font-size: 2.5rem;
+    }
   }
 
   .hero__poster,

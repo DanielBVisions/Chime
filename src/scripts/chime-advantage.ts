@@ -13,11 +13,22 @@ gsap.registerPlugin(ScrollTrigger);
 export function initChimeAdvantage() {
   const section = document.querySelector<HTMLElement>('[data-advantage]');
   const track = document.querySelector<HTMLElement>('[data-advantage-track]');
+  const viewport = document.querySelector<HTMLElement>('[data-advantage-viewport]');
   if (!section || !track) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const canScrollPin = window.matchMedia('(min-width: 900px)').matches;
-  if (prefersReducedMotion || !canScrollPin) return;
+  if (prefersReducedMotion || !canScrollPin) {
+    // Below 900px the row relies on the browser's own touch/trackpad
+    // scrolling of overflow-x: auto - this pointer-drag handling is an
+    // explicit fallback on top of that native behaviour (not a
+    // replacement for it), so a mouse/trackpad user who isn't dragging
+    // still gets ordinary scroll/swipe. Bound directly rather than
+    // trusting native touch-scroll alone to actually engage in every
+    // browser.
+    if (viewport) initDragToScroll(viewport);
+    return;
+  }
 
   section.classList.add('is-scroll-pin');
 
@@ -84,4 +95,53 @@ export function initChimeAdvantage() {
       }
     );
   });
+}
+
+// Pointer-based drag scroll: directly sets scrollLeft from pointer
+// movement instead of leaning on the browser's own touch-scroll
+// handling of overflow-x: auto. Works for touch, mouse and pen via a
+// single Pointer Events path rather than separate touch/mouse listeners.
+function initDragToScroll(viewport: HTMLElement) {
+  let isDown = false;
+  let dragged = false;
+  let startX = 0;
+  let startScrollLeft = 0;
+
+  viewport.addEventListener('pointerdown', (event) => {
+    isDown = true;
+    dragged = false;
+    startX = event.clientX;
+    startScrollLeft = viewport.scrollLeft;
+    viewport.setPointerCapture(event.pointerId);
+  });
+
+  viewport.addEventListener('pointermove', (event) => {
+    if (!isDown) return;
+    const delta = event.clientX - startX;
+    // Small threshold before treating this as a drag (rather than a
+    // tap/click) - once past it, stop the browser treating the gesture
+    // as text selection or a link/button activation.
+    if (Math.abs(delta) > 4) dragged = true;
+    if (dragged) viewport.scrollLeft = startScrollLeft - delta;
+  });
+
+  const endDrag = () => {
+    isDown = false;
+  };
+
+  viewport.addEventListener('pointerup', endDrag);
+  viewport.addEventListener('pointercancel', endDrag);
+
+  // Swallow the click that would otherwise follow a drag release, so
+  // dragging across a card doesn't also fire its own click/hover intent.
+  viewport.addEventListener(
+    'click',
+    (event) => {
+      if (dragged) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    },
+    { capture: true }
+  );
 }
