@@ -162,11 +162,12 @@ const columns = [
   }
 
   .delivers__functionality-heading {
-    /* Noticeably more than space-section (used everywhere else for a
-       normal section gap) - this needs to read as a clean break from
-       the card above, not just a slightly bigger version of the usual
-       spacing. */
-    margin-top: clamp(9rem, 20vw, 15rem);
+    /* Flat and large on purpose, not a vw-scaled clamp() - two rounds of
+       clamp() increases (up to 15rem at its max) still read as barely
+       different from the card above, so this needs to be unmistakably
+       big regardless of viewport-based scaling. Cut down on small
+       screens below. */
+    margin-top: 20rem;
     margin-inline: auto;
     max-width: 48rem;
     font-size: 2.5rem;
@@ -174,6 +175,12 @@ const columns = [
     letter-spacing: -0.02em;
     text-align: center;
     color: var(--color-ink);
+  }
+
+  @media (max-width: 700px) {
+    .delivers__functionality-heading {
+      margin-top: 8rem;
+    }
   }
 
   /* Narrower than the page's own wide container - wraps the hub AND the
