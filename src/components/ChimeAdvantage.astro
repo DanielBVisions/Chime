@@ -155,10 +155,15 @@ const features = [
     background: var(--color-blue-pale);
   }
 
+  /* Visible below the desktop breakpoint too, not just in the pinned
+     is-scroll-pin state - the native horizontal scroll on mobile has no
+     other affordance telling people there's more to see, and with each
+     card sized close to the viewport's own width (below) the next card
+     barely peeks into view on its own. */
   .advantage__hint {
     position: relative;
     z-index: 1;
-    display: none;
+    display: block;
     margin: 0 0 1.25rem;
     font-size: 0.75rem;
     font-weight: 700;
@@ -220,6 +225,17 @@ const features = [
     flex: 0 0 24rem;
   }
 
+  /* Narrower than the desktop 24rem below the point where the row is
+     just a plain native scroller - at 24rem, a card was nearly as wide
+     as the phone viewport itself, so the next one barely peeked into
+     view and the row read as a single static card rather than something
+     scrollable. */
+  @media (max-width: 640px) {
+    .advantage__viewport :global(.feature-card) {
+      flex-basis: 78vw;
+    }
+  }
+
   /* Scroll-pin state — added by chime-advantage.ts when motion is allowed
      and the viewport is wide enough. */
   .advantage.is-scroll-pin {
@@ -227,10 +243,6 @@ const features = [
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
-
-  .advantage.is-scroll-pin .advantage__hint {
-    display: block;
   }
 
   .advantage.is-scroll-pin .advantage__viewport {

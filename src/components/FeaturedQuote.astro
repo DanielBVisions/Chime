@@ -71,6 +71,19 @@
     color: var(--color-ink);
   }
 
+  /* 1.625rem was sized for the 47.5rem-max-width desktop column - on a
+     phone-width column the same size wraps almost every word onto its
+     own line, reading as oversized display text rather than a quote. */
+  @media (max-width: 700px) {
+    .quote__inner {
+      padding-block: 6.5rem 4rem;
+    }
+
+    blockquote p {
+      font-size: 1.1875rem;
+    }
+  }
+
   blockquote footer {
     margin-top: 1.5rem;
     font-size: 0.875rem;

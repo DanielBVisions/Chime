@@ -179,6 +179,17 @@ const trustedBy = [
     background: linear-gradient(135deg, var(--color-blue-pale), var(--color-blue-mid) 55%, var(--color-blue-deep));
   }
 
+  /* 2.8:1 was tuned against the wide desktop container - on a phone-width
+     column that same ratio makes the band very short, cropping the photo
+     down to a thin sliver and object-fit:cover loses most of the actual
+     subject. Taller ratio gives the image room to actually read as a
+     photo instead of a strip. */
+  @media (max-width: 700px) {
+    .hero__media {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
   .hero__poster,
   .hero__video {
     position: absolute;
