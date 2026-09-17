@@ -119,10 +119,8 @@
   }
 
   /* Sized 116% with a matching negative inset so the scroll-parallax drift
-     (--parallax-y, from image-parallax.ts) and the hover-zoom (--hover-scale)
-     never uncover the frame's edges. Both live on custom properties, not
-     the transform property itself, so the two effects compose instead of
-     one overwriting the other's inline style. max-width: none overrides
+     (--parallax-y, from image-parallax.ts) never uncovers the frame's
+     edges. max-width: none overrides
      global.css's site-wide `img { max-width: 100% }` reset, which was
      silently capping the width back down to 100% (height had no such
      reset, so only it was actually reaching 116%) - that's what left
@@ -139,7 +137,7 @@
 
   .industry__media-img--1 {
     opacity: 1;
-    transform: translateY(var(--parallax-y, 0px)) scale(var(--hover-scale, 1));
+    transform: translateY(var(--parallax-y, 0px));
   }
 
   .industry__media-img--2,
@@ -163,10 +161,6 @@
 
   .industry__media.is-frame-3 .industry__media-img--3 {
     opacity: 1;
-  }
-
-  .industry__media:hover img {
-    --hover-scale: 1.04;
   }
 
   @media (prefers-reduced-motion: reduce) {
