@@ -131,13 +131,26 @@ const testimonials = [
     flex: 0 0 80%;
     max-width: 80%;
     box-sizing: border-box;
-    padding-inline: 1.5rem;
+    /* No padding at this tier - see the max-width: 639px override below
+       for why. */
+    padding-inline: 0;
   }
 
+  /* padding-inline exists purely to create a visible gap between the
+     active card and its NEIGHBOURING cards peeking in on either side -
+     at 80% slide width (max-width: 639px, right above), the neighbours
+     are entirely off-screen (confirmed: at a 390px viewport the adjacent
+     slide sits fully outside the visible area), so that padding has
+     nothing to create a gap FROM at this tier. It was doing nothing but
+     taking 1.5rem off each side of the only card actually visible -
+     directly shrinking the one thing that needed the width most. Only
+     added back once slides are narrow enough (48%/36% below) that a
+     neighbour is actually visible beside the active card. */
   @media (min-width: 640px) {
     .testimonials__slide {
       flex-basis: 48%;
       max-width: 48%;
+      padding-inline: 1.5rem;
     }
   }
 
