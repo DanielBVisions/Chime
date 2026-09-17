@@ -180,13 +180,15 @@ const columns = [
   .delivers__diagram {
     max-width: 64rem;
     margin-inline: auto;
-    margin-top: var(--space-section);
+    /* Tighter than the card-to-heading gap above (space-section) - keeps
+       the heading grouped with the diagram it introduces instead of
+       reading as equidistant from both and belonging to neither. */
+    margin-top: var(--space-gutter);
   }
 
   .delivers__hub {
     position: relative;
-    padding: 4.5rem 3rem;
-    min-height: 22rem;
+    padding: 3rem 2.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
