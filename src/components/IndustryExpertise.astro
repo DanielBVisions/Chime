@@ -116,11 +116,16 @@
      (--parallax-y, from image-parallax.ts) and the hover-zoom (--hover-scale)
      never uncover the frame's edges. Both live on custom properties, not
      the transform property itself, so the two effects compose instead of
-     one overwriting the other's inline style. */
+     one overwriting the other's inline style. max-width: none overrides
+     global.css's site-wide `img { max-width: 100% }` reset, which was
+     silently capping the width back down to 100% (height had no such
+     reset, so only it was actually reaching 116%) - that's what left
+     gaps down the sides showing the container's own background through. */
   .industry__media-img {
     position: absolute;
     inset: -8%;
     width: 116%;
+    max-width: none;
     height: 116%;
     object-fit: cover;
     transition: opacity 0.6s ease;
