@@ -309,10 +309,22 @@ const columns = [
     transform: translate(-50%, -50%);
   }
 
+  /* 14rem is the desktop scroll-runway gap - room for the sticky rail
+     marker (delivers-timeline.ts, gated to min-width: 900px same as
+     the override below) to travel between steps. Below that width the
+     rail/marker/accordion effect never engages at all (every step
+     renders open in the base markup), so that gap is just wasted empty
+     space between three plain stacked cards. */
   .delivers__steps {
     display: flex;
     flex-direction: column;
-    gap: 14rem;
+    gap: 2rem;
+  }
+
+  @media (min-width: 900px) {
+    .delivers__steps {
+      gap: 14rem;
+    }
   }
 
   .delivers__step {
