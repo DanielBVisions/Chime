@@ -6,29 +6,18 @@ gsap.registerPlugin(ScrollTrigger);
 // Adapted from the madewithgsap.com "effect001" horizontal scroll-pin pattern,
 // with rotation/drift ranges cut way down (was ±10-20deg rotation, ±30-50%
 // xPercent, ±10-16% yPercent — original effect001 values) and generous card
-// gaps so cards never overlap each other's text mid-scroll. Desktop only —
-// a scroll-jacked horizontal pin doesn't translate well to touch, so it's
-// gated on both viewport width and prefers-reduced-motion; everything else
-// gets the static grid fallback already rendered in the markup.
+// gaps so cards never overlap each other's text mid-scroll. Runs at every
+// viewport width, touch included - vertical scroll drives the horizontal
+// card movement exactly like desktop, not a separate touch-only fallback.
+// Only prefers-reduced-motion skips it, leaving the static grid already
+// rendered in the markup.
 export function initChimeAdvantage() {
   const section = document.querySelector<HTMLElement>('[data-advantage]');
   const track = document.querySelector<HTMLElement>('[data-advantage-track]');
-  const viewport = document.querySelector<HTMLElement>('[data-advantage-viewport]');
   if (!section || !track) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const canScrollPin = window.matchMedia('(min-width: 900px)').matches;
-  if (prefersReducedMotion || !canScrollPin) {
-    // Below 900px the row relies on the browser's own touch/trackpad
-    // scrolling of overflow-x: auto - this pointer-drag handling is an
-    // explicit fallback on top of that native behaviour (not a
-    // replacement for it), so a mouse/trackpad user who isn't dragging
-    // still gets ordinary scroll/swipe. Bound directly rather than
-    // trusting native touch-scroll alone to actually engage in every
-    // browser.
-    if (viewport) initDragToScroll(viewport);
-    return;
-  }
+  if (prefersReducedMotion) return;
 
   section.classList.add('is-scroll-pin');
 
@@ -95,53 +84,4 @@ export function initChimeAdvantage() {
       }
     );
   });
-}
-
-// Pointer-based drag scroll: directly sets scrollLeft from pointer
-// movement instead of leaning on the browser's own touch-scroll
-// handling of overflow-x: auto. Works for touch, mouse and pen via a
-// single Pointer Events path rather than separate touch/mouse listeners.
-function initDragToScroll(viewport: HTMLElement) {
-  let isDown = false;
-  let dragged = false;
-  let startX = 0;
-  let startScrollLeft = 0;
-
-  viewport.addEventListener('pointerdown', (event) => {
-    isDown = true;
-    dragged = false;
-    startX = event.clientX;
-    startScrollLeft = viewport.scrollLeft;
-    viewport.setPointerCapture(event.pointerId);
-  });
-
-  viewport.addEventListener('pointermove', (event) => {
-    if (!isDown) return;
-    const delta = event.clientX - startX;
-    // Small threshold before treating this as a drag (rather than a
-    // tap/click) - once past it, stop the browser treating the gesture
-    // as text selection or a link/button activation.
-    if (Math.abs(delta) > 4) dragged = true;
-    if (dragged) viewport.scrollLeft = startScrollLeft - delta;
-  });
-
-  const endDrag = () => {
-    isDown = false;
-  };
-
-  viewport.addEventListener('pointerup', endDrag);
-  viewport.addEventListener('pointercancel', endDrag);
-
-  // Swallow the click that would otherwise follow a drag release, so
-  // dragging across a card doesn't also fire its own click/hover intent.
-  viewport.addEventListener(
-    'click',
-    (event) => {
-      if (dragged) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    },
-    { capture: true }
-  );
 }

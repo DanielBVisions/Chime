@@ -168,11 +168,10 @@ const features = [
     background: var(--color-blue-pale);
   }
 
-  /* Visible below the desktop breakpoint too, not just in the pinned
-     is-scroll-pin state - the native horizontal scroll on mobile has no
-     other affordance telling people there's more to see, and with each
-     card sized close to the viewport's own width (below) the next card
-     barely peeks into view on its own. */
+  /* Always visible (not gated to is-scroll-pin) - that state now applies
+     at every viewport width, so this would otherwise always show anyway;
+     kept simple rather than conditional on a state that's no longer
+     exceptional. */
   .advantage__hint {
     position: relative;
     z-index: 1;
@@ -185,31 +184,16 @@ const features = [
     color: rgba(255, 255, 255, 0.75);
   }
 
-  /* A horizontally-scrolling row is the base layout everywhere — native
-     scroll/swipe/trackpad on touch and no-JS/reduced-motion, all 8 cards
-     always reachable. chime-advantage.ts only adds the pinned, scroll-
-     driven version on top for wide, motion-allowed viewports. */
+  /* A horizontally-scrolling row is the no-JS/reduced-motion fallback -
+     chime-advantage.ts runs its pinned, vertical-scroll-driven horizontal
+     animation at every viewport width (touch included), matching desktop
+     exactly rather than swapping in a separate touch interaction. */
   .advantage__viewport {
     position: relative;
     z-index: 1;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
-    /* chime-advantage.ts adds its own pointer-drag scrolling below 900px
-       as a fallback on top of this native scrolling - pan-y keeps
-       vertical page scrolling passing through untouched (so a mostly-
-       vertical swipe that starts on a card still scrolls the page), while
-       leaving horizontal panning to that JS instead of the browser's own
-       gesture recognition potentially fighting it. user-select: none
-       stops a drag across a card's body text turning into a text
-       selection instead of a scroll gesture. */
-    touch-action: pan-y;
-    user-select: none;
-    cursor: grab;
-  }
-
-  .advantage__viewport:active {
-    cursor: grabbing;
   }
 
   /* align-items: flex-start so each card sizes to its own content -
@@ -253,19 +237,8 @@ const features = [
     flex: 0 0 24rem;
   }
 
-  /* Narrower than the desktop 24rem below the point where the row is
-     just a plain native scroller - at 24rem, a card was nearly as wide
-     as the phone viewport itself, so the next one barely peeked into
-     view and the row read as a single static card rather than something
-     scrollable. */
-  @media (max-width: 640px) {
-    .advantage__viewport :global(.feature-card) {
-      flex-basis: 78vw;
-    }
-  }
-
-  /* Scroll-pin state — added by chime-advantage.ts when motion is allowed
-     and the viewport is wide enough. */
+  /* Scroll-pin state — added by chime-advantage.ts whenever motion is
+     allowed, at every viewport width. */
   .advantage.is-scroll-pin {
     min-height: 100vh;
     display: flex;
