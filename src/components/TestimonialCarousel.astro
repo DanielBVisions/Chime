@@ -152,12 +152,20 @@ const testimonials = [
      size before the scale transform below is applied - otherwise a short
      quote and a long quote produce differently-sized boxes regardless of
      tier, instead of "active tallest, its two neighbours equal to each
-     other". Tall enough to fit the longest quote in full at this font
-     size/card width without clamping it mid-sentence - the line-clamp
-     below is a safety net for anything longer still, not the primary
-     mechanism. */
+     other".
+
+     19rem measured out to exactly zero px of spare room for the longest
+     real quote (Andy Horstead's) at some card widths: 8 clamped lines
+     (192px) + the footer (30px, 16px margin-top) landed flush against
+     the card's own available content height with nothing left over.
+     That's a 0px margin against font-metric rounding, not a working
+     safety net - real font rendering tipped it into clipping the footer
+     mid-glyph instead of cleanly respecting the line-clamp. 20.5rem
+     gives ~34px of genuine headroom for that same quote, so the
+     line-clamp stays a safety net for something longer still, rather
+     than something this card height was already relying on. */
   .testimonials__card {
-    height: 19rem;
+    height: 20.5rem;
     display: flex;
     padding: 1.75rem;
     background: var(--color-grey-100);

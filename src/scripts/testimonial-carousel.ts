@@ -159,7 +159,18 @@ export function initTestimonialCarousel() {
     if (event.key === 'ArrowRight') step(1);
   });
 
-  window.addEventListener('resize', () => step(0, { instant: true }));
+  // Width only, not a bare 'resize' listener - mobile browsers fire
+  // resize when the address bar/toolbar shows or hides during ordinary
+  // scrolling (a height-only change, viewport width unaffected), and
+  // this handler forces an instant, unanimated repositioning. Reacting
+  // to every one of those looked exactly like the carousel randomly
+  // snapping/jumping while the page was simply being scrolled past.
+  let lastWidth = window.innerWidth;
+  window.addEventListener('resize', () => {
+    if (window.innerWidth === lastWidth) return;
+    lastWidth = window.innerWidth;
+    step(0, { instant: true });
+  });
 
   if (prefersReducedMotion) return; // manual arrow/keyboard/dot nav still works; no autoplay
 
