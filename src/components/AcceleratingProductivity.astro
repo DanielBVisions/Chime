@@ -97,13 +97,28 @@
   }
 
   @media (max-width: 700px) {
+    /* A single-column grid auto-sizes each row to its own content, so
+       fixing the image to aspect-ratio: 4/3 (the previous approach) left
+       it as a small boxed photo with the card's own background showing
+       as dead space above and below it - the opposite of the "full
+       height, not a small icon with dead space" intent stated above for
+       the desktop columns. Flex: 1 was tried first to let the image
+       consume whatever height the copy text doesn't need, but that only
+       hands over "leftover" space when the column is taller than its
+       content needs - with a body paragraph this long, min-height: 75svh
+       above rarely exceeds that, so there's no leftover to give and the
+       image collapses to its own floor anyway. A direct viewport-relative
+       height makes it consistently prominent regardless of how much text
+       follows it. */
     .accelerating__inner {
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
     }
 
     .accelerating__media {
       order: -1;
-      aspect-ratio: 4 / 3;
+      height: 50svh;
+      min-height: 18rem;
     }
   }
 </style>
