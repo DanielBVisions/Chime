@@ -16,6 +16,12 @@ const features = [
     rotation: 2,
   },
   {
+    title: 'Industry Professionals',
+    body: 'At the heart of every successful network operation are the dedicated professionals who bring expertise, precision, and innovation to their roles. From design and construction to maintenance and oversight, these specialists ensure the seamless function and evolution of critical infrastructure.',
+    icon: '<circle cx="12" cy="9" r="4"/><path d="M8 12.5 L6 21 L12 18 L18 21 L16 12.5"/>',
+    rotation: 2,
+  },
+  {
     title: 'Built for the workforce',
     body: 'Designed with field teams in mind, CHIME streamlines workflows, reduces administrative burdens, and allows teams to focus on delivering quality work efficiently.',
     icon: '<circle cx="12" cy="8" r="3.4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>',
@@ -68,10 +74,10 @@ const features = [
       <a href="/chime" class="btn advantage__cta">Discover More</a>
     </div>
 
-    <p class="advantage__hint" data-advantage-hint>Scroll to explore all 8 &rarr;</p>
+    <p class="advantage__hint" data-advantage-hint>Scroll to explore all 9 &rarr;</p>
   </div>
 
-  <div class="advantage__viewport" data-advantage-viewport tabindex="0" aria-label="The CHiME Advantage, 8 features">
+  <div class="advantage__viewport" data-advantage-viewport tabindex="0" aria-label="The CHiME Advantage, 9 features">
     <div class="advantage__track" data-advantage-track>
       {features.map((feature) => (
         <FeatureCard title={feature.title} body={feature.body} icon={feature.icon} rotation={feature.rotation} />
