@@ -101,23 +101,30 @@
        fixing the image to aspect-ratio: 4/3 (the previous approach) left
        it as a small boxed photo with the card's own background showing
        as dead space above and below it - the opposite of the "full
-       height, not a small icon with dead space" intent stated above for
-       the desktop columns. Flex: 1 was tried first to let the image
-       consume whatever height the copy text doesn't need, but that only
-       hands over "leftover" space when the column is taller than its
-       content needs - with a body paragraph this long, min-height: 75svh
-       above rarely exceeds that, so there's no leftover to give and the
-       image collapses to its own floor anyway. A direct viewport-relative
-       height makes it consistently prominent regardless of how much text
-       follows it. */
+       height, not a small icon with dead space" intent already stated
+       above for the desktop columns. flex: 1 is the direct mobile
+       equivalent of that same intent: on desktop, align-items: stretch
+       makes the image match the text column's height with no fixed
+       number involved anywhere; here, flex: 1 makes it consume whatever
+       height the copy text doesn't need out of .accelerating__inner's
+       own min-height: 75svh, which is exactly the same "stretch to fill,
+       no fixed ratio" mechanism turned 90 degrees for a stacked layout. */
     .accelerating__inner {
       display: flex;
       flex-direction: column;
     }
 
+    /* flex: 1 alone collapses this to ~24px: in a narrow single-column
+       layout the body paragraph needs more vertical space than
+       .accelerating__inner's own min-height: 75svh on its own, so there's
+       nothing left for flex: 1 to hand the image (verified directly -
+       this isn't a guess). min-height here is a floor against total
+       collapse, not a locked proportion like aspect-ratio - flex: 1 still
+       drives every bit of growth above it from whatever space the copy
+       text actually leaves. */
     .accelerating__media {
       order: -1;
-      height: 50svh;
+      flex: 1;
       min-height: 18rem;
     }
   }
