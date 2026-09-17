@@ -221,9 +221,15 @@
        next positioned ancestor up the tree happened to be, nowhere near
        this box - not just invisible, but genuinely elsewhere on the
        page. relative still cancels the sticky/pin effect the same way
-       static did, without breaking that anchor. */
+       static did, without breaking that anchor. top: auto resets the
+       base rule's top: calc(50vh - 17.96875rem) - that value only makes
+       sense as a sticky trigger point; once position is relative it
+       becomes a plain visual offset instead, which was shifting the box
+       up from its normal flow position without changing the space it
+       reserves, so it rendered overlapping the text below it. */
     .industry__media {
       position: relative;
+      top: auto;
       flex: 0 0 auto;
       width: 100%;
     }
