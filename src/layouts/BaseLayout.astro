@@ -36,20 +36,36 @@ const { title, description = 'CHiME — built for the network operator.' } = Ast
       import { initDeliversTimeline } from '../scripts/delivers-timeline';
       import { initIndustryCrossfade } from '../scripts/industry-crossfade';
 
-      initSmoothScroll();
-      initRevealAnimations();
-      initRoleTicker();
-      initPartnerMarquee();
-      initHeroTrustMarquee();
-      initTestimonialCarousel();
-      initHero();
-      initNav();
-      initContactForm();
-      initChimeAdvantage();
-      initHeadingReveal();
-      initImageParallax();
-      initDeliversTimeline();
-      initIndustryCrossfade();
+      // Each init runs independently - these all live in one synchronous
+      // script block, so an uncaught error thrown by any one of them
+      // would otherwise stop every init call scheduled after it from
+      // ever running at all, on that page load. A bug confined to (say)
+      // the partner-logo marquee has no business silently taking the
+      // testimonial carousel or the CHiME Advantage scroll down with it.
+      const inits: [string, () => void][] = [
+        ['initSmoothScroll', initSmoothScroll],
+        ['initRevealAnimations', initRevealAnimations],
+        ['initRoleTicker', initRoleTicker],
+        ['initPartnerMarquee', initPartnerMarquee],
+        ['initHeroTrustMarquee', initHeroTrustMarquee],
+        ['initTestimonialCarousel', initTestimonialCarousel],
+        ['initHero', initHero],
+        ['initNav', initNav],
+        ['initContactForm', initContactForm],
+        ['initChimeAdvantage', initChimeAdvantage],
+        ['initHeadingReveal', initHeadingReveal],
+        ['initImageParallax', initImageParallax],
+        ['initDeliversTimeline', initDeliversTimeline],
+        ['initIndustryCrossfade', initIndustryCrossfade],
+      ];
+
+      for (const [name, fn] of inits) {
+        try {
+          fn();
+        } catch (error) {
+          console.error(`[init] ${name} failed:`, error);
+        }
+      }
     </script>
   </body>
 </html>

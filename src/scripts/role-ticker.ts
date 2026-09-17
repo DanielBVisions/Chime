@@ -9,6 +9,15 @@ interface MarqueeOptions {
 function buildMarquee(wrapper: HTMLElement, group: HTMLElement, track: HTMLElement, { speed }: MarqueeOptions) {
   const baseWidth = track.offsetWidth;
 
+  // A zero-width track (e.g. this ran before layout/images settled, or
+  // the track legitimately has no measurable content yet) would turn the
+  // cloning loop below into an infinite loop: totalWidth starts at 0 and
+  // never grows, so it can never reach minWidth. That would hang this
+  // script's whole synchronous <script> block in BaseLayout.astro -
+  // everything scheduled after it (initChimeAdvantage included) would
+  // simply never run on that page load.
+  if (baseWidth <= 0) return;
+
   // A single clone (2 copies total) only tiles seamlessly across the
   // full row width if the track itself is already at least half the
   // wrapper's width. A short track (e.g. a role-ticker row with just a
