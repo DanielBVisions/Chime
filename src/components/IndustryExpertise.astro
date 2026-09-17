@@ -246,6 +246,15 @@
       align-items: stretch;
     }
 
+    /* 24rem was the desktop scroll-runway distance between blocks (room
+       for the sticky image to sit still while each one scrolls past) -
+       with no sticky effect on mobile, and each block now carrying its
+       own image, that gap is just an enormous empty space between
+       otherwise self-contained image+text groups. */
+    .industry__text {
+      gap: 3.5rem;
+    }
+
     /* The shared sticky media box only makes sense with the desktop
        row/sticky layout - on mobile there's no scroll-driven pinning, so
        it would just sit once at the top of the whole section showing
