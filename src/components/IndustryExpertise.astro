@@ -18,6 +18,7 @@
         alt=""
         loading="lazy"
         decoding="async"
+        data-parallax-image
       />
       <img
         class="industry__media-img industry__media-img--3"
@@ -25,6 +26,7 @@
         alt=""
         loading="lazy"
         decoding="async"
+        data-parallax-image
       />
     </div>
 
@@ -132,12 +134,12 @@
     max-width: none;
     height: 116%;
     object-fit: cover;
+    transform: translateY(var(--parallax-y, 0px));
     transition: opacity 0.6s ease;
   }
 
   .industry__media-img--1 {
     opacity: 1;
-    transform: translateY(var(--parallax-y, 0px));
   }
 
   .industry__media-img--2,
