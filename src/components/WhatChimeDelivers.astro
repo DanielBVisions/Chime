@@ -152,15 +152,22 @@ const columns = [
     max-width: 56rem;
     margin-inline: auto;
     line-height: 1.7;
+  }
+
+  /* Scoped to the card specifically - .delivers p above is shared with
+     .delivers__hub p (grey-100 background), which needed to keep its
+     own dark colour instead of inheriting this card's white text. */
+  .delivers__intro-card p {
     color: rgba(255, 255, 255, 0.85);
   }
 
   .delivers__functionality-heading {
     margin-top: var(--space-section);
     margin-inline: auto;
-    max-width: 44rem;
-    font-size: 1.5rem;
-    font-weight: 700;
+    max-width: 48rem;
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     text-align: center;
     color: var(--color-ink);
   }
@@ -221,6 +228,7 @@ const columns = [
     max-width: 40rem;
     margin-inline: auto;
     font-size: 1.0625rem;
+    color: var(--color-grey-600);
   }
 
   /* Cards scroll normally — the rail's dotted line runs the full length
