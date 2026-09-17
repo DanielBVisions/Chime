@@ -149,14 +149,19 @@ const columns = [
     color: var(--color-ink);
   }
 
+  /* Narrower than the page's own wide container - wraps the hub AND the
+     timeline/steps below it, so the steps' 50%-based widths are computed
+     against this smaller box too, instead of just the hub card being
+     narrow while the cards beneath it still spread across the full page
+     width. */
   .delivers__diagram {
+    max-width: 64rem;
+    margin-inline: auto;
     margin-top: var(--space-section);
   }
 
   .delivers__hub {
     position: relative;
-    max-width: 64rem;
-    margin-inline: auto;
     padding: 4.5rem 3rem;
     min-height: 22rem;
     display: flex;
