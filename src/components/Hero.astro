@@ -28,12 +28,15 @@ const trustedBy = [
     </div>
 
     <div class="hero__media">
-      <img class="hero__poster" src="/video/hero-poster.avif" alt="" fetchpriority="high" />
+      <picture>
+        <source srcset="/video/hero-poster.avif" type="image/avif" />
+        <img class="hero__poster" src="/video/hero-poster.jpg" alt="" fetchpriority="high" />
+      </picture>
       <video
         class="hero__video"
         data-hero-video
         src="/video/hero.mp4"
-        poster="/video/hero-poster.avif"
+        poster="/video/hero-poster.jpg"
         autoplay
         muted
         loop
