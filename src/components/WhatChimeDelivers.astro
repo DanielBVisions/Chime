@@ -162,7 +162,11 @@ const columns = [
   }
 
   .delivers__functionality-heading {
-    margin-top: var(--space-section);
+    /* Noticeably more than space-section (used everywhere else for a
+       normal section gap) - this needs to read as a clean break from
+       the card above, not just a slightly bigger version of the usual
+       spacing. */
+    margin-top: clamp(6rem, 16vw, 11rem);
     margin-inline: auto;
     max-width: 48rem;
     font-size: 2.5rem;
