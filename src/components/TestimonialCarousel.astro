@@ -169,9 +169,21 @@ const testimonials = [
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, box-shadow 0.3s ease;
   }
 
+  /* flex-shrink: 0 is load-bearing, not decorative - .testimonials__card
+     is itself display:flex (row), and blockquote is its only child. Even
+     though blockquote's own width:100% exactly matches the card's
+     available content width, the default flex-shrink:1 still shrinks it
+     well below that (confirmed independently: ~360px collapsed to
+     ~280px in an isolated reproduction) - the flex algorithm's basis
+     calculation for blockquote picks up on its own nested content's
+     intrinsic sizing rather than simply honouring the 100% width. That
+     shrink is what was actually causing the severe word-wrapping inside
+     every card, at any viewport width, not the card/slide width itself
+     (which was already computing correctly). */
   .testimonials__card blockquote {
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     justify-content: space-between;
     height: 100%;
     width: 100%;
