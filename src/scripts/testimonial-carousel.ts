@@ -97,6 +97,14 @@ export function initTestimonialCarousel() {
       active = offset + realIndexOf(active);
       setActiveClasses();
       gsap.set(track, { x: centreOn(slides[active]) });
+      // Forces the browser to fully commit this instant reposition -
+      // both the style write and a synchronous layout checkpoint -
+      // before the very next line starts a new tween on the same
+      // property. Without this, the following animateTo()'s tween has
+      // no guarantee it picks up "from" the position just set here
+      // rather than from a stale cached value, which would show up as
+      // exactly the kind of visible jump this snap exists to prevent.
+      void track.offsetWidth;
     }
   }
 
