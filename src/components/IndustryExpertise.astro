@@ -85,9 +85,14 @@
      align-items: flex-start above keeps this column at its own natural
      height instead of stretching to match the text column, which is what
      gives the sticky effect room to work. */
+  /* top: 50% + translateY(-50%) centres it vertically in the viewport
+     once locked, instead of sticking near the top edge - the transform
+     doesn't affect where the sticky offset is computed from, so this is
+     the standard way to vertically centre a sticky element. */
   .industry__media {
     position: sticky;
-    top: 6rem;
+    top: 50%;
+    transform: translateY(-50%);
     flex: 0 0 28.75rem;
     aspect-ratio: 4 / 5;
     border-radius: 24px;
