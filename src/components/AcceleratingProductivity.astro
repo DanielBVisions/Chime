@@ -1,5 +1,4 @@
 ---
-import BrandArc from './BrandArc.astro';
 ---
 
 <section class="accelerating">
@@ -16,13 +15,8 @@ import BrandArc from './BrandArc.astro';
       </p>
     </div>
 
-    <div class="accelerating__media" aria-hidden="true">
-      <BrandArc
-        size={320}
-        anchor="top-right"
-        variant="white"
-        style="position: relative; top: auto; right: auto; width: 60%; height: auto;"
-      />
+    <div class="accelerating__media">
+      <img src="/images/accelerating-network.avif" alt="" loading="lazy" decoding="async" />
     </div>
   </div>
 </section>
@@ -90,11 +84,13 @@ import BrandArc from './BrandArc.astro';
 
   .accelerating__media {
     border-radius: 1.5rem;
-    background: rgba(255, 255, 255, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
+  }
+
+  .accelerating__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   @media (max-width: 700px) {
