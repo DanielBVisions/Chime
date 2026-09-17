@@ -211,8 +211,14 @@
       align-items: stretch;
     }
 
+    /* flex: 0 0 28.75rem (set for the row layout above) applies to the
+       main axis, which becomes height once .industry__split switches to
+       a column - that fought with aspect-ratio: 4/5 and collapsed the
+       image away instead of sizing it from the full-width column. */
     .industry__media {
       position: static;
+      flex: 0 0 auto;
+      width: 100%;
     }
 
     .industry__block {
