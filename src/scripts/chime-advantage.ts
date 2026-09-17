@@ -22,11 +22,20 @@ export function initChimeAdvantage() {
   section.classList.add('is-scroll-pin');
 
   const cards = Array.from(track.children) as HTMLElement[];
-  const distance = track.scrollWidth - window.innerWidth;
-  if (distance <= 0) return;
+  if (track.scrollWidth - window.innerWidth <= 0) return;
 
+  // GSAP's pin locks the section's width via an inline style captured at
+  // ScrollTrigger creation/refresh time - if that capture happens before
+  // web fonts finish loading (or before a resize settles), it can lock in
+  // a narrower width than the section's true, final layout, and nothing
+  // in this section's own CSS can override an inline style afterwards.
+  // invalidateOnRefresh + function-based x/end (rather than a value
+  // captured once into `distance`) make GSAP re-measure on every refresh
+  // (including the resize refresh it already runs automatically), and the
+  // fonts.ready refresh below covers the case where the pin was first set
+  // up against fallback-font metrics.
   const scrollTween = gsap.to(track, {
-    x: -distance,
+    x: () => -(track.scrollWidth - window.innerWidth),
     ease: 'none',
     scrollTrigger: {
       // Trigger is the card row itself, not the whole section - the
@@ -40,9 +49,12 @@ export function initChimeAdvantage() {
       pin: section,
       scrub: true,
       start: 'center center',
-      end: '+=' + distance,
+      end: () => '+=' + (track.scrollWidth - window.innerWidth),
+      invalidateOnRefresh: true,
     },
   });
+
+  document.fonts?.ready.then(() => ScrollTrigger.refresh());
 
   cards.forEach((card) => {
     const values = {
