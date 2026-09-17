@@ -89,6 +89,17 @@ const features = [
     color: var(--color-white);
   }
 
+  /* .container's max-width caps at 1920px (tokens.css --size-container-max)
+     and centres itself once the browser window exceeds that - on wide
+     monitors that adds a large empty margin outside the container on top
+     of its own padding, before any content starts. AcceleratingProductivity
+     avoids this entirely by never using .container's clamp-based width in
+     the first place. Un-capping it here for the same effect: no added
+     margin beyond the container's own padding-inline, at any window width. */
+  .advantage .container {
+    max-width: none;
+  }
+
   .advantage__intro {
     position: relative;
     z-index: 1;
