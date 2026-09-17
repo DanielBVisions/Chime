@@ -89,15 +89,19 @@ const features = [
     color: var(--color-white);
   }
 
-  /* .container's max-width caps at 1920px (tokens.css --size-container-max)
-     and centres itself once the browser window exceeds that - on wide
-     monitors that adds a large empty margin outside the container on top
-     of its own padding, before any content starts. AcceleratingProductivity
-     avoids this entirely by never using .container's clamp-based width in
-     the first place. Un-capping it here for the same effect: no added
-     margin beyond the container's own padding-inline, at any window width. */
+  /* .container's own margin-inline: auto (global.css) is harmless in
+     normal block layout, but once chime-advantage.ts adds is-scroll-pin
+     and .advantage becomes a flex container (below), a flex item with
+     auto cross-axis margins stops stretching to fill the available width
+     per the flexbox spec - it shrinks to fit its own content instead, and
+     the leftover space becomes those large auto margins. That's what was
+     actually making this section's content so much narrower than every
+     other section's, not its max-width. Zeroing the margin here (on top
+     of un-capping max-width, for the same "no added space" effect at
+     any window width) stops that from triggering. */
   .advantage .container {
     max-width: none;
+    margin-inline: 0;
   }
 
   .advantage__intro {
