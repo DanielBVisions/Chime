@@ -4,7 +4,6 @@ import BrandArc from './BrandArc.astro';
 const trustedBy = [
   { name: 'UK Power Networks', logo: '/images/partner-logos/uk-power-networks.avif' },
   { name: 'SSE', logo: '/images/partner-logos/sse.svg' },
-  { name: 'Cadent Gas' },
   { name: 'ESB Networks', logo: '/images/partner-logos/esb-networks.png' },
   { name: 'SP Energy', logo: '/images/partner-logos/sp-energy.png' },
   { name: 'Electricity North West', logo: '/images/partner-logos/electricity-north-west.avif' },
@@ -53,11 +52,7 @@ const trustedBy = [
         <ul class="hero__trust-list" data-hero-trust-track>
           {trustedBy.map((partner) => (
             <li>
-              {partner.logo ? (
-                <img src={partner.logo} alt={partner.name} loading="lazy" decoding="async" />
-              ) : (
-                partner.name
-              )}
+              <img src={partner.logo} alt={partner.name} loading="lazy" decoding="async" />
             </li>
           ))}
         </ul>
