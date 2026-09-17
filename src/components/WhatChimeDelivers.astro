@@ -39,7 +39,7 @@ const columns = [
 
 <section class="section delivers">
   <div class="container">
-    <div data-reveal>
+    <div class="delivers__intro-card" data-reveal>
       <h2 data-reveal-heading>What CHIME Delivers</h2>
       <h3 class="delivers__sub">Improving Volume Output</h3>
       <p>
@@ -121,6 +121,19 @@ const columns = [
 </section>
 
 <style>
+  /* Bounded, centred card like EnquireCta's - same gradient/rounded
+     treatment, rather than plain text sitting flush in the page's wide
+     container. */
+  .delivers__intro-card {
+    max-width: 64rem;
+    margin-inline: auto;
+    padding: 3.5rem 3rem;
+    border-radius: 2.5rem;
+    background: linear-gradient(120deg, var(--color-blue-deep), var(--color-blue-mid) 130%);
+    color: var(--color-white);
+    text-align: center;
+  }
+
   .delivers h2 {
     font-size: 2.5rem;
     font-weight: 800;
@@ -131,22 +144,24 @@ const columns = [
     margin-top: 1.5rem;
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--color-blue-deep);
+    color: var(--color-blue-pale);
   }
 
   .delivers p {
     margin-top: 1rem;
     max-width: 56rem;
+    margin-inline: auto;
     line-height: 1.7;
-    color: var(--color-grey-600);
+    color: rgba(255, 255, 255, 0.85);
   }
 
   .delivers__functionality-heading {
     margin-top: var(--space-gutter);
+    margin-inline: auto;
     font-size: 1.5rem;
     font-weight: 700;
     max-width: 44rem;
-    color: var(--color-ink);
+    color: var(--color-white);
   }
 
   /* Narrower than the page's own wide container - wraps the hub AND the
