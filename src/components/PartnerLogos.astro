@@ -61,6 +61,7 @@ const partners = [
   .partners__list li {
     display: flex;
     align-items: center;
+    overflow: hidden;
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--color-grey-600);
@@ -76,6 +77,17 @@ const partners = [
     width: 7rem;
     height: 2.25rem;
     object-fit: contain;
+  }
+
+  /* sse.svg's own canvas has a huge amount of transparent padding baked
+     around the actual wordmark (confirmed by reading the file - the
+     visible mark occupies a small fraction of its intrinsic viewBox),
+     so at a matching bounding box it renders far smaller than every
+     other logo here. Scaled up and clipped to the same footprint (the
+     li's own overflow:hidden) to compensate, since the source file
+     itself can't be safely re-cropped by hand. */
+  .partners__list li img[src$="sse.svg"] {
+    transform: scale(2.4);
   }
 
   .partners__list li:hover {

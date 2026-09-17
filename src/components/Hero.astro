@@ -240,6 +240,7 @@ const trustedBy = [
   .hero__trust-list li {
     display: flex;
     align-items: center;
+    overflow: hidden;
     font-size: 0.9375rem;
     font-weight: 700;
     color: var(--color-grey-600);
@@ -256,6 +257,14 @@ const trustedBy = [
     width: 7rem;
     height: 2.25rem;
     object-fit: contain;
+  }
+
+  /* sse.svg's own canvas has a huge amount of transparent padding baked
+     around the actual wordmark, so at a matching bounding box it renders
+     far smaller than the other logos here - scaled up and clipped to
+     the same footprint (the li's own overflow:hidden) to compensate. */
+  .hero__trust-list li img[src$="sse.svg"] {
+    transform: scale(2.4);
   }
 
   .hero__trust-marquee.is-marquee .hero__trust-group {
