@@ -52,11 +52,11 @@ const columns = [
         No other application has been designed to specifically target work productivity. CHIME
         stands apart as the only application built with Network Operators for Network Operators
       </p>
-
-      <h3 class="delivers__functionality-heading">
-        CHIME Equips You with All This Essential Functionality to Drive Productivity and Efficiency.
-      </h3>
     </div>
+
+    <h3 class="delivers__functionality-heading" data-reveal>
+      CHIME Equips You with All This Essential Functionality to Drive Productivity and Efficiency.
+    </h3>
 
     <div class="delivers__diagram" data-reveal>
       <div class="delivers__hub">
@@ -156,12 +156,13 @@ const columns = [
   }
 
   .delivers__functionality-heading {
-    margin-top: var(--space-gutter);
+    margin-top: var(--space-section);
     margin-inline: auto;
+    max-width: 44rem;
     font-size: 1.5rem;
     font-weight: 700;
-    max-width: 44rem;
-    color: var(--color-white);
+    text-align: center;
+    color: var(--color-ink);
   }
 
   /* Narrower than the page's own wide container - wraps the hub AND the
