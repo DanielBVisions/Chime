@@ -98,13 +98,19 @@
   /* Sticky while the (now taller, three-block) text column scrolls past
      it - align-items: flex-start above keeps this column at its own
      natural height instead of stretching to match the text column,
-     which is what gives the sticky effect room to work. top: 50vh (a
-     viewport unit, not a % of the containing block) + translateY(-50%)
-     centres it vertically once locked. */
+     which is what gives the sticky effect room to work. The top offset
+     is computed directly (50vh minus half this element's own height:
+     28.75rem wide at aspect-ratio 4/5 = 35.9375rem tall, so 17.96875rem)
+     rather than using top: 50% + transform: translateY(-50%) - combining
+     position: sticky with a transform on the same element is a known
+     cross-browser quirk where the sticky offset can miscalculate when
+     the scroll direction reverses (confirmed: image stuck at the top
+     the entire time scrolling up, fine scrolling down). A plain top
+     value avoids that entirely while landing at the exact same
+     centred position. */
   .industry__media {
     position: sticky;
-    top: 50vh;
-    transform: translateY(-50%);
+    top: calc(50vh - 17.96875rem);
     flex: 0 0 28.75rem;
     aspect-ratio: 4 / 5;
     border-radius: 24px;
