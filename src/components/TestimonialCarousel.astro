@@ -97,41 +97,6 @@ const testimonials = [
     gap: 1.5rem;
   }
 
-  /* Below 640px (where slides are 80% of the viewport, not a fixed
-     tier), the two 44px arrow buttons plus their gaps were eating a
-     large share of a narrow screen's width before the viewport even
-     got sized - on a ~390px phone that left barely 170px for each
-     card, cramming the quote text down to 2-3 words per line. There's
-     no swipe/touch navigation (checked testimonial-carousel.ts - only
-     a touchstart listener that pauses autoplay), so the arrows can't
-     just be hidden; overlaying them on top of the viewport instead of
-     sitting beside it in the flex row lets the viewport use the full
-     width. */
-  @media (max-width: 640px) {
-    .testimonials__carousel {
-      position: relative;
-    }
-
-    .testimonials__arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 2;
-      width: 36px;
-      height: 36px;
-      background: var(--color-white);
-      box-shadow: 0 4px 12px rgba(20, 24, 29, 0.15);
-    }
-
-    .testimonials__arrow[data-testimonial-prev] {
-      left: 0.25rem;
-    }
-
-    .testimonials__arrow[data-testimonial-next] {
-      right: 0.25rem;
-    }
-  }
-
   /* padding-block gives the active card's own box-shadow (0 24px 40px
      -16px, offset downward) room to render - it extends past the card's
      own layout box, so with no buffer here it was getting clipped by
@@ -259,6 +224,51 @@ const testimonials = [
     border-radius: 50%;
     background: var(--color-grey-100);
     font-size: 1.1rem;
+  }
+
+  /* Below 640px (where slides are 80% of the viewport, not a fixed
+     tier), the two 44px arrow buttons plus their gaps were eating a
+     large share of a narrow screen's width before the viewport even
+     got sized - on a ~390px phone that left barely 170px for each
+     card, cramming the quote text down to 2-3 words per line. There's
+     no swipe/touch navigation (checked testimonial-carousel.ts - only
+     a touchstart listener that pauses autoplay), so the arrows can't
+     just be hidden; overlaying them on top of the viewport instead of
+     sitting beside it in the flex row lets the viewport use the full
+     width.
+
+     This has to come AFTER the base .testimonials__arrow rule above -
+     both selectors have identical specificity, and a matched @media
+     block doesn't add any, so with equal specificity the cascade falls
+     back to source order. Placed before that base rule (as it originally
+     was), the base rule's later width/height/background silently won on
+     every viewport, undoing this block's 36px/white overrides while its
+     position/transform/z-index (untouched by the base rule) still took
+     effect - the arrows were absolutely positioned but never actually
+     resized or recoloured. */
+  @media (max-width: 640px) {
+    .testimonials__carousel {
+      position: relative;
+    }
+
+    .testimonials__arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 36px;
+      height: 36px;
+      background: var(--color-white);
+      box-shadow: 0 4px 12px rgba(20, 24, 29, 0.15);
+    }
+
+    .testimonials__arrow[data-testimonial-prev] {
+      left: 0.25rem;
+    }
+
+    .testimonials__arrow[data-testimonial-next] {
+      right: 0.25rem;
+    }
   }
 
   .testimonials__dots {
