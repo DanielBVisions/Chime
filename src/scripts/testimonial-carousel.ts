@@ -17,13 +17,20 @@ const BUFFER = 2; // cloned slides on each end - see note below
 // appended - "active" is allowed to land on a clone (that transition
 // looks like a completely normal step, since the clone is identical to
 // the real slide it stands in for), and the very next time the carousel
-// is asked to move, it first snaps - instantly, no animation - from
-// that clone back to the equivalent real slide, before starting the new
-// animated step. Doing the snap at the *start* of the next interaction,
-// with nothing else animating, keeps it fully decoupled from any
-// in-flight tween's own final frame - an earlier version did this snap
-// inside the previous tween's onComplete instead, which visibly
-// collided with that tween settling and read as a glitch/jump.
+// is asked to move, the index re-points to the equivalent real slide
+// before that move's tween is built.
+//
+// Two earlier approaches to that re-point both showed a visible jump
+// under some conditions: doing it inside the *previous* tween's
+// onComplete visibly collided with that tween settling, and doing it as
+// a separate instant gsap.set() immediately followed by a fresh gsap.to()
+// relied on GSAP correctly inferring the tween's start from whatever it
+// had cached from that just-applied set() - fine on a fast desktop
+// pipeline, but transform is composited rather than laid out, and that
+// implicit hand-off between two separate calls could lose a beat on a
+// slower mobile compositor. The current approach (see step()/animateTo())
+// passes both the start and end position to a single gsap.fromTo() call,
+// so there's no intermediate value for anything to infer or cache.
 export function initTestimonialCarousel() {
   const viewport = document.querySelector<HTMLElement>('[data-testimonial-viewport]');
   const track = document.querySelector<HTMLElement>('[data-testimonial-track]');
@@ -87,25 +94,15 @@ export function initTestimonialCarousel() {
     return viewport!.offsetWidth / 2 - slide.offsetLeft - slide.offsetWidth / 2;
   }
 
-  // If `active` is currently sitting on a clone, jump back to the
-  // equivalent real slide instantly (no animation) before anything else
-  // happens - see the note above the export for why this lives here
-  // rather than in the previous tween's onComplete.
-  function snapToReal() {
-    if (!hasBuffer) return;
+  // If `active` is currently sitting on a clone, re-point it at the
+  // equivalent real slide (no DOM/track change yet - see step() for why).
+  function snapIndexToReal(): boolean {
+    if (!hasBuffer) return false;
     if (active < offset || active >= offset + count) {
       active = offset + realIndexOf(active);
-      setActiveClasses();
-      gsap.set(track, { x: centreOn(slides[active]) });
-      // Forces the browser to fully commit this instant reposition -
-      // both the style write and a synchronous layout checkpoint -
-      // before the very next line starts a new tween on the same
-      // property. Without this, the following animateTo()'s tween has
-      // no guarantee it picks up "from" the position just set here
-      // rather than from a stale cached value, which would show up as
-      // exactly the kind of visible jump this snap exists to prevent.
-      void track.offsetWidth;
+      return true;
     }
+    return false;
   }
 
   function buildDots() {
@@ -118,8 +115,8 @@ export function initTestimonialCarousel() {
       dot.className = 'testimonials__dot';
       dot.setAttribute('aria-label', `Go to testimonial ${i + 1} of ${count}`);
       dot.addEventListener('click', () => {
-        snapToReal();
-        animateTo(offset + i);
+        const snapped = snapIndexToReal();
+        animateTo(offset + i, { fromX: snapped ? centreOn(slides[active]) : undefined });
       });
       dotsContainer.appendChild(dot);
       dots.push(dot);
@@ -132,16 +129,33 @@ export function initTestimonialCarousel() {
     dots.forEach((dot, i) => dot.classList.toggle('is-active', i === realIndex));
   }
 
-  function animateTo(target: number, { instant = false } = {}) {
+  // fromX, when given, makes this a two-point gsap.fromTo() instead of a
+  // gsap.to() that infers its starting value from whatever GSAP currently
+  // has cached for the track. That inference is exactly what a wraparound
+  // step relied on previously (an instant gsap.set() to the snapped
+  // position, immediately followed by a separate gsap.to() reading
+  // "current" position back from GSAP) - and exactly the kind of implicit
+  // hand-off between two separate calls on the same property that can
+  // land cleanly on a fast desktop pipeline but lose a beat on a slower
+  // mobile compositor, since transform changes are composited, not laid
+  // out - forcing a layout reflow (offsetWidth) between the two calls, as
+  // a previous version of this fix did, has no bearing on when a
+  // composited transform is actually committed. Passing both endpoints
+  // explicitly in one call removes the hand-off entirely: there's nothing
+  // for GSAP to infer, so there's nothing for a slower device to miss.
+  function animateTo(target: number, { instant = false, fromX }: { instant?: boolean; fromX?: number } = {}) {
     active = target;
     setActiveClasses();
     updateDots();
 
-    gsap.to(track, {
-      x: centreOn(slides[active]),
-      duration: instant || prefersReducedMotion ? 0 : 0.6,
-      ease: 'power3.out',
-    });
+    const toX = centreOn(slides[active]);
+    const duration = instant || prefersReducedMotion ? 0 : 0.6;
+
+    if (fromX !== undefined) {
+      gsap.fromTo(track, { x: fromX }, { x: toX, duration, ease: 'power3.out' });
+    } else {
+      gsap.to(track, { x: toX, duration, ease: 'power3.out' });
+    }
 
     if (liveRegion) {
       const label = realSlides[realIndexOf(active)]?.dataset.testimonialLabel;
@@ -150,10 +164,13 @@ export function initTestimonialCarousel() {
   }
 
   // Advances by one step, snapping back to a real slide first if we're
-  // currently resting on a clone from the previous step.
+  // currently resting on a clone from the previous step - see animateTo()
+  // for why that snap is folded into a single fromTo() rather than a
+  // separate instant reposition.
   function step(delta: number, opts?: { instant?: boolean }) {
-    snapToReal();
-    animateTo(active + delta, opts);
+    const snapped = snapIndexToReal();
+    const fromX = snapped ? centreOn(slides[active]) : undefined;
+    animateTo(active + delta, { ...opts, fromX });
   }
 
   buildDots();
