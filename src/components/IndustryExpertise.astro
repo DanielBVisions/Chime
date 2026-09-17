@@ -89,9 +89,15 @@
      once locked, instead of sticking near the top edge - the transform
      doesn't affect where the sticky offset is computed from, so this is
      the standard way to vertically centre a sticky element. */
+  /* top: 50vh (a viewport unit) rather than top: 50% - percentages on a
+     sticky element resolve against its containing block (here, the
+     whole multi-thousand-pixel-tall text column), not the viewport, so
+     top: 50% stuck it at a wildly wrong offset that overlapped the
+     previous section entirely. vh is always relative to the viewport,
+     matching the same pattern already used for delivers__rail-marker. */
   .industry__media {
     position: sticky;
-    top: 50%;
+    top: 50vh;
     transform: translateY(-50%);
     flex: 0 0 28.75rem;
     aspect-ratio: 4 / 5;
