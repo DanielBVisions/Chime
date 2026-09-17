@@ -86,11 +86,25 @@
   }
 
   .accelerating__media {
+    position: relative;
     border-radius: 1.5rem;
     overflow: hidden;
   }
 
+  /* Absolutely positioned + inset: 0, not width/height: 100% on a
+     statically positioned img - verified directly that height: 100%
+     was silently not resolving at all here: the img was falling back to
+     its own intrinsic aspect ratio (rendering at exactly width / the
+     image's own natural ratio, ignoring the container completely). That
+     matches a known CSS edge case - when a flex item's height comes from
+     min-height clamping a zero flex-basis (mobile's flex: 1 below,
+     rather than an explicit height), that's not always treated as
+     "definite" enough for a descendant's percentage height to resolve
+     against. Absolute positioning sizes against the nearest positioned
+     ancestor's box directly and isn't subject to that same restriction. */
   .accelerating__media img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
