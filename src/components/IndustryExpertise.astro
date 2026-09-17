@@ -81,25 +81,30 @@
     padding-block: 7rem;
   }
 
-  /* Sticky while the (now taller, three-block) text column scrolls past it -
-     align-items: flex-start above keeps this column at its own natural
-     height instead of stretching to match the text column, which is what
-     gives the sticky effect room to work. */
-  /* top: 50% + translateY(-50%) centres it vertically in the viewport
-     once locked, instead of sticking near the top edge - the transform
-     doesn't affect where the sticky offset is computed from, so this is
-     the standard way to vertically centre a sticky element. */
-  /* Reverted the centred (top: 50vh) version - centring the sticky point
-     makes it lock much earlier in the scroll (as soon as the image
-     reaches the vertical middle of the viewport, rather than needing to
-     reach 6rem from the top), so it was still substantially visible
-     while AcceleratingProductivity's card above was still on screen,
-     reading as an overlap between the two sections. Back to sticking
-     near the top, which only locks once the previous section has
-     mostly scrolled out of the way. */
+  /* Centring the sticky point (top: 50vh below) makes it lock as soon as
+     the image reaches the vertical middle of the viewport - with no
+     buffer beforehand, that point arrives while AcceleratingProductivity's
+     card above is still partly on screen, since its bottom edge and this
+     column's top are the same scroll position. This extra top padding
+     (desktop only - matches the breakpoint below sticky becomes static)
+     delays that lock point until AcceleratingProductivity has fully
+     scrolled away first. */
+  @media (min-width: 900px) {
+    .industry__split {
+      padding-top: 55vh;
+    }
+  }
+
+  /* Sticky while the (now taller, three-block) text column scrolls past
+     it - align-items: flex-start above keeps this column at its own
+     natural height instead of stretching to match the text column,
+     which is what gives the sticky effect room to work. top: 50vh (a
+     viewport unit, not a % of the containing block) + translateY(-50%)
+     centres it vertically once locked. */
   .industry__media {
     position: sticky;
-    top: 6rem;
+    top: 50vh;
+    transform: translateY(-50%);
     flex: 0 0 28.75rem;
     aspect-ratio: 4 / 5;
     border-radius: 24px;
