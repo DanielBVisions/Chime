@@ -231,6 +231,11 @@ const columns = [
   }
 
   .delivers__hub h4 {
+    /* h4 isn't covered by global.css's heading margin reset (only
+       h1-h3), so without this it keeps the browser's default h4
+       margin on top of the paragraph's own margin-top below,
+       compounding into a much bigger gap than either alone. */
+    margin: 0;
     font-size: 1.625rem;
     font-weight: 800;
     color: var(--color-blue-deep);
