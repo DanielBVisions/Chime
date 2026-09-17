@@ -107,6 +107,7 @@ const features = [
   .advantage__intro {
     position: relative;
     z-index: 1;
+    width: 50%;
     display: flex;
     flex-direction: column;
     gap: 1.125rem;
@@ -192,7 +193,9 @@ const features = [
 
   @media (min-width: 1200px) {
     .advantage__track {
-      padding-inline: 4rem;
+      /* Matches .container's own padding-inline at this breakpoint, so
+         the first card lines up flush with the intro text above it. */
+      padding-inline: 5rem;
     }
   }
 
@@ -220,9 +223,5 @@ const features = [
 
   .advantage.is-scroll-pin .advantage__viewport {
     overflow: hidden;
-  }
-
-  .advantage.is-scroll-pin .advantage__track {
-    padding-inline: 12vw;
   }
 </style>
