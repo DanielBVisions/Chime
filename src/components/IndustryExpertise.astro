@@ -214,9 +214,16 @@
     /* flex: 0 0 28.75rem (set for the row layout above) applies to the
        main axis, which becomes height once .industry__split switches to
        a column - that fought with aspect-ratio: 4/5 and collapsed the
-       image away instead of sizing it from the full-width column. */
+       image away instead of sizing it from the full-width column.
+       position: relative (not static) - the images inside are
+       position: absolute and need a positioned ancestor to anchor to;
+       static removes that entirely, so they were rendering wherever the
+       next positioned ancestor up the tree happened to be, nowhere near
+       this box - not just invisible, but genuinely elsewhere on the
+       page. relative still cancels the sticky/pin effect the same way
+       static did, without breaking that anchor. */
     .industry__media {
-      position: static;
+      position: relative;
       flex: 0 0 auto;
       width: 100%;
     }
